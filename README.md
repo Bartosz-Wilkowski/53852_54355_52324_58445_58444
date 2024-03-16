@@ -1,2 +1,2 @@
-# sign-language-recognition-system
+# sign-language-interpreter
 AEH students' project
