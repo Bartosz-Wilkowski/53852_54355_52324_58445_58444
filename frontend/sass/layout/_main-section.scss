@@ -1,0 +1,219 @@
+.howtouse {
+	background-color: $light-white;
+	&__box {
+		display: flex;
+		flex-direction: column;
+		margin: 2em 0;
+	}
+
+	&__img {
+		width: 100%;
+		margin-bottom: 1em;
+		border-radius: 15px;
+	}
+
+	&__title {
+		margin-bottom: 0 0.5em;
+		font-weight: 500;
+		color: $secondary-color;
+		text-transform: uppercase;
+	}
+
+	&__text {
+		font-size: 1.4rem;
+		color: $dark;
+	}
+}
+
+//klasy .section-heading i .section-padding znajdują się w pliku components/sections
+
+//druga sekcja w <main> - sekcja hero-img:
+.hero-img {
+	position: relative;
+	padding: 10em 2em;
+	@include heroImages('../img/groupofpeople-image-small.jpeg');
+	height: 110vh;
+	text-align: center;
+	color: $light-dark;
+
+	&__title {
+		margin-bottom: 0.5em;
+		font-size: 4rem;
+	}
+
+	&__text {
+		padding: 1em 0;
+	}
+}
+
+// trzecia sekcja w <main> - sekcja signlanguage
+.signlanguage {
+	background-color: $light-white;
+	&__card {
+		position: relative;
+		margin: 1em 0;
+		height: 450px;
+		color: $light-white;
+		text-align: center;
+		max-width: 50vh;
+		min-width: 40vh;
+		perspective: 1000px;
+
+		&:hover {
+			.signlanguage__card-img {
+				transform: rotateY(-180deg);
+				opacity: 0;
+			}
+
+			.signlanguage__card-info {
+				transform: rotateY(0);
+				opacity: 1;
+			}
+		}
+
+		//przednia część kart
+		&-img {
+			padding: 2em;
+			height: 100%;
+			border-radius: 8px;
+			background-size: cover;
+			transition: transform 1s, opacity 1s;
+			background-color: $secondary-color;
+
+			&-title {
+				position: absolute;
+				top: 50%;
+				left: 50%;
+				transform: translate(-50%, -50%);
+				font-size: 20rem;
+				font-weight: 100;
+			}
+
+			//napis "Poznaj znak migowy"
+			&-info {
+				position: absolute;
+				bottom: 30px;
+				right: 30px;
+				font-size: 1.8rem;
+
+				i {
+					margin-right: 0.3em;
+				}
+			}
+		}
+
+		// dolne części kart (te ze zdjęciami)
+		&-info {
+			position: absolute;
+			background-size: cover;
+			top: 0;
+			bottom: 0;
+			left: 0;
+			right: 0;
+			border-radius: 8px;
+			opacity: 0;
+			transform: rotateY(180deg);
+			transition: transform 1s, opacity 1s;
+
+			&--first {
+				background-image: $light-transparent-color,
+					url(/img/a-americansign.jpeg);
+			}
+
+			&--second {
+				background-image: $light-transparent-color,
+					url(/img/b-americansign.jpeg);
+			}
+
+			&--third {
+				background-image: $light-transparent-color,
+					url(/img/c-americansign.jpeg);
+			}
+
+			&--fourth {
+				background-image: $light-transparent-color,
+					url(/img/d-americansign.jpeg);
+			}
+
+			&--fifth {
+				background-image: $light-transparent-color,
+					url(/img/e-americansign.jpeg);
+			}
+
+			&--sixth {
+				background-image: $light-transparent-color,
+					url(/img/f-americansign.jpeg);
+			}
+		}
+	}
+}
+
+//sekcja translate
+.translate {
+	background-image: $light-transparent-color,
+		url(/img/hero-image-translate-small.jpeg);
+	position: relative;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	text-align: center;
+	background-size: cover;
+	color: $dark;
+
+	&__box-text {
+		margin-top: 1em;
+		padding: 2em;
+		border-radius: 15px;
+		background-color: $light-white;
+		opacity: 0.8;
+	}
+
+	&__btn {
+		display: inline-block;
+		margin-top: 1em;
+		padding: 0.8em 1.6em;
+		font-size: 1.4rem;
+		font-family: 'Montserrat', sans-serif;
+		background: $main-color;
+		border: none;
+		border-radius: 8px;
+		color: $dark;
+		text-decoration: none;
+		text-transform: uppercase;
+		cursor: pointer;
+
+		//po najechaniu myszką na button zmienia się jego kolor:
+		&::before {
+			background-color: $secondary-color;
+		}
+	}
+
+	//stylowanie video-boxa
+
+	&__box {
+		display: flex;
+		justify-content: space-between;
+		margin: 2em 0;
+		height: 30em;
+		color: $dark;
+		text-align: center;
+	}
+
+	&__box-video {
+		border-radius: 15px;
+		background-color: none;
+
+		video {
+			border-radius: 15px;
+			margin-right: 2em;
+		}
+	}
+
+	//drugi box, w którym mają wyświetlać się znaki z tłumaczeniem
+	&__box-signs {
+		border-radius: 15px;
+		width: 40em;
+		background-color: $light-white;
+		opacity: 0.8;
+	}
+}
