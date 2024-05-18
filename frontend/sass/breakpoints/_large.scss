@@ -1,0 +1,84 @@
+@media (min-width: 992px) {
+	.burger-btn {
+		display: none;
+	}
+
+	.white-block-header {
+		height: 60%;
+		width: 75%;
+	}
+
+	.header {
+		background-image: $light-transparent-color,
+			url('../img/signlanguage-big.jpg');
+
+		&__heading {
+			margin-top: 3vh;
+			font-size: 7rem;
+		}
+
+		&__btn {
+		font-size: 2rem;
+
+		}
+	}
+
+	.section-heading {
+		font-size: 4.8rem;
+	}
+
+	.section-padding {
+		padding: 8em 2em;
+	}
+
+	// nawigacja typu mobile z barsem nie jest widoczna na breakpoincie od 992px
+	.nav {
+		display: none;
+	}
+
+	.howtouse {
+		&__box {
+			margin: 5em 0;
+
+			&-text {
+				display: flex;
+				flex-direction: column;
+				justify-content: flex-end;
+				margin-bottom: 2.5em;
+			}
+		}
+
+		&__title {
+			font-size: 3.6rem;
+		}
+
+		&__text {
+			font-size: 2.2rem;
+		}
+	}
+
+	.hero-img {
+		padding: 30rem 2em;
+		background-image: $light-transparent-color,
+			url('/img/group-of-people-image-big.jpeg');
+
+		&__title {
+			flex: 7.2rem;
+		}
+
+		hr {
+			width: 60%;
+			max-width: 900px;
+		}
+	}
+}
+
+// pojawienie się nawigacji na desktopa (bez bars) dopiero po przekroczeniu breakpointu 992px
+@media (max-width: 992px) {
+
+		.navbar {
+			display: none;
+
+		}
+
+}

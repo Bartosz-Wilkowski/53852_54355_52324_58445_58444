@@ -1,0 +1,70 @@
+@media (min-width: 768px) {
+	.header {
+		&__heading {
+			font-size: 6rem;
+		}
+
+		&__text {
+			font-size: 2rem;
+		}
+
+		&__btn {
+			font-size: 1.6rem;
+		}
+
+		&__describe {
+			font-size: 2rem;
+		}
+	}
+
+	.section-heading {
+		font-size: 3.6rem;
+	}
+
+	.section-padding {
+		padding: 6em 2em;
+	}
+
+	.howtouse {
+		&__text {
+			font-size: 1.8rem;
+		}
+	}
+
+	.hero-img {
+		padding: 30rem 2em;
+
+		hr {
+			margin: 0 auto;
+			width: 70%;
+		}
+
+        &__text {
+            font-size: 2.2rem;
+        }
+	}
+
+    .signlanguage {
+        &__cards {
+            display: flex;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+        &__card {
+            margin: 1em;
+            width: 45%;
+        }
+        
+    }
+
+	.footer {
+		&__boxes {
+display: flex;
+justify-content: space-between;
+		}
+
+		&__box-desktop {
+			display: block;
+		}
+	}
+}
