@@ -1,0 +1,727 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  font-size: 62.5%;
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Montserrat", sans-serif;
+  font-size: 1.6rem;
+}
+
+.header {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  padding: 2em;
+  height: 85vh;
+  text-align: center;
+  color: #2e2e2e;
+  height: 100vh;
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("../img/signlanguage-small.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  background-attachment: scroll;
+}
+.header__heading {
+  top: 4rem;
+  margin-top: 2rem;
+  padding: 1rem;
+  font-size: 3rem;
+  font-weight: 300;
+  border-bottom: 2px solid #b3c8cf;
+}
+.header__text {
+  font-size: 1.4rem;
+  padding: 2rem;
+}
+.header__btn {
+  display: inline-block;
+  margin-top: 1em;
+  padding: 0.8em 1.6em;
+  font-size: 1.4rem;
+  background: #b3c8cf;
+  border: none;
+  border-radius: 8px;
+  color: #4e4e4e;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.header__btn::before {
+  background-color: #d2beb3;
+}
+.header__describe {
+  position: absolute;
+  bottom: 18vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  font-size: 1.4rem;
+  margin-top: 3em;
+  padding: 2rem;
+  color: #2e2e2e;
+  text-decoration: none;
+  opacity: 0.8;
+  cursor: pointer;
+  transition: color 0.3s;
+}
+.header__describe:hover {
+  color: #2f5a69;
+}
+.header .fa-chevron-down {
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+  bottom: 20px;
+  font-size: 30px;
+  color: #eee;
+  opacity: 0.7;
+}
+
+.shadow-bg {
+  background-color: rgba(194, 204, 207, 0.8);
+}
+
+.burger-btn {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  padding: 1em;
+  background: none;
+  border: 1px solid transparent;
+  cursor: pointer;
+  z-index: 1000;
+}
+.burger-btn:focus {
+  outline: none;
+  border: 1px solid rgba(255, 255, 255, 0.5);
+  border-radius: 8px;
+}
+.burger-btn:hover .burger-btn__bars::after,
+.burger-btn:hover .burger-btn__bars::before {
+  width: 100%;
+}
+.burger-btn__box {
+  position: relative;
+  width: 40px;
+  height: 30px;
+}
+.burger-btn__bars, .burger-btn__bars::after, .burger-btn__bars::before {
+  position: absolute;
+  right: 0;
+  height: 3.2px;
+  content: "";
+  background-color: #eee;
+  transition: width 0.3s;
+}
+.burger-btn__bars {
+  width: 100%;
+}
+.burger-btn__bars::after {
+  top: 13px;
+  width: 60%;
+}
+.burger-btn__bars::before {
+  top: 27px;
+  width: 30%;
+  transition-delay: 0.1s;
+}
+
+.nav {
+  position: fixed;
+  top: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  width: 100%;
+  transform: translateX(100%);
+  transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+  height: 100vh;
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("../img/navigation-image-small.jpg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  z-index: 100;
+}
+.nav--active {
+  transform: translateX(0);
+}
+.nav__box {
+  padding: 1em 1.5em;
+  margin-top: 1em;
+  border-radius: 8px;
+  background-color: #eee;
+  opacity: 0.9;
+}
+.nav__item {
+  position: relative;
+  display: block;
+  padding: 0.5em 1.5em;
+  margin: 1.7em 0;
+  font-size: 1.5rem;
+  color: #2e2e2e;
+  letter-spacing: 1px;
+  text-align: center;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+.nav__item::before, .nav__item::after {
+  position: absolute;
+  width: 0;
+  bottom: 0;
+  border-bottom: 2px solid #b3c8cf;
+  content: "";
+  transition: 0.3s;
+}
+.nav__item::before {
+  right: 50%;
+}
+.nav__item::after {
+  left: 50%;
+}
+.nav__item:hover::before, .nav__item:hover::after {
+  width: 50%;
+}
+
+@keyframes navItemsAnimation {
+  from {
+    transform: translateX(200%);
+  }
+  to {
+    transform: translateX(0);
+  }
+}
+.nav-items-animation {
+  animation: navItemsAnimation 1s both;
+}
+
+.black-bars-color,
+.black-bars-color::after,
+.black-bars-color::before {
+  background-color: #4e4e4e;
+}
+
+nav {
+  z-index: 10;
+  transition: background-color 0.6s;
+}
+nav .navbar-brand {
+  font-weight: bold;
+  color: #4e4e4e;
+}
+nav .nav-link {
+  color: #4e4e4e;
+  font-size: 1.5rem;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+nav .nav-link:focus,
+nav .nav-link:hover,
+nav .navbar-brand:focus,
+nav .navbar-brand:hover {
+  color: #2f5a69;
+}
+
+.howtouse {
+  background-color: #eee;
+}
+.howtouse__box {
+  display: flex;
+  flex-direction: column;
+  margin: 2em 0;
+}
+.howtouse__img {
+  width: 100%;
+  margin-bottom: 1em;
+  border-radius: 15px;
+}
+.howtouse__title {
+  margin-bottom: 0 0.5em;
+  font-weight: 500;
+  color: #d2beb3;
+  text-transform: uppercase;
+}
+.howtouse__text {
+  font-size: 1.4rem;
+  color: #2e2e2e;
+}
+
+.hero-img {
+  position: relative;
+  padding: 10em 2em;
+  height: 100vh;
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("../img/groupofpeople-image-small.jpeg");
+  background-size: cover;
+  background-position: center;
+  background-attachment: fixed;
+  height: 110vh;
+  text-align: center;
+  color: #4e4e4e;
+}
+.hero-img__title {
+  margin-bottom: 0.5em;
+  font-size: 4rem;
+}
+.hero-img__text {
+  padding: 1em 0;
+}
+
+.signlanguage {
+  background-color: #eee;
+}
+.signlanguage__card {
+  position: relative;
+  margin: 1em 0;
+  height: 450px;
+  color: #eee;
+  text-align: center;
+  max-width: 50vh;
+  min-width: 40vh;
+  perspective: 1000px;
+}
+.signlanguage__card:hover .signlanguage__card-img {
+  transform: rotateY(-180deg);
+  opacity: 0;
+}
+.signlanguage__card:hover .signlanguage__card-info {
+  transform: rotateY(0);
+  opacity: 1;
+}
+.signlanguage__card-img {
+  padding: 2em;
+  height: 100%;
+  border-radius: 8px;
+  background-size: cover;
+  transition: transform 1s, opacity 1s;
+  background-color: #d2beb3;
+}
+.signlanguage__card-img-title {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  font-size: 20rem;
+  font-weight: 100;
+}
+.signlanguage__card-img-info {
+  position: absolute;
+  bottom: 30px;
+  right: 30px;
+  font-size: 1.8rem;
+}
+.signlanguage__card-img-info i {
+  margin-right: 0.3em;
+}
+.signlanguage__card-info {
+  position: absolute;
+  background-size: cover;
+  top: 0;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-radius: 8px;
+  opacity: 0;
+  transform: rotateY(180deg);
+  transition: transform 1s, opacity 1s;
+}
+.signlanguage__card-info--first {
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/a-americansign.jpeg);
+}
+.signlanguage__card-info--second {
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/b-americansign.jpeg);
+}
+.signlanguage__card-info--third {
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/c-americansign.jpeg);
+}
+.signlanguage__card-info--fourth {
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/d-americansign.jpeg);
+}
+.signlanguage__card-info--fifth {
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/e-americansign.jpeg);
+}
+.signlanguage__card-info--sixth {
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/f-americansign.jpeg);
+}
+
+.translate {
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/hero-image-translate-small.jpeg);
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background-size: cover;
+  color: #2e2e2e;
+}
+.translate__box-text {
+  margin-top: 1em;
+  padding: 2em;
+  border-radius: 15px;
+  background-color: #eee;
+  opacity: 0.8;
+}
+.translate__btn {
+  display: inline-block;
+  margin-top: 1em;
+  padding: 0.8em 1.6em;
+  font-size: 1.4rem;
+  font-family: "Montserrat", sans-serif;
+  background: #b3c8cf;
+  border: none;
+  border-radius: 8px;
+  color: #2e2e2e;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.translate__btn::before {
+  background-color: #d2beb3;
+}
+.translate__box {
+  display: flex;
+  justify-content: space-between;
+  margin: 2em 0;
+  height: 30em;
+  color: #2e2e2e;
+  text-align: center;
+}
+.translate__box-video {
+  border-radius: 15px;
+  background-color: none;
+}
+.translate__box-video video {
+  border-radius: 15px;
+  margin-right: 2em;
+}
+.translate__box-signs {
+  border-radius: 15px;
+  width: 40em;
+  background-color: #eee;
+  opacity: 0.8;
+}
+
+.footer {
+  color: #2e2e2e;
+  background-color: #eee;
+}
+.footer .wrapper {
+  padding: 6em 2em 2em;
+}
+.footer__box {
+  font-size: 1.4rem;
+}
+.footer__box-desktop {
+  display: none;
+}
+.footer__box {
+  margin: 0 2em;
+  width: 40%;
+}
+.footer__box:first-child {
+  width: 50%;
+}
+.footer__box-title {
+  font-size: 2.4rem;
+  font-weight: 400;
+}
+.footer__box-list {
+  list-style: none;
+}
+.footer__box-list-item {
+  margin-bottom: 1em;
+}
+.footer__box-list-item a {
+  color: #2e2e2e;
+  text-decoration: none;
+}
+.footer__box-title {
+  margin-bottom: 1em;
+  font-size: 3rem;
+  text-transform: uppercase;
+}
+.footer__box-social {
+  margin: 2em 0 1em;
+}
+.footer__box-link {
+  padding: 0 0.3em;
+  font-size: 3.6rem;
+  color: #2e2e2e;
+  text-decoration: none;
+  transition: color 0.3s;
+}
+.footer__box-link:first-child {
+  padding-left: 0;
+}
+.footer__box-link:hover {
+  color: #4e4e4e;
+}
+.footer__bottom-text {
+  padding: 2em;
+  text-align: center;
+}
+
+.wrapper {
+  margin: 0 auto;
+  width: 100%;
+  max-width: 1200px;
+}
+
+.btn-special-animation {
+  position: relative;
+  transition: background-color 0.3s;
+  overflow: hidden;
+  z-index: 10;
+}
+.btn-special-animation::before {
+  display: block;
+  content: "";
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  transform: scaleX(0);
+  transform-origin: right;
+  transition: transform 0.3s;
+  z-index: -9;
+}
+.btn-special-animation:hover::before {
+  transform: scaleX(1);
+  transform-origin: left;
+}
+
+.header__white-block {
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 70%;
+  top: 100px;
+  bottom: 100px;
+  width: 80%;
+  margin-bottom: 5em;
+  padding: 2em;
+  background-color: #eee;
+  opacity: 0.8;
+  border-radius: 15px;
+}
+
+.section-heading {
+  position: relative;
+  margin-bottom: 2em;
+  font-size: 2.8rem;
+  font-weight: 300;
+  text-align: center;
+  color: #2e2e2e;
+  letter-spacing: 2px;
+}
+
+.section-padding {
+  padding: 6em 2em;
+}
+
+.bounce-top {
+  animation: bounce-top 2s infinite both;
+}
+
+/* ----------------------------------------------
+ * Generated by Animista on 2024-5-14 15:49:29
+ * Licensed under FreeBSD License.
+ * See http://animista.net/license for more info. 
+ * w: http://animista.net, t: @cssanimista
+ * ---------------------------------------------- */
+/**
+ * ----------------------------------------
+ * animation bounce-top
+ * ----------------------------------------
+ */
+@keyframes bounce-top {
+  0% {
+    transform: translateY(-45px);
+    animation-timing-function: ease-in;
+    opacity: 1;
+  }
+  24% {
+    opacity: 1;
+  }
+  40% {
+    transform: translateY(-24px);
+    animation-timing-function: ease-in;
+  }
+  65% {
+    transform: translateY(-12px);
+    animation-timing-function: ease-in;
+  }
+  25%, 55%, 75%, 87% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+  }
+  100% {
+    transform: translateY(0px);
+    animation-timing-function: ease-out;
+    opacity: 1;
+  }
+}
+@media (min-width: 576px) {
+  .header__heading {
+    font-size: 4.5rem;
+  }
+  .header__text {
+    font-size: 1.6rem;
+  }
+  .header__btn {
+    font-size: 1.6rem;
+  }
+  .howtouse__box {
+    flex-direction: row;
+    justify-content: space-between;
+  }
+  .howtouse__box-text {
+    width: 55%;
+  }
+  .howtouse__box-text--right {
+    text-align: right;
+  }
+  .howtouse__box-img {
+    width: 40%;
+  }
+  .howtouse__box-img--right {
+    order: 1;
+  }
+  .howtouse__img {
+    margin-bottom: 0;
+    max-height: 300px;
+  }
+}
+@media (min-width: 576px) and (max-width: 768px) {
+  .signlanguage__card {
+    margin: 2em auto;
+  }
+}
+@media (min-width: 768px) {
+  .header__heading {
+    font-size: 6rem;
+  }
+  .header__text {
+    font-size: 2rem;
+  }
+  .header__btn {
+    font-size: 1.6rem;
+  }
+  .header__describe {
+    font-size: 2rem;
+  }
+  .section-heading {
+    font-size: 3.6rem;
+  }
+  .section-padding {
+    padding: 6em 2em;
+  }
+  .howtouse__text {
+    font-size: 1.8rem;
+  }
+  .hero-img {
+    padding: 30rem 2em;
+  }
+  .hero-img hr {
+    margin: 0 auto;
+    width: 70%;
+  }
+  .hero-img__text {
+    font-size: 2.2rem;
+  }
+  .signlanguage__cards {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .signlanguage__card {
+    margin: 1em;
+    width: 45%;
+  }
+  .footer__boxes {
+    display: flex;
+    justify-content: space-between;
+  }
+  .footer__box-desktop {
+    display: block;
+  }
+}
+@media (min-width: 992px) {
+  .burger-btn {
+    display: none;
+  }
+  .white-block-header {
+    height: 60%;
+    width: 75%;
+  }
+  .header {
+    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("../img/signlanguage-big.jpg");
+  }
+  .header__heading {
+    margin-top: 3vh;
+    font-size: 7rem;
+  }
+  .header__btn {
+    font-size: 2rem;
+  }
+  .section-heading {
+    font-size: 4.8rem;
+  }
+  .section-padding {
+    padding: 8em 2em;
+  }
+  .nav {
+    display: none;
+  }
+  .howtouse__box {
+    margin: 5em 0;
+  }
+  .howtouse__box-text {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-end;
+    margin-bottom: 2.5em;
+  }
+  .howtouse__title {
+    font-size: 3.6rem;
+  }
+  .howtouse__text {
+    font-size: 2.2rem;
+  }
+  .hero-img {
+    padding: 30rem 2em;
+    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/img/group-of-people-image-big.jpeg");
+  }
+  .hero-img__title {
+    flex: 7.2rem;
+  }
+  .hero-img hr {
+    width: 60%;
+    max-width: 900px;
+  }
+}
+@media (max-width: 992px) {
+  .navbar {
+    display: none;
+  }
+}
+@media (min-width: 1100px) {
+  .signlanguage__card {
+    width: 30%;
+  }
+}/*# sourceMappingURL=main.css.map */

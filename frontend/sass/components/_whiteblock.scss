@@ -1,0 +1,19 @@
+.header {
+    &__white-block {
+		position: absolute;
+		display: flex;
+		flex-direction: column;
+		justify-content: center;
+		align-items: center;
+		height: 70%;
+		top: 100px;
+		bottom: 100px;
+		width: 80%;
+		margin-bottom: 5em;
+		padding: 2em;
+		background-color: $light-white;
+		opacity: 0.8;
+		border-radius: 15px;
+    }
+}
+

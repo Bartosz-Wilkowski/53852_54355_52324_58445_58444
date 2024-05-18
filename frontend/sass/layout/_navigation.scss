@@ -1,0 +1,185 @@
+// żeby podczas scrollowania pod nawigacją na desktopy dodawał się cień
+.shadow-bg {
+	background-color: $shadow-color;
+}
+
+
+
+.burger-btn {
+	position: fixed;
+	top: 20px;
+	right: 20px;
+	padding: 1em;
+	background: none;
+	border: 1px solid transparent;
+	cursor: pointer;
+	z-index: 1000;
+
+	&:focus {
+		outline: none;
+		border: 1px solid rgba(255, 255, 255, 0.5);
+		border-radius: 8px;
+	}
+
+	&:hover {
+		.burger-btn__bars::after,
+		.burger-btn__bars::before {
+			width: 100%;
+		}
+	}
+
+	&__box {
+		position: relative;
+		width: 40px;
+		height: 30px;
+	}
+
+	//wygląd trzech pasków składających się na burger icon:
+	&__bars,
+	&__bars::after,
+	&__bars::before {
+		position: absolute;
+		right: 0;
+		height: 3.2px;
+		content: '';
+		background-color: $light-white;
+		transition: width 0.3s;
+	}
+
+	&__bars {
+		width: 100%;
+
+		&::after {
+			top: 13px;
+			width: 60%;
+		}
+
+		&::before {
+			top: 27px;
+			width: 30%;
+			transition-delay: 0.1s;
+		}
+	}
+}
+
+.nav {
+	position: fixed;
+	top: 0;
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	height: 100vh;
+	width: 100%;
+	transform: translateX(100%);
+	transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
+	@include heroImages('../img/navigation-image-small.jpg');
+	z-index: 100;
+
+	//dzięki modifier'owi --active nawigacja po kliknięciu w burger icon będzie się pojawiać (odpowiednia funkcja została użyta w pliku main.js)
+	&--active {
+		transform: translateX(0);
+	}
+
+	//wygląd prostokątów
+	&__box {
+		padding: 1em 1.5em;
+		margin-top: 1em;
+		border-radius: 8px;
+		background-color: $light-white;
+		opacity: 0.9;
+	}
+
+	//wygląd tekstu linków
+	&__item {
+		position: relative;
+		display: block;
+		padding: 0.5em 1.5em;
+		margin: 1.7em 0;
+		font-size: 1.5rem;
+		color: $dark;
+		letter-spacing: 1px;
+		text-align: center;
+		text-decoration: none;
+		text-transform: uppercase;
+
+		//animacja - pojawiający się pasek
+		&::before,
+		&::after {
+			position: absolute;
+			width: 0;
+			bottom: 0;
+			border-bottom: 2px solid $main-color;
+			content: '';
+			transition: 0.3s;
+		}
+
+		&::before {
+			right: 50%;
+		}
+
+		&::after {
+			left: 50%;
+		}
+
+		&:hover::before,
+		&:hover::after {
+			width: 50%;
+		}
+	}
+}
+
+//animacja dla linków znajdujących się w nawigacji (reszta w pliku main.js)
+@keyframes navItemsAnimation {
+	from {
+		transform: translateX(200%);
+	}
+	to {
+		transform: translateX(0);
+	}
+}
+
+.nav-items-animation {
+	animation: navItemsAnimation 1s both;
+}
+
+// kod do zmiany pasków nawigacji na ciemniejszy (reszta w pliku main.js)
+.black-bars-color,
+.black-bars-color::after,
+.black-bars-color::before {
+	background-color: $light-dark;
+}
+
+// nawigacja na desktopa
+nav {
+
+	
+z-index: 10;
+transition: background-color .6s;
+
+
+	.navbar-brand {
+		font-weight: bold;
+		color: $light-dark;
+	}
+
+
+	.nav-link {
+		color: $light-dark;
+		font-size: 1.5rem;
+		text-transform: uppercase;
+		font-weight: 500;
+		
+	}
+
+	.nav-link:focus,
+	.nav-link:hover,
+	.navbar-brand:focus,
+	.navbar-brand:hover {
+		color: $dark-blue;
+	}
+
+	
+
+}
+
+

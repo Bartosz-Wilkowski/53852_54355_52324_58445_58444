@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<meta charset="UTF-8" />
+		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+		<title>Sign Language Detector</title>
+		<link rel="preconnect" href="https://fonts.googleapis.com" />
+		<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+		<link
+			href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap"
+			rel="stylesheet"
+		/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Comfortaa&family=Nunito:wght@300;400;700&family=Raleway:wght@100;400;700&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
+		<script
+			src="https://kit.fontawesome.com/ca421726c5.js"
+			crossorigin="anonymous"
+		></script>
+		<link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-QWTKZyjpPEjISv5WaRU9OFeRpok6YctnYmDr5pNlyT2bRjXh0JMhjY6hW+ALEwIH" crossorigin="anonymous">
+		<link rel="stylesheet" href="css/main.css" />
+	</head>
+	<body>
+	
+		<button class="burger-btn">
+			<div class="burger-btn__box">
+				<div class="burger-btn__bars"></div>
+			</div>
+		</button>
+
+		<nav class="nav">
+			<div class="nav__items">
+				<div class="nav__box">
+					<a href="#howitworks" class="nav__item">how it works</a>
+				</div>
+				<div class="nav__box">
+					<a href="#signlanguage" class="nav__item">ASL alphabet</a>
+				</div>
+				<div class="nav__box">
+					<a href="#subscription" class="nav__item">subscription</a>
+				</div>
+				<div class="nav__box">
+					<a href="#turnyourcameraon" class="nav__item">start translation</a>
+				</div>
+			</div>
+
+		</nav>
+
+		<!-- bootstrap navbar (desktop navigation) -->
+		<nav class="navbar navbar-expand-lg position-fixed top-0 w-100 py-3">
+			<div class="container">
+			  <a class="navbar-brand" href="#home"><i class="fa-solid fa-hands-asl-interpreting"></i> Sign Language Detector</a>
+			  </button>
+			  <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+				<div class="navbar-nav ms-auto">
+				  <a class="nav-link" href="#howitworks">how it works</a>
+				  <a class="nav-link" href="#signlanguage">ASL alphabet</a>
+				  <a class="nav-link" href="#subscription">subscription</a>
+				  <a class="nav-link" href="#subscription">subscription</a>
+				  <a class="nav-link" href="#turnyourcameraon">start translation</a>
+				</div>
+			  </div>
+			</div>
+		  </nav>
+
+		  <!-- header -->
+		<header class="header section" id="home">
+			<div class="container header__white-block">
+				<h1 class="header__heading">Sign Language Detector</h1>
+				<p class="header__text">
+					an online translator for the American Sign Language alphabet
+				</p>
+				<a href="#turnyourcameraon" class="header__btn btn-special-animation"
+					>Start translation</a
+				>
+				
+			</div>
+
+			<a href="#howitworks" class="header__describe">
+				Find out how to use Sign Language Detector!</a>
+
+			<a href="#howitworks"><i class="fa-solid fa-chevron-down bounce-top"></i></a>
+		</header>
+
+
+		<main class="main">
+			<!-- section "How to use Sign Language Detector" -->
+			<section
+				class="howtouse section-padding section white-section"
+				id="howitworks"
+			>
+				<div class="wrapper">
+					<h2 class="section-heading">How to use Sign Language Detector</h2>
+
+					<div class="howtouse__box">
+						<div class="howtouse__box-img">
+							<img
+								src="/img/howtouse-image-small.jpg"
+								alt="A man sitting on a couch with a laptop on his lap, showing a sign of the sign alphabet to a webcam with a smile"
+								class="howtouse__img"
+							/>
+						</div>
+						<div class="howtouse__box-text">
+							<h3 class="howtouse__title">Turn the camera on</h3>
+							<p class="howtouse__text">
+								Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+								Distinctio officiis animi, autem numquam perspiciatis amet
+								temporibus ipsam dolorum iste natus.
+							</p>
+						</div>
+					</div>
+
+					<div class="howtouse__box">
+						<div class="howtouse__box-img howtouse__box-img--right">
+							<img
+								src="/img/polishsignlanguage-image-small.jpg"
+								alt="Woman showing sign alphabet sign to phone camera"
+								class="howtouse__img"
+							/>
+						</div>
+						<div class="howtouse__box-text howtouse__box-text--right">
+							<h3 class="howtouse__title">Show one of the ASL signs</h3>
+							<p class="howtouse__text">
+								Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+								Distinctio officiis animi, autem numquam perspiciatis amet
+								temporibus ipsam dolorum iste natus.
+							</p>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- section: American Sign Language Alphabet with background image-->
+			<section class="hero-img section">
+				<p class="hero-img__title">American Sign Language (ASL) Alphabet</p>
+				<hr />
+				<p class="hero-img__text">
+					Sign Language Detector translates all signs of ASL alphabet
+				</p>
+				<hr />
+			</section>
+
+			<!-- section with examples of ASL signs in the form of cards -->
+			<section
+				class="signlanguage section-padding section white-section"
+				id="signlanguage"
+			>
+				<div class="wrapper">
+					<h2 class="section-heading">Examples of ASL alphabet signs</h2>
+
+					<div class="signlanguage__cards">
+						<!-- first card, letter A -->
+						<div class="signlanguage__card" onclick="void(0)">
+							<div class="signlanguage__card-img">
+								<h3 class="signlanguage__card-img-title">A</h3>
+								<p class="signlanguage__card-img-info">
+									<i class="fas fa-angle-double-right"></i>Learn more
+								</p>
+							</div>
+							<!-- the back of card A -->
+
+							<div
+								class="signlanguage__card-info signlanguage__card-info--first"
+							></div>
+						</div>
+
+						<!-- second card, letter B -->
+						<div class="signlanguage__card" onclick="void(0)">
+							<div class="signlanguage__card-img">
+								<h3 class="signlanguage__card-img-title">B</h3>
+								<p class="signlanguage__card-img-info">
+									<i class="fas fa-angle-double-right"></i>Learn more
+								</p>
+							</div>
+							<!-- the back of card B -->
+							<div
+								class="signlanguage__card-info signlanguage__card-info--second"
+							></div>
+						</div>
+						<!-- third card, letter C -->
+						<div class="signlanguage__card" onclick="void(0)">
+							<div class="signlanguage__card-img">
+								<h3 class="signlanguage__card-img-title">C</h3>
+								<p class="signlanguage__card-img-info">
+									<i class="fas fa-angle-double-right"></i>Learn more
+								</p>
+							</div>
+							<!-- the back of card C -->
+							<div
+								class="signlanguage__card-info signlanguage__card-info--third"
+							></div>
+						</div>
+						<!-- fourth card, letter D -->
+						<div class="signlanguage__card" onclick="void(0)">
+							<div class="signlanguage__card-img">
+								<h3 class="signlanguage__card-img-title">D</h3>
+								<p class="signlanguage__card-img-info">
+									<i class="fas fa-angle-double-right"></i>Learn more
+								</p>
+							</div>
+							<!-- the back of card D -->
+							<div
+								class="signlanguage__card-info signlanguage__card-info--fourth"
+							></div>
+						</div>
+						<!-- fifth card, letter E -->
+						<div class="signlanguage__card" onclick="void(0)">
+							<div class="signlanguage__card-img">
+								<h3 class="signlanguage__card-img-title">E</h3>
+								<p class="signlanguage__card-img-info">
+									<i class="fas fa-angle-double-right"></i>Learn more
+								</p>
+							</div>
+							<!-- the back of card E -->
+							<div
+								class="signlanguage__card-info signlanguage__card-info--fifth"
+							></div>
+						</div>
+						<!-- sixth card, letter F -->
+						<div class="signlanguage__card" onclick="void(0)">
+							<div class="signlanguage__card-img">
+								<h3 class="signlanguage__card-img-title">F</h3>
+								<p class="signlanguage__card-img-info">
+									<i class="fas fa-angle-double-right"></i>Learn more
+								</p>
+							</div>
+							<!-- the back of card F -->
+							<div
+								class="signlanguage__card-info signlanguage__card-info--sixth"
+							></div>
+						</div>
+					</div>
+				</div>
+			</section>
+			<!-- section using the camera -->
+			<section class="translate section-padding section" id="turnyourcameraon">
+				<div class="wrapper">
+					<h2 class="section-heading">
+						Translation of ASL Alphabet signs
+					</h2>
+					<div class="translate__box-text">
+						<p class="translate__text">
+							Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+							Distinctio officiis animi, autem numquam perspiciatis amet
+							temporibus ipsam dolorum iste natus.
+						</p>
+						<!-- WEBCAM -->
+					<button
+					id="#startbtn"
+					onclick="openCam()"
+					class="translate__btn btn-special-animation"
+				>
+				Use your camera
+				</button>
+					</div>
+					<div class="translate__boxes">
+						<div class="translate__box">
+							<div class="translate__box-video">
+								<video id="videocam"></video>
+							</div>
+							<div class="translate__box-signs"></div>
+						</div>
+					</div>
+				</div>
+			</section>
+		</main>
+
+		<footer class="footer">
+			<div class="wrapper">
+				<div class="footer__boxes">
+					<div class="footer__box">
+						<h3 class="footer__box-title">
+							<i class="fa-solid fa-hands-asl-interpreting"></i> American Sign Language
+							Detector Co.
+						</h3>
+						<p>
+							Lorem ipsum dolor, sit amet consectetur adipisicing elit. Dolorum
+							ratione et expedita, pariatur obcaecati dicta exercitationem.
+							Ratione tempore fugiat unde.
+						</p>
+						<div class="footer__box-social">
+							<a href="" class="footer__box-link"
+								><i class="fab fa-github-square"></i
+							></a>
+						</div>
+					</div>
+
+					<div class="footer__box footer__box-desktop">
+						<h3 class="footer__box-title">Sign Language Detector</h3>
+						<ul class="footer__box-list">
+							<li class="footer__box-list-item">
+								<a href="#howitworks">How to use Sign Language Detector</a>
+							</li>
+							<li class="footer__box-list-item">
+								<a href="#signlanguage">Examples of ASL alphabet signs</a>
+							</li>
+							<li class="footer__box-list-item">
+								<a href="#turnyourcameraon">Translation of ASL Alphabet signs</a>
+							</li>
+						</ul>
+					</div>
+				</div>
+			</div>
+			<hr />
+			<p class="footer__bottom-text">
+				&copy; <span class="footer__year"></span> Sign Language Detector
+			</p>
+		</footer>
+
+		<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-YvpcrYf0tY3lHB60NNkmXc5s9fDVZLESaAA55NDzOxhy9GkcIdslK1eN7N6jIeHz" crossorigin="anonymous"></script>
+		<script src="./js/main.js"></script>
+	</body>
+</html>
