@@ -338,26 +338,26 @@ nav .navbar-brand:hover {
   transition: transform 1s, opacity 1s;
 }
 .signlanguage__card-info--first {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/a-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/frontend/img/a-americansign.jpeg");
 }
 .signlanguage__card-info--second {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/b-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/frontend/img/b-americansign.jpeg");
 }
 .signlanguage__card-info--third {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/c-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/frontend/img/c-americansign.jpeg");
 }
 .signlanguage__card-info--fourth {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/d-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/frontend/img/d-americansign.jpeg");
 }
 .signlanguage__card-info--fifth {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/e-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/frontend/img/e-americansign.jpeg");
 }
 .signlanguage__card-info--sixth {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/f-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/frontend/img/f-americansign.jpeg");
 }
 
 .translate {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/img/hero-image-translate-small.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/frontend/img/hero-image-translate-small.jpeg");
   position: relative;
   display: flex;
   justify-content: center;
@@ -670,7 +670,7 @@ nav .navbar-brand:hover {
     width: 75%;
   }
   .header {
-    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("../img/signlanguage-big.jpg");
+    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/frontend/img/signlanguage-big.jpg");
   }
   .header__heading {
     margin-top: 3vh;
@@ -705,7 +705,7 @@ nav .navbar-brand:hover {
   }
   .hero-img {
     padding: 30rem 2em;
-    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/img/group-of-people-image-big.jpeg");
+    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/frontend/img/group-of-people-image-big.jpeg");
   }
   .hero-img__title {
     flex: 7.2rem;
