@@ -117,32 +117,32 @@
 
 			&--first {
 				background-image: $light-transparent-color,
-					url(/img/a-americansign.jpeg);
+					url('/frontend/img/a-americansign.jpeg');
 			}
 
 			&--second {
 				background-image: $light-transparent-color,
-					url(/img/b-americansign.jpeg);
+					url('/frontend/img/b-americansign.jpeg');
 			}
 
 			&--third {
 				background-image: $light-transparent-color,
-					url(/img/c-americansign.jpeg);
+					url('/frontend/img/c-americansign.jpeg');
 			}
 
 			&--fourth {
 				background-image: $light-transparent-color,
-					url(/img/d-americansign.jpeg);
+					url('/frontend/img/d-americansign.jpeg');
 			}
 
 			&--fifth {
 				background-image: $light-transparent-color,
-					url(/img/e-americansign.jpeg);
+					url('/frontend/img/e-americansign.jpeg');
 			}
 
 			&--sixth {
 				background-image: $light-transparent-color,
-					url(/img/f-americansign.jpeg);
+					url('/frontend/img/f-americansign.jpeg');
 			}
 		}
 	}
@@ -151,7 +151,7 @@
 //sekcja translate
 .translate {
 	background-image: $light-transparent-color,
-		url(/img/hero-image-translate-small.jpeg);
+		url('/frontend/img/hero-image-translate-small.jpeg');
 	position: relative;
 	display: flex;
 	justify-content: center;
