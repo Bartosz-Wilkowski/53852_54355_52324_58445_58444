@@ -412,6 +412,9 @@ nav .navbar-brand:hover {
   background-color: #eee;
   opacity: 0.8;
 }
+.translate__box-signs--activebox {
+  display: inline-block;
+}
 
 .footer {
   color: #2e2e2e;
