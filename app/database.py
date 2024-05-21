@@ -2,20 +2,34 @@ import mysql.connector
 from mysql.connector import Error
 
 # Remember to change the 'database' and 'password' fields to the appropriate values.
+# Function to create a database connection
+
 
 def create_connection():
     try:
         connection = mysql.connector.connect(
             host='localhost',
-            database='users', 
             user='root',
-            password='root'
+            password='AEHprojekt'
+        )
+        if connection.is_connected():
+            cursor = connection.cursor()
+            cursor.execute("CREATE DATABASE IF NOT EXISTS user_auth")
+            cursor.close()
+            connection.close()
+
+        connection = mysql.connector.connect(
+            host='localhost',
+            database='user_auth',
+            user='root',
+            password='AEHprojekt'
         )
         if connection.is_connected():
             return connection
     except Error as e:
         print(f"Error: {e}")
         return None
+
 
 def init_db():
     connection = create_connection()
