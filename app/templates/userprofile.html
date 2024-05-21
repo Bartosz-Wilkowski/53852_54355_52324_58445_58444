@@ -1,0 +1,47 @@
+{% extends "base.html" %}
+{% block content %}
+
+<section class="header">
+    <div class="container py-5 h-100">
+        <div class="row d-flex justify-content-center align-items-center h-100">
+            <div class="col-xl-10">
+                <div class="card rounded-3 text-black">
+                    <div class="row g-0">
+
+                        <div class="card-body p-md-5 mx-md-4">
+                            <!--Registration section-->
+                            <p>User Profile</p>
+                            <form id="userData">
+                                <p><strong>Username:</strong> <span id="username"></span></p>
+                                <p><strong>Email:</strong> <span id="email"></span></p>
+                                <p><strong>Plan:</strong> <span id="plan"></span></p>
+                        </div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    </div>
+</section>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script>
+    $(document).ready(function () {
+        // AJAX request to get user data from the server
+        $.ajax({
+            url: '/get-user-data',
+            type: 'GET',
+            success: function (userData) {
+                $('#username').text(userData.username);
+                $('#email').text(userData.email);
+                $('#name').text(userData.name);
+            },
+            error: function (xhr, status, error) {
+                console.error('Error:', error);
+                $('#userData').html('<p>Error retrieving user data.</p>');
+            }
+        });
+    });
+</script>
+{% endblock %}
