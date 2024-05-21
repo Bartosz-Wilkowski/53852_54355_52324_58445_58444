@@ -10,7 +10,7 @@
 
 	.header {
 		background-image: $light-transparent-color,
-			url('/img/signlanguage-big.jpg');
+			url('../img/signlanguage-big.jpg');
 
 		&__heading {
 			margin-top: 3vh;
@@ -60,7 +60,7 @@
 	.hero-img {
 		padding: 30rem 2em;
 		background-image: $light-transparent-color,
-			url('../img/group-of-people-image-big.jpeg');
+			url('/img/group-of-people-image-big.jpeg');
 
 		&__title {
 			flex: 7.2rem;

@@ -708,7 +708,7 @@ nav .navbar-brand:hover {
   }
   .hero-img {
     padding: 30rem 2em;
-    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("../img/group-of-people-image-big.jpeg");
+    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url("/img/group-of-people-image-big.jpeg");
   }
   .hero-img__title {
     flex: 7.2rem;
