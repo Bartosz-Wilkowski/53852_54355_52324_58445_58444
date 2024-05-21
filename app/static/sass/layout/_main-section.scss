@@ -197,23 +197,29 @@
 		height: 30em;
 		color: $dark;
 		text-align: center;
-	}
 
-	&__box-video {
-		border-radius: 15px;
-		background-color: none;
-
-		video {
+		&-video {
 			border-radius: 15px;
-			margin-right: 2em;
-		}
-	}
+			background-color: none;
 
-	//drugi box, w którym mają wyświetlać się znaki z tłumaczeniem
-	&__box-signs {
-		border-radius: 15px;
-		width: 40em;
-		background-color: $light-white;
-		opacity: 0.8;
+			video {
+				border-radius: 15px;
+				margin-right: 2em;
+			}
+		}
+
+		//drugi box, w którym mają wyświetlać się znaki z tłumaczeniem
+		&-signs {
+			border-radius: 15px;
+			width: 40em;
+			background-color: $light-white;
+			opacity: 0.8;
+			
+			
+
+			&--activebox {
+			display: inline-block;
+			}
+		}
 	}
 }
