@@ -1,23 +1,23 @@
-sign-language-interpreter
+# sign-language-interpreter
 
-to use the module run 'app.py' in cmd
-to check results open 'http://127.0.0.1:5000' in your browser 
-(change port number if youre using different port than 5000)
+# to use the module run 'app.py' in cmd
+# to check results open 'http://127.0.0.1:5000' in your browser 
+# (change port number if youre using different port than 5000)
 
 
 
-datasets:
+## datasets:
 
-https://www.kaggle.com/datasets/grassknoted/asl-alphabet
-https://datasets.cms.waikato.ac.nz/ufdl/american-sign-language-letters/
-https://public.roboflow.com/object-detection/american-sign-language-letters/1/download
+## https://www.kaggle.com/datasets/grassknoted/asl-alphabet
+## https://datasets.cms.waikato.ac.nz/ufdl/american-sign-language-letters/
+## https://public.roboflow.com/object-detection/american-sign-language-letters/1/download
 
 
 
 
 structure
-
 sign-language-interpreter/
+
 │
 ├── templates/               # HTML
 │   └── index.html           # HTML file
