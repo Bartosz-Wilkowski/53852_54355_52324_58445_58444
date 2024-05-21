@@ -1,0 +1,8 @@
+# cache files
+app/__pycache__/
+*.pyc
+*.pyo
+
+#dataset images
+model/dataset/test/
+model/dataset/train/

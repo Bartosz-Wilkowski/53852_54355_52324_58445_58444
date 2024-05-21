@@ -7,18 +7,22 @@ from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
 import matplotlib.pyplot as plt
 
 # mp
-mp_hands = mp.solutions.hands.Hands(static_image_mode=True, max_num_hands=1, min_detection_confidence=0.5)
+mp_hands = mp.solutions.hands.Hands(
+    static_image_mode=True, max_num_hands=1, min_detection_confidence=0.5)
 
 # existing model
-model_path = '/Users/wiola/Desktop/sign-language-interpreter/final_model.h5'
+model_path = 'model/final_model/final_model.h5'
 
 # test datset
-test_dataset_path = '/Users/wiola/Desktop/sign-language-interpreter/dataset/test'
+test_dataset_path = 'model/dataset/test'
 
 # labels
-labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'del', 'nothing', 'space']
+labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O',
+          'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'del', 'nothing', 'space']
 
 # process data
+
+
 def process_test_dataset(dataset_path):
     X = []
     y = []
@@ -28,24 +32,25 @@ def process_test_dataset(dataset_path):
             img_path = os.path.join(label_path, img_name)
             img = cv2.imread(img_path)
             img_rgb = cv2.cvtColor(img, cv2.COLOR_BGR2RGB)
-            
+
             # mp hd
             results = mp_hands.process(img_rgb)
-            
+
             if results.multi_hand_landmarks:
                 hand_landmarks = results.multi_hand_landmarks[0]
                 landmarks = []
                 for lm in hand_landmarks.landmark:
                     landmarks.append([lm.x, lm.y, lm.z])
-                
-                landmarks = np.array(landmarks).flatten() 
-                
+
+                landmarks = np.array(landmarks).flatten()
+
                 X.append(landmarks)
                 y.append(labels.index(label))
-    
+
     X = np.array(X)
     y = np.array(y)
     return X, y
+
 
 # load model
 model = load_model(model_path)
@@ -60,14 +65,16 @@ y_pred_classes = np.argmax(y_pred, axis=1)
 # create and save confusion matrix
 try:
     # conf mx
-    conf_matrix = confusion_matrix(y_test, y_pred_classes, labels=np.arange(len(labels)))
+    conf_matrix = confusion_matrix(
+        y_test, y_pred_classes, labels=np.arange(len(labels)))
 
     # display conf mx
-    disp = ConfusionMatrixDisplay(confusion_matrix=conf_matrix, display_labels=labels)
+    disp = ConfusionMatrixDisplay(
+        confusion_matrix=conf_matrix, display_labels=labels)
     disp.plot(cmap=plt.cm.Blues)
 
     # save as jpg
-    output_path = '/Users/wiola/Desktop/sign-language-interpreter/confusion_matrix.jpg'
+    output_path = 'models/results'
     plt.savefig(output_path, format='jpg')
     plt.close()
 
