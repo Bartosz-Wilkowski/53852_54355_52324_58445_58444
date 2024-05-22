@@ -42,11 +42,11 @@ def register():
     elif request.method == 'POST':
         data = request.get_json() if request.is_json else request.form
         username = data['username']
+        name = data['name'] 
+        surname = data['surname']
         email = data['email']
         password = data['password']
-        name = data.get('name', 'defaultName')  # Add proper input fields for name in HTML and get their values
-        surname = data.get('surname', 'defaultSurname')
-
+        
         connection = create_connection()
         if connection is None:
             return jsonify({"message": "Failed to connect to the database."}), 500
@@ -54,12 +54,12 @@ def register():
         cursor = connection.cursor()
         hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         try:
-            cursor.execute("INSERT INTO users (username, email, password, name, surname) VALUES (%s, %s, %s, %s, %s)",
-                           (username, email, hashed_password, name, surname))
+            cursor.execute("INSERT INTO users (username, email, password, name, surname, plan) VALUES (%s, %s, %s, %s, %s, %s)",
+                           (username, email, hashed_password, name, surname, 'Basic'))
             connection.commit()
             return redirect(url_for('login_form'))
         except Error as e:
-            if e.errno == errorcode.ER_DUP_ENTRY:  # Poprawiony warunek błędu
+            if e.errno == errorcode.ER_DUP_ENTRY: 
                 return jsonify({"message": "Username or email already exists."}), 409
             else:
                 return jsonify({"message": str(e)}), 500
@@ -89,6 +89,41 @@ def get_user_data():
             return jsonify(user_data)
         else:
             return jsonify({"message": "User not found."}), 404
+    except Error as e:
+        return jsonify({"message": str(e)}), 500
+    finally:
+        cursor.close()
+        connection.close()
+        
+def purchase_form():
+    if 'username' in session:
+        return render_template('purchase.html')
+    else:
+        return redirect(url_for('login_form'))
+    
+def purchase_plan():
+    if 'username' not in session:
+        return jsonify({"message": "User not logged in."}), 401
+
+    data = request.get_json()
+    plan = data['newplan']
+    card_number = data['cardNumber']
+    card_name = data['cardName']
+    expiry_date = data['expiryDate']
+    cvc = data['cvc']
+
+    # Add logic to process the payment here
+    # For the sake of example, we assume payment is always successful
+
+    connection = create_connection()
+    if connection is None:
+        return jsonify({"message": "Failed to connect to the database."}), 500
+
+    cursor = connection.cursor()
+    try:
+        cursor.execute("UPDATE users SET plan = %s WHERE username = %s", (plan, session['username']))
+        connection.commit()
+        return jsonify({"message": "Plan purchased successfully!"})
     except Error as e:
         return jsonify({"message": str(e)}), 500
     finally:

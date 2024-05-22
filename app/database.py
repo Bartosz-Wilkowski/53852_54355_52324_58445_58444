@@ -44,6 +44,7 @@ def init_db():
                       password VARCHAR(255) NOT NULL,
                       name VARCHAR(255),
                       surname VARCHAR(255),
+                      plan VARCHAR(255),
                       UNIQUE (username),
                       UNIQUE (email))''')
     connection.commit()

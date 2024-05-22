@@ -4,6 +4,8 @@ $(document).ready(function () {
 
         var formData = {
             'username': $('#username').val(),
+            'name': $('#name').val(),
+            'surname': $('#surname').val(),
             'email': $('#email').val(),
             'password': $('#password').val()
         };

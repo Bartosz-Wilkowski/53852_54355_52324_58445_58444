@@ -15,7 +15,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('#loginResult').text(response.message);
                 setTimeout(function () {
-                    window.location.href = '/userprofile'; // Redirect to home page
+                    window.location.href = '/'; // Redirect to home page
                 }, 2000); // przekierowanie do strony głównej po 2 sekundach
             },
             error: function (xhr, status, error) {
