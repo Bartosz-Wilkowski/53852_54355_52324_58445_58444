@@ -1,19 +1,60 @@
 const video = document.getElementById('video');
 const predictionElement = document.getElementById('prediction');
 const historyElement = document.getElementById('history');
+const toggleCameraBtn = document.getElementById('toggleCameraBtn');
 let historyText = "";
+let cameraStream = null;
+let captureInterval = null;
 
-// get video from webcam
-navigator.mediaDevices.getUserMedia({ video: true })
-    .then(stream => {
-        video.srcObject = stream;
-    })
-    .catch(err => console.error('Error accessing webcam:', err));
+// Function to start the camera
+function startCamera() {
+    navigator.mediaDevices.getUserMedia({ video: true })
+        .then(stream => {
+            video.srcObject = stream;
+            video.style.display = 'block';
+            cameraStream = stream;
+            toggleCameraBtn.textContent = 'Turn Camera Off';
+            startCapturing();
+        })
+        .catch(err => console.error('Error accessing webcam:', err));
+}
 
-// get Socket.IO
-const socket = io();
+// Function to stop the camera
+function stopCamera() {
+    if (cameraStream) {
+        let tracks = cameraStream.getTracks();
+        tracks.forEach(track => track.stop());
+        video.srcObject = null;
+        video.style.display = 'none';
+        cameraStream = null;
+        toggleCameraBtn.textContent = 'Turn Camera On';
+        stopCapturing();
+    }
+}
 
-// get img from vid
+// Function to start capturing images
+function startCapturing() {
+    captureInterval = setInterval(() => {
+        const imageData = captureImage().split(',')[1]; 
+        socket.emit('image', { image: imageData });
+    }, 1000);
+}
+
+// Function to stop capturing images
+function stopCapturing() {
+    clearInterval(captureInterval);
+}
+
+// Event listener for the toggle button
+toggleCameraBtn.addEventListener('click', function() {
+    if (cameraStream) {
+        stopCamera();
+    } else {
+        startCamera();
+    }
+});
+
+// Function to capture an image from the video
 function captureImage() {
     const canvas = document.createElement('canvas');
     canvas.width = video.videoWidth;
@@ -23,14 +64,10 @@ function captureImage() {
     return canvas.toDataURL('image/jpeg');
 }
 
-// sent img to server / 1 sec
-setInterval(() => {
-    const imageData = captureImage().split(',')[1]; 
+// Get Socket.IO
+const socket = io();
 
-    socket.emit('image', { image: imageData });
-}, 1000);
-
-// get predicition from server
+// Get prediction from server
 socket.on('prediction', data => {
     predictionElement.textContent = `Predicted letter: ${data.prediction}`;
     historyText += data.prediction;

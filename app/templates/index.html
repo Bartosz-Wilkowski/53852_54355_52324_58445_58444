@@ -175,7 +175,8 @@
         <h2 class="section-heading">
           Translation of ASL Alphabet signs
         </h2>
-        <video id="video" width="640" height="480" autoplay></video>
+        <video id="video" width="640" height="480" autoplay style="display: none;"></video>
+        <button id="toggleCameraBtn" class="btn btn-primary">Turn Camera On</button>
 		<p id="prediction"></p>
 		<textarea id="history" rows="4" cols="50" readonly></textarea>
 		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
@@ -184,4 +185,3 @@
     </section>
   </main>
 {% endblock %}
-
