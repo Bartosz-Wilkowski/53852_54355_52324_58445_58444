@@ -1,11 +1,13 @@
 const video = document.getElementById('video');
 const placeholder = document.getElementById('placeholder');
 const toggleCameraBtn = document.getElementById('toggleCameraBtn');
+const toggleRecognitionBtn = document.getElementById('toggleRecognitionBtn');
 const predictionElement = document.getElementById('prediction');
 const historyElement = document.getElementById('history');
 let historyText = "";
 let cameraStream = null;
 let captureInterval = null;
+let recognitionPaused = false;
 
 // Function to start the camera
 function startCamera() {
@@ -13,7 +15,6 @@ function startCamera() {
         .then(stream => {
             video.srcObject = stream;
             video.style.display = 'block';
-            setPlaceholderDimensions();
             placeholder.style.display = 'none';
             cameraStream = stream;
             toggleCameraBtn.textContent = 'Turn Camera Off';
@@ -39,8 +40,10 @@ function stopCamera() {
 // Function to start capturing images
 function startCapturing() {
     captureInterval = setInterval(() => {
-        const imageData = captureImage().split(',')[1]; 
-        socket.emit('image', { image: imageData });
+        if (!recognitionPaused) {
+            const imageData = captureImage().split(',')[1];
+            socket.emit('image', { image: imageData });
+        }
     }, 1000);
 }
 
@@ -49,12 +52,22 @@ function stopCapturing() {
     clearInterval(captureInterval);
 }
 
-// Event listener for the toggle button
+// Event listener for the toggle camera button
 toggleCameraBtn.addEventListener('click', function() {
     if (cameraStream) {
         stopCamera();
     } else {
         startCamera();
+    }
+});
+
+// Event listener for the toggle recognition button
+toggleRecognitionBtn.addEventListener('click', function() {
+    recognitionPaused = !recognitionPaused;
+    if (recognitionPaused) {
+        toggleRecognitionBtn.textContent = 'Resume Recognition';
+    } else {
+        toggleRecognitionBtn.textContent = 'Pause Recognition';
     }
 });
 
@@ -66,12 +79,6 @@ function captureImage() {
     const context = canvas.getContext('2d');
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     return canvas.toDataURL('image/jpeg');
-}
-
-// Function to set placeholder dimensions
-function setPlaceholderDimensions() {
-    placeholder.style.width = `${video.offsetWidth}px`;
-    placeholder.style.height = `${video.offsetHeight}px`;
 }
 
 // Get Socket.IO
