@@ -1,6 +1,6 @@
 
 from flask import Flask, render_template
-from .routes import home, login_form, login, register, userprofile, get_user_data, purchase_plan, purchase_form
+from .routes import home, login_form, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout
 from .database import init_db
 from flask_socketio import SocketIO, emit
 from tensorflow.keras.models import load_model
@@ -32,7 +32,7 @@ app.add_url_rule('/userprofile', view_func=userprofile, methods=['GET'])
 app.add_url_rule('/get-user-data', view_func=get_user_data, methods=['GET'])
 app.add_url_rule('/purchase_form', view_func=purchase_form, methods=['GET'])
 app.add_url_rule('/purchase_plan', view_func=purchase_plan, methods=['POST'])
-
+app.add_url_rule('/logout', view_func=logout, methods=['GET'])
 
 # Initialize the database
 init_db()

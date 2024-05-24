@@ -40,7 +40,12 @@
             <div class="nav__box">
                 <a class="nav-link" href="{{ url_for('index') }}#turnyourcameraon">start translation</a>
                 <div class="nav__box">
-                    <a class="nav-link" href="">login</a>
+                    {% if logged_in %}
+                    <a class="nav-link" href="{{ url_for('userprofile') }}">Profile</a>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    {% else %}
+                    <a class="nav-link" href="{{ url_for('login_form') }}">Login</a>
+                    {% endif %}
                 </div>
             </div>
     </nav>
@@ -57,7 +62,12 @@
                     <a class="nav-link" href="{{ url_for('index') }}#signlanguage">ASL alphabet</a>
                     <a class="nav-link" href="{{ url_for('index') }}#subscription">subscription</a>
                     <a class="nav-link" href="{{ url_for('index') }}#turnyourcameraon">start translation</a>
-                    <a class="nav-link" href="">login</a>
+                    {% if logged_in %}
+                    <a class="nav-link" href="{{ url_for('userprofile') }}">Profile</a>
+                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
+                    {% else %}
+                    <a class="nav-link" href="{{ url_for('login_form') }}">Login</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

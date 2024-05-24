@@ -5,7 +5,7 @@ import bcrypt
 
 #renders the home page of the website
 def home():
-    return render_template('index.html')
+    return render_template('index.html', logged_in=is_logged_in())
     
 #serves the login page.
 def login_form():
@@ -14,6 +14,14 @@ def login_form():
 #serves the registration page.
 def registration_form():
     return render_template('register.html')
+
+def is_logged_in():
+    return 'username' in session
+
+# Funkcja wylogowująca użytkownika
+def logout():
+    session.pop('username', None)
+    return redirect(url_for('index'))
 
 #function tests the database connection, prints a success message if connected, or an error message if it fails to connect.
 def test_connection():
