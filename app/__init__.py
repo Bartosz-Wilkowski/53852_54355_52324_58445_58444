@@ -1,13 +1,14 @@
 
 from flask import Flask, render_template
+from .routes import home, login_form, login, register, userprofile, get_user_data, purchase_plan, purchase_form
+from .database import init_db
 from flask_socketio import SocketIO, emit
 from tensorflow.keras.models import load_model
 import numpy as np
 import cv2
 import base64
 import mediapipe as mp
-from .routes import home, login_form, login, register, userprofile, get_user_data, purchase_plan, purchase_form
-from .database import init_db
+
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'AEH'
