@@ -92,6 +92,13 @@ socket.on('prediction', data => {
     historyElement.value = historyText;
 });
 
+// Handle limit reached message from server
+socket.on('limit_reached', data => {
+    alert(data.message);
+    recognitionPaused = true;
+    toggleRecognitionBtn.textContent = 'Recognition Paused';
+});
+
 // Event listener for the clear history button
 clearHistoryBtn.addEventListener('click', function() {
     historyText = "";

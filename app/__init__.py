@@ -1,4 +1,4 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, session
 from flask_socketio import SocketIO, emit
 from tensorflow.keras.models import load_model
 import numpy as np
@@ -6,7 +6,7 @@ import cv2
 import base64
 import mediapipe as mp
 from .routes import home, login_form, login, register, userprofile, get_user_data, purchase_plan, purchase_form
-from .database import init_db
+from .database import init_db, create_connection
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'AEH'
@@ -31,7 +31,6 @@ app.add_url_rule('/get-user-data', view_func=get_user_data, methods=['GET'])
 app.add_url_rule('/purchase_form', view_func=purchase_form, methods=['GET'])
 app.add_url_rule('/purchase_plan', view_func=purchase_plan, methods=['POST'])
 
-
 # Initialize the database
 init_db()
 
@@ -41,8 +40,38 @@ def index():
     return render_template('index.html')
 
 
+def get_user_sign_limit():
+    if 'username' in session:
+        connection = create_connection()
+        if connection:
+            cursor = connection.cursor(dictionary=True)
+            cursor.execute(
+                "SELECT plan FROM users WHERE username = %s", (session['username'],))
+            user_data = cursor.fetchone()
+            cursor.close()
+            connection.close()
+            if user_data:
+                plan = user_data['plan']
+                if plan == 'Basic':
+                    return 100  # example limit for basic plan
+                elif plan == 'Premium':
+                    return 1000  # example limit for premium plan
+                else:
+                    return 10  # default limit
+    return 10  # default limit for guests
+
+
 @socketio.on('image')
 def handle_image(data):
+    if 'recognized_count' not in session:
+        session['recognized_count'] = 0
+
+    limit = get_user_sign_limit()
+    if session['recognized_count'] >= limit:
+        emit('limit_reached', {
+             'message': 'Recognition limit reached. Please upgrade your plan or try again later.'})
+        return
+
     img_data = base64.b64decode(data['image'])
     np_img = np.frombuffer(img_data, np.uint8)
     img = cv2.imdecode(np_img, cv2.IMREAD_COLOR)
@@ -73,6 +102,7 @@ def handle_image(data):
             # Get the predicted class
             predicted_class = labels[np.argmax(prediction)]
 
+            session['recognized_count'] += 1
             emit('prediction', {'prediction': predicted_class})
             return
 
