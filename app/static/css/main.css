@@ -195,6 +195,33 @@ body {
 .nav__item:hover::before, .nav__item:hover::after {
   width: 50%;
 }
+/* Add this CSS to style the video/placeholder container */
+.video-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 640px;
+  height: 480px;
+  background-color: white;
+  margin: auto;
+  padding: 10px;
+}
+
+#video, #placeholder {
+  max-width: 100%;
+  height: auto;
+}
+
+.placeholder {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  height: 100%;
+  background-color: white;
+}
+
+
 
 @keyframes navItemsAnimation {
   from {

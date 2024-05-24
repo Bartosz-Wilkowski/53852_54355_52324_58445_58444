@@ -1,7 +1,8 @@
 const video = document.getElementById('video');
+const placeholder = document.getElementById('placeholder');
+const toggleCameraBtn = document.getElementById('toggleCameraBtn');
 const predictionElement = document.getElementById('prediction');
 const historyElement = document.getElementById('history');
-const toggleCameraBtn = document.getElementById('toggleCameraBtn');
 let historyText = "";
 let cameraStream = null;
 let captureInterval = null;
@@ -12,6 +13,8 @@ function startCamera() {
         .then(stream => {
             video.srcObject = stream;
             video.style.display = 'block';
+            setPlaceholderDimensions();
+            placeholder.style.display = 'none';
             cameraStream = stream;
             toggleCameraBtn.textContent = 'Turn Camera Off';
             startCapturing();
@@ -26,6 +29,7 @@ function stopCamera() {
         tracks.forEach(track => track.stop());
         video.srcObject = null;
         video.style.display = 'none';
+        placeholder.style.display = 'block';
         cameraStream = null;
         toggleCameraBtn.textContent = 'Turn Camera On';
         stopCapturing();
@@ -62,6 +66,12 @@ function captureImage() {
     const context = canvas.getContext('2d');
     context.drawImage(video, 0, 0, canvas.width, canvas.height);
     return canvas.toDataURL('image/jpeg');
+}
+
+// Function to set placeholder dimensions
+function setPlaceholderDimensions() {
+    placeholder.style.width = `${video.offsetWidth}px`;
+    placeholder.style.height = `${video.offsetHeight}px`;
 }
 
 // Get Socket.IO

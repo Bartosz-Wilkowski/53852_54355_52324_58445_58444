@@ -6,7 +6,7 @@
     <div class="container header__white-block">
       <h1 class="header__heading">Sign Language Detector</h1>
       <p class="header__text">
-				an online translator for the American Sign Language alphabet
+        an online translator for the American Sign Language alphabet
       </p>
 			<a href="#turnyourcameraon" class="header__btn btn-special-animation"
 				>Start translation</a
@@ -41,9 +41,9 @@
           <div class="howtouse__box-text">
             <h3 class="howtouse__title">Turn the camera on</h3>
             <p class="howtouse__text">
-							Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-							Distinctio officiis animi, autem numquam perspiciatis amet
-							temporibus ipsam dolorum iste natus.
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Distinctio officiis animi, autem numquam perspiciatis amet
+              temporibus ipsam dolorum iste natus.
             </p>
           </div>
         </div>
@@ -59,9 +59,9 @@
           <div class="howtouse__box-text howtouse__box-text--right">
             <h3 class="howtouse__title">Show one of the ASL signs</h3>
             <p class="howtouse__text">
-							Lorem ipsum dolor sit, amet consectetur adipisicing elit.
-							Distinctio officiis animi, autem numquam perspiciatis amet
-							temporibus ipsam dolorum iste natus.
+              Lorem ipsum dolor sit, amet consectetur adipisicing elit.
+              Distinctio officiis animi, autem numquam perspiciatis amet
+              temporibus ipsam dolorum iste natus.
             </p>
           </div>
         </div>
@@ -175,12 +175,19 @@
         <h2 class="section-heading">
           Translation of ASL Alphabet signs
         </h2>
-        <video id="video" width="640" height="480" autoplay style="display: none;"></video>
+        <div class="video-container">
+          <video id="video" width="640" height="480" autoplay style="display: none;"></video>
+          <div id="placeholder" class="placeholder">
+            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="64" height="64" fill="currentColor">
+              <path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6-10h-2.586l-2-2H10.586l-2 2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2zm0 12H6V7h12v10z"></path>
+            </svg>
+          </div>
+        </div>
         <button id="toggleCameraBtn" class="btn btn-primary">Turn Camera On</button>
-		<p id="prediction"></p>
-		<textarea id="history" rows="4" cols="50" readonly></textarea>
-		<script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
-		<script src="/static/js/script.js"></script>
+        <p id="prediction"></p>
+        <textarea id="history" rows="4" cols="50" readonly></textarea>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
+        <script src="/static/js/script.js"></script>
       </div>
     </section>
   </main>
