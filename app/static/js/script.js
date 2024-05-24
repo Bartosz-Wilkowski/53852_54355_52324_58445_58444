@@ -4,6 +4,7 @@ const toggleCameraBtn = document.getElementById('toggleCameraBtn');
 const toggleRecognitionBtn = document.getElementById('toggleRecognitionBtn');
 const predictionElement = document.getElementById('prediction');
 const historyElement = document.getElementById('history');
+const clearHistoryBtn = document.getElementById('clearHistoryBtn');
 let historyText = "";
 let cameraStream = null;
 let captureInterval = null;
@@ -89,4 +90,10 @@ socket.on('prediction', data => {
     predictionElement.textContent = `Predicted letter: ${data.prediction}`;
     historyText += data.prediction;
     historyElement.value = historyText;
+});
+
+// Event listener for the clear history button
+clearHistoryBtn.addEventListener('click', function() {
+    historyText = "";
+    historyElement.value = "";
 });
