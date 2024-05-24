@@ -29,18 +29,20 @@
     <nav class="nav">
         <div class="nav__items">
             <div class="nav__box">
-                <a href="#howitworks" class="nav__item">how it works</a>
+                <a class="nav-link" href="{{ url_for('index') }}#howitworks">how it works</a>
             </div>
             <div class="nav__box">
-                <a href="#signlanguage" class="nav__item">ASL alphabet</a>
+                <a class="nav-link" href="{{ url_for('index') }}#signlanguage">ASL alphabet</a>
             </div>
             <div class="nav__box">
-                <a href="#subscription" class="nav__item">subscription</a>
+                <a class="nav-link" href="{{ url_for('index') }}#subscription">subscription</a>
             </div>
             <div class="nav__box">
-                <a href="#turnyourcameraon" class="nav__item">start translation</a>
+                <a class="nav-link" href="{{ url_for('index') }}#turnyourcameraon">start translation</a>
+                <div class="nav__box">
+                    <a class="nav-link" href="">login</a>
+                </div>
             </div>
-        </div>
     </nav>
 
     <!-- bootstrap navbar (desktop navigation) -->
@@ -51,11 +53,10 @@
             </button>
             <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
                 <div class="navbar-nav ms-auto">
-                    <a class="nav-link" href="#howitworks">how it works</a>
-                    <a class="nav-link" href="#signlanguage">ASL alphabet</a>
-                    <a class="nav-link" href="#subscription">subscription</a>
-                    <a class="nav-link" href="#subscription">subscription</a>
-                    <a class="nav-link" href="#turnyourcameraon">start translation</a>
+                    <a class="nav-link" href="{{ url_for('index') }}#howitworks">how it works</a>
+                    <a class="nav-link" href="{{ url_for('index') }}#signlanguage">ASL alphabet</a>
+                    <a class="nav-link" href="{{ url_for('index') }}#subscription">subscription</a>
+                    <a class="nav-link" href="{{ url_for('index') }}#turnyourcameraon">start translation</a>
                     <a class="nav-link" href="">login</a>
                 </div>
             </div>
