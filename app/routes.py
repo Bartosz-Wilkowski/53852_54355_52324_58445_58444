@@ -7,10 +7,6 @@ import bcrypt
 def home():
     return render_template('index.html', logged_in=is_logged_in())
     
-#serves the login page.
-def login_form():
-    return render_template('login.html')
-
 #serves the registration page.
 def registration_form():
     return render_template('register.html')
@@ -42,28 +38,42 @@ test_connection()
 #function handles user login. It retrieves user credentials, verifies them, and sets a session if successful.
 #Returns appropriate JSON responses for success, invalid credentials, and errors.
 def login():
-    data = request.get_json() if request.is_json else request.form
-    username = data['username']
-    password = data['password']
+    logged_in = 'user' in session
+    
+    if request.method == 'POST':
+        data = request.get_json() if request.is_json else request.form
+        username = data.get('username')
+        password = data.get('password')
 
-    connection = create_connection()
-    if connection is None:
-        return jsonify({"message": "Failed to connect to the database."}), 500
+        connection = create_connection()
+        if connection is None:
+            return jsonify({"message": "Failed to connect to the database."}), 500
 
-    cursor = connection.cursor()
-    try:
-        cursor.execute("SELECT password FROM users WHERE username = %s", (username,))
-        result = cursor.fetchone()
-        if result and bcrypt.checkpw(password.encode('utf-8'), result[0].encode('utf-8')):
-            session['username'] = username
-            return jsonify({'message': f'Welcome, {username}!'})
-        else:
-            return jsonify({'message': 'Invalid username or password!'}), 401
-    except Error as e:
-        return jsonify({'message': str(e)}), 500
-    finally:
-        cursor.close()
-        connection.close()
+        cursor = connection.cursor()
+        try:
+            cursor.execute("SELECT password FROM users WHERE username = %s", (username,))
+            result = cursor.fetchone()
+            if result and bcrypt.checkpw(password.encode('utf-8'), result[0].encode('utf-8')):
+                session['user'] = username
+                if request.is_json:
+                    return jsonify({'message': f'Welcome, {username}!'})
+                else:
+                    return redirect(url_for('index'))
+            else:
+                if request.is_json:
+                    return jsonify({'message': 'Invalid username or password!'}), 401
+                else:
+                    return render_template('login.html', logged_in=logged_in, error='Invalid username or password!')
+        except Error as e:
+            if request.is_json:
+                return jsonify({'message': str(e)}), 500
+            else:
+                return render_template('login.html', logged_in=logged_in, error=str(e))
+        finally:
+            cursor.close()
+            connection.close()
+    
+    return render_template('login.html', logged_in=logged_in)
 
 #function handles user registration. Renders the registration form for GET requests and processes the form data for POST requests.
 #Inserts new user data into the database, hashes passwords, and handles errors, including duplicate entries.
