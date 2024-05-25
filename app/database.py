@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+from datetime import datetime
 
 # Remember to change the 'database' and 'password' fields to the appropriate values.
 # Function to create a database connection
@@ -46,7 +47,9 @@ def init_db():
                       surname VARCHAR(255),
                       plan VARCHAR(255),
                       UNIQUE (username),
-                      UNIQUE (email))''')
+                      UNIQUE (email),
+                      recognized_count INT DEFAULT 0,
+                      last_reset DATETIME DEFAULT NULL)''')
     connection.commit()
     cursor.close()
     connection.close()
