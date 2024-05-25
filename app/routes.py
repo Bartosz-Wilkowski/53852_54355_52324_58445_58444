@@ -138,7 +138,7 @@ def get_user_data():
 #function serves the purchase form page.        
 def purchase_form():
     if 'username' in session:
-        return render_template('purchase.html')
+        return render_template('purchase.html', logged_in=is_logged_in())
     else:
         return redirect(url_for('login'))
 

@@ -16,7 +16,7 @@ $(document).ready(function () {
                 $('#loginResult').text(response.message);
                 setTimeout(function () {
                     window.location.href = '/'; // Redirect to home page
-                }, 1); 
+                }, 100); 
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.responseJSON.message;

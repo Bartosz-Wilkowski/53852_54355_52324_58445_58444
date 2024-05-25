@@ -37,7 +37,7 @@ $(document).ready(function () {
                 $('#result').text(response.message);
                 setTimeout(function () {
                     window.location.href = '/userprofile'; // Redirect to user profile after 2 seconds
-                }, 1);
+                }, 100);
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.responseJSON.message;

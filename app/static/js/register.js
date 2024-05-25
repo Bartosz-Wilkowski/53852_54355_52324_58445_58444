@@ -19,7 +19,7 @@ $(document).ready(function () {
                 $('#message').text(response.message);
                 setTimeout(function () {
                     window.location.href = '/login';
-                },1);
+                },100);
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.responseJSON.message;
