@@ -16,7 +16,7 @@ $(document).ready(function () {
                 $('#loginResult').text(response.message);
                 setTimeout(function () {
                     window.location.href = '/'; // Redirect to home page
-                }, 2000); // przekierowanie do strony głównej po 2 sekundach
+                }, 1); 
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.responseJSON.message;

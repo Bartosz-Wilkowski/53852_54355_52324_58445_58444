@@ -19,7 +19,7 @@ $(document).ready(function () {
                 $('#message').text(response.message);
                 setTimeout(function () {
                     window.location.href = '/login';
-                }, 2000); // przekierowanie do strony logowania po 2 sekundach
+                },1);
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.responseJSON.message;
