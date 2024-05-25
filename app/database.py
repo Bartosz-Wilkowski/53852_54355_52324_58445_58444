@@ -53,7 +53,7 @@ def init_db():
             password VARCHAR(255) NOT NULL,
             name VARCHAR(255),
             surname VARCHAR(255),
-            plan VARCHAR(255),
+            plan INT,
             last_reset datetime,
             UNIQUE (username),
             UNIQUE (email),
