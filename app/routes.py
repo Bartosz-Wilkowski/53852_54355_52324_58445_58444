@@ -15,7 +15,7 @@ def is_logged_in():
 # Funkcja wylogowująca użytkownika
 def logout():
     session.pop('username', None)
-    return redirect(url_for('index'))
+    return redirect(url_for('home'))
 
 # function tests the database connection, prints a success message if connected, or an error message if it fails to connect.
 
