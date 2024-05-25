@@ -41,6 +41,7 @@ def init_db():
             plan_name VARCHAR(255) NOT NULL,
             daily_limit INT NOT NULL,
             price DOUBLE
+            UNIQUE (plan_name)   
         )
     ''')
 
