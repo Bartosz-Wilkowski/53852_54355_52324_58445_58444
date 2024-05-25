@@ -34,7 +34,7 @@ def get_user_sign_limit():
         if connection:
             cursor = connection.cursor(dictionary=True)
             cursor.execute(
-                "SELECT plan, last_reset, recognized_count FROM users WHERE username = %s", (session['username'],))
+                "SELECT plan_name, last_reset, recognized_count FROM users WHERE username = %s", (session['username'],))
             user_data = cursor.fetchone()
             cursor.close()
             connection.close()

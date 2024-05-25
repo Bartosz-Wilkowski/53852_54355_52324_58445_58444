@@ -8,11 +8,14 @@ import bcrypt
 
 def home():
     return render_template('index.html', logged_in=is_logged_in())
-    
+
+
 def is_logged_in():
     return 'username' in session
 
 # Funkcja wylogowująca użytkownika
+
+
 def logout():
     session.pop('username', None)
     return redirect(url_for('home'))
@@ -55,7 +58,8 @@ def login():
 
             cursor = connection.cursor()
             try:
-                cursor.execute("SELECT password FROM users WHERE username = %s", (username,))
+                cursor.execute(
+                    "SELECT password FROM users WHERE username = %s", (username,))
                 result = cursor.fetchone()
                 if result and bcrypt.checkpw(password.encode('utf-8'), result[0].encode('utf-8')):
                     session['username'] = username
@@ -184,7 +188,7 @@ def purchase_plan():
     cursor = connection.cursor()
     try:
         cursor.execute(
-            "UPDATE users SET plan = %s WHERE username = %s", (plan, session['username']))
+            "UPDATE users SET plan_name = %s WHERE username = %s", (plan, session['username']))
         connection.commit()
         return jsonify({"message": "Plan purchased successfully!"})
     except Error as e:
