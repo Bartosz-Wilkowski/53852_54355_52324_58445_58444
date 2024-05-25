@@ -54,11 +54,11 @@ def init_db():
             password VARCHAR(255) NOT NULL,
             name VARCHAR(255),
             surname VARCHAR(255),
-            plan VARCHAR(255),
+            plan_name VARCHAR(255),
             last_reset datetime,
             UNIQUE (username),
             UNIQUE (email),
-            FOREIGN KEY (plan) REFERENCES subscription_plan(plan_name)
+            FOREIGN KEY (plan_name) REFERENCES subscription_plan(plan_name)
         )
     ''')
 
