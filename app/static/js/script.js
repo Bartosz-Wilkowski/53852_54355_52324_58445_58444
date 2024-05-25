@@ -106,12 +106,19 @@ function showDialog() {
         title: 'Recognition Limit Reached',
         text: 'You have reached your daily limit of recognized characters. Please wait until tomorrow or upgrade your plan.',
         icon: 'info',
-        confirmButtonText: 'OK',
+        confirmButtonText: 'Not now',
+        showCancelButton: true, 
+        cancelButtonText: 'Upgrade Plan', 
         customClass: {
             popup: 'swal-wide'
         }
+    }).then((result) => {
+        if (result.dismiss === Swal.DismissReason.cancel) { 
+            window.location.href = '/register';
+        }
     });
 }
+
 // Event listener for the clear history button
 clearHistoryBtn.addEventListener('click', function() {
     historyText = "";

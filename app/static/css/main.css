@@ -226,6 +226,36 @@ body {
   font-size: 1.5em !important;
 }
 
+.swal2-popup {
+  background-color: #fff !important;
+  color: #333 !important;
+}
+
+.swal2-title {
+  color: #333 !important;
+}
+
+.swal2-content {
+  color: #666 !important;
+}
+
+.swal2-actions {
+  display: flex;
+  gap: 10px; 
+}
+
+.swal2-cancel {
+  order: -1;
+  background-color: #007bff !important; 
+  color: #fff !important; 
+  border: none; 
+}
+
+.swal2-confirm {
+  background-color: #ccc !important; 
+  color: #333 !important; 
+  border: none; 
+}
 
 @keyframes navItemsAnimation {
   from {
