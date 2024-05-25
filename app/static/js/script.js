@@ -106,16 +106,56 @@ function showDialog() {
         title: 'Recognition Limit Reached',
         text: 'You have reached your daily limit of recognized characters. Please wait until tomorrow or upgrade your plan.',
         icon: 'info',
-        confirmButtonText: 'Not now',
-        showCancelButton: true, 
+        showCancelButton: true,
+        allowOutsideClick: false,
         cancelButtonText: 'Upgrade Plan', 
+        confirmButtonText: 'Not Now', 
         customClass: {
             popup: 'swal-wide'
         }
     }).then((result) => {
+        // If Upgrade Plan is clicked
         if (result.dismiss === Swal.DismissReason.cancel) { 
-            window.location.href = '/register';
-        }
+            window.location.href = '/register'; 
+        // If Not Now is clicked
+        } else if (result.dismiss === Swal.DismissReason.confirm) { 
+            // Create a new element with the message and icon
+            const messageElement = document.createElement('div');
+            messageElement.style.textAlign = 'center'; 
+        
+            // Create icon element
+            const iconElement = document.createElement('div');
+            iconElement.innerHTML = `
+                <div class="swal2-icon swal2-info" style="display: flex; justify-content: center; align-items: center; width: 132px; height: 132px; margin: 0 auto;">
+                    <div class="swal2-icon-content" style="font-size: 80px;">i</div>
+                </div>`;
+            messageElement.appendChild(iconElement);
+        
+            // Create text element
+            const textElement = document.createElement('div');
+            textElement.textContent = 'You have reached your daily limit of recognized characters. Please wait until tomorrow or upgrade your plan.';
+            textElement.style.marginTop = '20px'; 
+            messageElement.appendChild(textElement);
+        
+            // Create Upgrade Plan button
+            const upgradeButton = document.createElement('button');
+            upgradeButton.textContent = 'Upgrade Plan';
+            upgradeButton.className = 'swal2-cancel swal2-styled'; 
+            upgradeButton.style.backgroundColor = '#3085d6'; 
+            upgradeButton.style.border = 'none';
+            upgradeButton.style.color = 'white';
+            upgradeButton.style.padding = '10px 20px';
+            upgradeButton.style.fontSize = '1em';
+            upgradeButton.style.marginTop = '20px';
+            upgradeButton.onclick = function() {
+                window.location.href = '/register'; 
+            };
+            messageElement.appendChild(upgradeButton); // Append Upgrade Plan button to the message
+        
+            // Replace the video element with the message
+            const videoElement = document.getElementById('video');
+            videoElement.parentNode.replaceChild(messageElement, videoElement);
+        }        
     });
 }
 
