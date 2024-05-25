@@ -39,7 +39,7 @@ def get_user_sign_limit():
             cursor.close()
             connection.close()
             if user_data:
-                plan = user_data['plan']
+                plan = user_data['plan_name']
                 last_reset = user_data['last_reset']
                 if last_reset is None or (datetime.now() - last_reset).days >= 1:
                     reset_recognition_count(session['username'])
