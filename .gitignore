@@ -2,7 +2,7 @@
 app/__pycache__/
 *.pyc
 *.pyo
-
+venv/
 #dataset images
 model/dataset/test/
 model/dataset/train/
