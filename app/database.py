@@ -55,6 +55,7 @@ def init_db():
             name VARCHAR(255),
             surname VARCHAR(255),
             plan_name VARCHAR(255),
+            recognized_count INT,       
             last_reset datetime,
             UNIQUE (username),
             UNIQUE (email),
