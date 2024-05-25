@@ -4,11 +4,11 @@ const toggleCameraBtn = document.getElementById('toggleCameraBtn');
 const toggleRecognitionBtn = document.getElementById('toggleRecognitionBtn');
 const predictionElement = document.getElementById('prediction');
 const historyElement = document.getElementById('history');
-const clearHistoryBtn = document.getElementById('clearHistoryBtn');
 let historyText = "";
 let cameraStream = null;
 let captureInterval = null;
 let recognitionPaused = false;
+let limitReached = false;
 
 // Function to start the camera
 function startCamera() {
@@ -41,7 +41,7 @@ function stopCamera() {
 // Function to start capturing images
 function startCapturing() {
     captureInterval = setInterval(() => {
-        if (!recognitionPaused) {
+        if (!recognitionPaused && !limitReached) {
             const imageData = captureImage().split(',')[1];
             socket.emit('image', { image: imageData });
         }
@@ -92,13 +92,26 @@ socket.on('prediction', data => {
     historyElement.value = historyText;
 });
 
-// Handle limit reached message from server
-socket.on('limit_reached', data => {
-    alert(data.message);
-    recognitionPaused = true;
-    toggleRecognitionBtn.textContent = 'Recognition Paused';
+// Handle limit reached from server
+socket.on('limit_reached', () => {
+    if (!limitReached) {
+        limitReached = true;
+        showDialog();
+    }
 });
 
+// Function to show dialog using SweetAlert2
+function showDialog() {
+    Swal.fire({
+        title: 'Recognition Limit Reached',
+        text: 'You have reached your daily limit of recognized characters. Please wait until tomorrow or upgrade your plan.',
+        icon: 'info',
+        confirmButtonText: 'OK',
+        customClass: {
+            popup: 'swal-wide'
+        }
+    });
+}
 // Event listener for the clear history button
 clearHistoryBtn.addEventListener('click', function() {
     historyText = "";

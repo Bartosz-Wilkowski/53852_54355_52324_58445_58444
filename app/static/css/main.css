@@ -221,6 +221,10 @@ body {
   background-color: white;
 }
 
+.swal-wide {
+  width: 80% !important;
+  font-size: 1.5em !important;
+}
 
 
 @keyframes navItemsAnimation {
