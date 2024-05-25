@@ -2,6 +2,8 @@ import mysql.connector
 from mysql.connector import Error
 
 # Function to create a database connection
+
+
 def create_connection():
     try:
         connection = mysql.connector.connect(
@@ -27,6 +29,7 @@ def create_connection():
         print(f"Error: {e}")
         return None
 
+
 def init_db():
     connection = create_connection()
     if connection is None:
@@ -40,7 +43,7 @@ def init_db():
             plan_id INT AUTO_INCREMENT PRIMARY KEY,
             plan_name VARCHAR(255) NOT NULL,
             daily_limit INT NOT NULL,
-            price DOUBLE
+            price DOUBLE,
             UNIQUE (plan_name)   
         )
     ''')
@@ -77,6 +80,7 @@ def init_db():
     cursor.close()
     connection.close()
 
+
 def revoke_drop_privileges():
     connection = create_connection()
     if connection is None:
@@ -103,6 +107,7 @@ def revoke_drop_privileges():
     finally:
         cursor.close()
         connection.close()
+
 
 if __name__ == "__main__":
     init_db()
