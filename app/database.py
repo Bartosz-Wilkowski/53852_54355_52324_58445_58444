@@ -1,6 +1,5 @@
 import mysql.connector
 from mysql.connector import Error
-from datetime import datetime
 
 # Function to create a database connection
 def create_connection():
@@ -38,7 +37,7 @@ def init_db():
     # Create subscription_plan table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS subscription_plan (
-            plan_id INT AUTO_INCREMENT PRIMARY KEY,
+            plan_id VARCHAR(255) AUTO_INCREMENT PRIMARY KEY,
             plan_name VARCHAR(255) NOT NULL,
             daily_limit INT NOT NULL,
             price DOUBLE
@@ -54,7 +53,7 @@ def init_db():
             password VARCHAR(255) NOT NULL,
             name VARCHAR(255),
             surname VARCHAR(255),
-            plan INT,
+            plan VARCHAR(255),
             last_reset datetime,
             UNIQUE (username),
             UNIQUE (email),
@@ -72,6 +71,7 @@ def init_db():
             FOREIGN KEY (user_id) REFERENCES users(id)
         )
     ''')
+
     connection.commit()
     cursor.close()
     connection.close()
