@@ -17,7 +17,8 @@ app.add_url_rule('/userprofile', view_func=userprofile, methods=['GET'])
 app.add_url_rule('/get-user-data', view_func=get_user_data, methods=['GET'])
 app.add_url_rule('/purchase_form', view_func=purchase_form, methods=['GET'])
 app.add_url_rule('/purchase_plan', view_func=purchase_plan, methods=['POST'])
-app.add_url_rule('/websocket', view_func=websocket_index)  # Adding websocket route
+app.add_url_rule('/websocket', view_func=websocket_index)
+
 
 # Initialize the database
 init_db()
