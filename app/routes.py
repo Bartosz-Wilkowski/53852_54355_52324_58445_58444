@@ -3,15 +3,36 @@ from .database import create_connection
 from mysql.connector import Error, errorcode
 import bcrypt
 
+#renders the home page of the website
 def home():
     return render_template('index.html')
     
+#serves the login page.
 def login_form():
     return render_template('login.html')
 
+#serves the registration page.
 def registration_form():
     return render_template('register.html')
 
+#function tests the database connection, prints a success message if connected, or an error message if it fails to connect.
+def test_connection():
+    try:
+        connection = create_connection()
+        if connection and connection.is_connected():
+            print("Connected to the database.")
+        else:
+            print("Failed to connect to the database.")
+    except Error as e:
+        print(f"Error: {e}")
+    finally:
+        if connection and connection.is_connected():
+            connection.close()
+
+test_connection()
+
+#function handles user login. It retrieves user credentials, verifies them, and sets a session if successful.
+#Returns appropriate JSON responses for success, invalid credentials, and errors.
 def login():
     data = request.get_json() if request.is_json else request.form
     username = data['username']
@@ -36,43 +57,55 @@ def login():
         cursor.close()
         connection.close()
 
+#function handles user registration. Renders the registration form for GET requests and processes the form data for POST requests.
+#Inserts new user data into the database, hashes passwords, and handles errors, including duplicate entries.
 def register():
     if request.method == 'GET':
         return render_template('register.html')
     elif request.method == 'POST':
-        data = request.get_json() if request.is_json else request.form
-        username = data['username']
-        name = data['name'] 
-        surname = data['surname']
-        email = data['email']
-        password = data['password']
-        
-        connection = create_connection()
-        if connection is None:
-            return jsonify({"message": "Failed to connect to the database."}), 500
-
-        cursor = connection.cursor()
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
         try:
-            cursor.execute("INSERT INTO users (username, email, password, name, surname, plan) VALUES (%s, %s, %s, %s, %s, %s)",
-                           (username, email, hashed_password, name, surname, 'Basic'))
-            connection.commit()
-            return redirect(url_for('login_form'))
-        except Error as e:
-            if e.errno == errorcode.ER_DUP_ENTRY: 
-                return jsonify({"message": "Username or email already exists."}), 409
-            else:
-                return jsonify({"message": str(e)}), 500
-        finally:
-            cursor.close()
-            connection.close()
+            data = request.get_json() if request.is_json else request.form
+            username = data['username']
+            name = data['name']
+            surname = data['surname']
+            email = data['email']
+            password = data['password']
+            
+            connection = create_connection()
+            if connection is None:
+                print("Failed to connect to the database.")
+                return jsonify({"message": "Failed to connect to the database."}), 500
 
+            cursor = connection.cursor()
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            try:
+                cursor.execute("INSERT INTO users (username, email, password, name, surname, plan) VALUES (%s, %s, %s, %s, %s, %s)",
+                               (username, email, hashed_password.decode('utf-8'), name, surname, 'Basic'))
+                connection.commit()
+                return redirect(url_for('login_form'))
+            except Error as e:
+                print(f"Error during user registration: {e}")
+                if e.errno == errorcode.ER_DUP_ENTRY: 
+                    return jsonify({"message": "Username or email already exists."}), 409
+                else:
+                    return jsonify({"message": str(e)}), 500
+            finally:
+                cursor.close()
+                connection.close()
+        except Exception as e:
+            print(f"Exception during registration: {e}")
+            return jsonify({"message": str(e)}), 500
+        
+#function serves the user profile page. It checks if the user is logged in by verifying the session.
+#Redirects to the login page if the user is not logged in.
 def userprofile():
     if 'username' in session:
         return render_template('userprofile.html')
     else:
         return redirect(url_for('login_form'))
 
+#function retrieves user data from the database. Checks if the user is logged in, fetches user details from the database, and returns them as JSON.
+#Handles errors and returns appropriate status codes.
 def get_user_data():
     if 'username' not in session:
         return jsonify({"message": "User not logged in."}), 401
@@ -95,12 +128,15 @@ def get_user_data():
         cursor.close()
         connection.close()
         
+#function serves the purchase form page.        
 def purchase_form():
     if 'username' in session:
         return render_template('purchase.html')
     else:
         return redirect(url_for('login_form'))
-    
+
+#function processes plan purchases. It verifies if the user is logged in, processes the payment details, and updates the user's plan in the database.
+#Returns success or error messages as JSON responses, and assumes payment processing is successful for this example.    
 def purchase_plan():
     if 'username' not in session:
         return jsonify({"message": "User not logged in."}), 401

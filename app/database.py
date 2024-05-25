@@ -1,5 +1,6 @@
 import mysql.connector
 from mysql.connector import Error
+from datetime import datetime
 
 # Function to create a database connection
 def create_connection():
@@ -71,7 +72,6 @@ def init_db():
             FOREIGN KEY (user_id) REFERENCES users(id)
         )
     ''')
-
     connection.commit()
     cursor.close()
     connection.close()
