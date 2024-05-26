@@ -196,3 +196,7 @@ def purchase_plan():
     finally:
         cursor.close()
         connection.close()
+
+
+def interpreter():
+    return render_template('sli.html')
