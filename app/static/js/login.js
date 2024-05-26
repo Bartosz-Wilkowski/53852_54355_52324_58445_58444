@@ -2,9 +2,17 @@ $(document).ready(function () {
     $('#loginForm').submit(function (event) {
         event.preventDefault();
 
+        var username = $('#username').val().trim();
+        var password = $('#password').val().trim();
+
+        if (!username || !password) {
+            $('#loginResult').text('Both username and password are required.');
+            return;
+        }
+
         var formData = {
-            'username': $('#username').val(),
-            'password': $('#password').val()
+            'username': username,
+            'password': password
         };
 
         $.ajax({
@@ -16,7 +24,7 @@ $(document).ready(function () {
                 $('#loginResult').text(response.message);
                 setTimeout(function () {
                     window.location.href = '/'; // Redirect to home page
-                }, 100); 
+                }, 100);
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.responseJSON.message;
