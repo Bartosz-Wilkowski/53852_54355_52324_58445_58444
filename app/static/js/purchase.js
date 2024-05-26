@@ -21,12 +21,46 @@ $(document).ready(function () {
         event.preventDefault();
 
         var formData = {
-            'newplan': $('#newplan').val(),
-            'cardNumber': $('#cardNumber').val(),
-            'cardName': $('#cardName').val(),
-            'expiryDate': $('#expiryDate').val(),
-            'cvc': $('#cvc').val()
+            'newplan': $('#newplan').val().trim(),
+            'cardNumber': $('#cardNumber').val().trim(),
+            'cardName': $('#cardName').val().trim(),
+            'expiryDate': $('#expiryDate').val().trim(),
+            'cvc': $('#cvc').val().trim()
         };
+
+        // Basic validation
+        if (!formData.newplan || !formData.cardNumber || !formData.cardName || !formData.expiryDate || !formData.cvc) {
+            $('#resultPurchase').text('All fields are required.');
+            return;
+        }
+
+        // Validate card number (basic Luhn algorithm check could be added for more complexity)
+        var cardNumberPattern = /^\d{16}$/;
+        if (!cardNumberPattern.test(formData.cardNumber)) {
+            $('#resultPurchase').text('Invalid card number. It should be 16 digits.');
+            return;
+        }
+
+        // Validate card name (only letters and spaces)
+        var cardNamePattern = /^[A-Za-z\s]+$/;
+        if (!cardNamePattern.test(formData.cardName)) {
+            $('#resultPurchase').text('Card name should only contain letters and spaces.');
+            return;
+        }
+
+        // Validate expiry date (MM/YY)
+        var expiryDatePattern = /^(0[1-9]|1[0-2])\/?([0-9]{2})$/;
+        if (!expiryDatePattern.test(formData.expiryDate)) {
+            $('#resultPurchase').text('Invalid expiry date format. Use MM/YY.');
+            return;
+        }
+
+        // Validate CVC (3 or 4 digits)
+        var cvcPattern = /^[0-9]{3,4}$/;
+        if (!cvcPattern.test(formData.cvc)) {
+            $('#resultPurchase').text('Invalid CVC. It should be 3 or 4 digits.');
+            return;
+        }
 
         $.ajax({
             type: 'POST',
@@ -34,14 +68,14 @@ $(document).ready(function () {
             contentType: 'application/json',
             data: JSON.stringify(formData),
             success: function (response) {
-                $('#result').text(response.message);
+                $('#resultPurchase').text(response.message);
                 setTimeout(function () {
-                    window.location.href = '/userprofile'; // Redirect to user profile after 2 seconds
+                    window.location.href = '/userprofile';
                 }, 100);
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.responseJSON.message;
-                $('#result').text(errorMessage);
+                $('#resultPurchase').text(errorMessage);
             }
         });
     });
