@@ -9,7 +9,7 @@ import mediapipe as mp
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'secret!'
 socketio = SocketIO(app)
-model = load_model('model/final_model/final_model.h5')
+model = load_model('model/checkpoint_model.h5')
 
 # get hd from mp
 mp_hands = mp.solutions.hands.Hands(
