@@ -13,6 +13,7 @@ let limitReached = false;
 
 // Function to start the camera
 function startCamera() {
+    if (limitReached) return; // Prevent starting camera if limit is reached
     navigator.mediaDevices.getUserMedia({ video: true })
         .then(stream => {
             video.srcObject = stream;
@@ -88,20 +89,35 @@ const socket = io();
 
 // Get prediction from server
 socket.on('prediction', data => {
-    predictionElement.textContent = `Predicted letter: ${data.prediction}`;
-    historyText += data.prediction;
-    historyElement.value = historyText;
+    if (data.prediction === 'space') {
+        predictionElement.textContent = `Predicted letter: ${data.prediction}`;
+        historyText += ' ';
+    } else if (data.prediction === 'del') {
+        predictionElement.textContent = `Predicted letter: ${data.prediction}`;
+        historyText = historyText.slice(0, -1);
+    } else if (data.prediction === 'nothing' || data.prediction === 'No hand detected') {
+        predictionElement.textContent = `Predicted letter: ${data.prediction}`;
+    } else {
+        predictionElement.textContent = `Predicted letter: ${data.prediction}`;
+        historyText += data.prediction;
+        historyElement.value = historyText;
+    }
 });
 
 // Handle limit reached from server
 socket.on('limit_reached', () => {
     if (!limitReached) {
         limitReached = true;
+        disableButtons();
         showDialog();
-        toggleCameraBtn.disabled = true;
-        toggleRecognitionBtn.disabled = true;
     }
 });
+
+// Disable buttons when limit is reached
+function disableButtons() {
+    toggleCameraBtn.disabled = true;
+    toggleRecognitionBtn.disabled = true;
+}
 
 // Function to show dialog using SweetAlert2
 function showDialog() {
@@ -166,4 +182,17 @@ function showDialog() {
 clearHistoryBtn.addEventListener('click', function() {
     historyText = "";
     historyElement.value = "";
+});
+
+// Check limit on page load
+document.addEventListener('DOMContentLoaded', () => {
+    socket.emit('check_limit');
+});
+
+// Handle limit status from server
+socket.on('limit_status', status => {
+    if (status.limitReached) {
+        limitReached = true;
+        disableButtons();
+    }
 });
