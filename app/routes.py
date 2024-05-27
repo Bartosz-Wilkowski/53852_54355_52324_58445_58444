@@ -2,6 +2,7 @@ from flask import render_template, request, jsonify, redirect, url_for, session
 from .database import create_connection
 from mysql.connector import Error, errorcode
 import bcrypt
+import re
 
 # renders the home page of the website
 
@@ -44,13 +45,23 @@ test_connection()
 
 
 def login():
+    if is_logged_in():
+        return redirect('/')
+
     if request.method == 'GET':
         return render_template('login.html', logged_in=is_logged_in())
+    
     elif request.method == 'POST':
         try:
             data = request.get_json() if request.is_json else request.form
-            username = data['username']
-            password = data['password']
+            username = data.get('username', '').strip()
+            password = data.get('password', '').strip()
+
+            # Validate username and password
+            if not username or not password:
+                return jsonify({"message": "Both username and password are required."}), 400
+            if len(password) < 8:
+                return jsonify({"message": "Password must be at least 8 characters long."}), 400
 
             connection = create_connection()
             if connection is None:
@@ -58,8 +69,7 @@ def login():
 
             cursor = connection.cursor()
             try:
-                cursor.execute(
-                    "SELECT password FROM users WHERE username = %s", (username,))
+                cursor.execute("SELECT password FROM users WHERE username = %s", (username,))
                 result = cursor.fetchone()
                 if result and bcrypt.checkpw(password.encode('utf-8'), result[0].encode('utf-8')):
                     session['username'] = username
@@ -80,30 +90,44 @@ def login():
 
 
 def register():
+    if is_logged_in():
+        return redirect('/')
+
     if request.method == 'GET':
         return render_template('register.html', logged_in=is_logged_in())
+    
     elif request.method == 'POST':
         try:
             data = request.get_json() if request.is_json else request.form
-            username = data['username']
-            name = data['name']
-            surname = data['surname']
-            email = data['email']
-            password = data['password']
+            username = data.get('username', '').strip()
+            name = data.get('name', '').strip()
+            surname = data.get('surname', '').strip()
+            email = data.get('email', '').strip()
+            password = data.get('password', '').strip()
+
+            # Validate input
+            if not all([username, name, surname, email, password]):
+                return jsonify({"message": "All fields are required."}), 400
+            if len(password) < 8:
+                return jsonify({"message": "Password must be at least 8 characters long."}), 400
+
+            email_pattern = re.compile(r'^[^\s@]+@[^\s@]+\.[^\s@]+$')
+            if not email_pattern.match(email):
+                return jsonify({"message": "Invalid email format."}), 400
 
             connection = create_connection()
             if connection is None:
-                print("Failed to connect to the database.")
                 return jsonify({"message": "Failed to connect to the database."}), 500
 
             cursor = connection.cursor()
-            hashed_password = bcrypt.hashpw(
-                password.encode('utf-8'), bcrypt.gensalt())
+            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
             try:
-                cursor.execute("INSERT INTO users (username, email, password, name, surname) VALUES (%s, %s, %s, %s, %s)",
-                               (username, email, hashed_password.decode('utf-8'), name, surname))
+                cursor.execute(
+                    "INSERT INTO users (username, email, password, name, surname) VALUES (%s, %s, %s, %s, %s)",
+                    (username, email, hashed_password.decode('utf-8'), name, surname)
+                )
                 connection.commit()
-                return redirect(url_for('login'))
+                return jsonify({"message": "Registration successful! Please log in."})
             except Error as e:
                 print(f"Error during user registration: {e}")
                 if e.errno == errorcode.ER_DUP_ENTRY:
@@ -116,7 +140,8 @@ def register():
         except Exception as e:
             print(f"Exception during registration: {e}")
             return jsonify({"message": str(e)}), 500
-
+        
+        
 # function serves the user profile page. It checks if the user is logged in by verifying the session.
 # Redirects to the login page if the user is not logged in.
 
