@@ -2,6 +2,7 @@ const video = document.getElementById('video');
 const placeholder = document.getElementById('placeholder');
 const toggleCameraBtn = document.getElementById('toggleCameraBtn');
 const toggleRecognitionBtn = document.getElementById('toggleRecognitionBtn');
+const clearHistoryBtn = document.getElementById('clearHistoryBtn');
 const predictionElement = document.getElementById('prediction');
 const historyElement = document.getElementById('history');
 let historyText = "";
@@ -97,6 +98,8 @@ socket.on('limit_reached', () => {
     if (!limitReached) {
         limitReached = true;
         showDialog();
+        toggleCameraBtn.disabled = true;
+        toggleRecognitionBtn.disabled = true;
     }
 });
 
