@@ -200,3 +200,7 @@ def purchase_plan():
 
 def interpreter():
     return render_template('sli.html')
+
+
+def pricing():
+    return render_template('pricing.html')
