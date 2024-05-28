@@ -1,5 +1,5 @@
 from flask import Flask
-from .routes import home, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout, interpreter, delete_account
+from .routes import home, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout, interpreter, delete_account, reset_password, reset_with_token, reset_password_link
 from .database import init_db
 from flask_socketio import SocketIO
 from .models import websocket_index, handle_image
@@ -20,7 +20,9 @@ app.add_url_rule('/logout', view_func=logout, methods=['GET'])
 app.add_url_rule('/sli', view_func=interpreter)
 app.add_url_rule('/websocket', view_func=websocket_index)
 app.add_url_rule('/delete_account', view_func=delete_account, methods=['POST'])
-
+app.add_url_rule('/reset_password', view_func=reset_password, methods=['POST'])
+app.add_url_rule('/reset_password_link', view_func=reset_password_link, methods=['POST'])
+app.add_url_rule('/reset/<token>', view_func=reset_with_token, methods=['GET', 'POST'])
 # Initialize the database
 init_db()
 

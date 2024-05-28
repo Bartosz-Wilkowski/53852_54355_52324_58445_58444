@@ -62,6 +62,7 @@ def init_db():
             last_reset datetime,
             UNIQUE (username),
             UNIQUE (email),
+            reset_token VARCHAR(255),
             FOREIGN KEY (plan_name) REFERENCES subscription_plan(plan_name)
         )
     ''')

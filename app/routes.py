@@ -1,10 +1,12 @@
-from flask import render_template, request, jsonify, redirect, url_for, session
+from flask import render_template, request, jsonify, redirect, url_for, session, flash
 from .database import create_connection
 from mysql.connector import Error, errorcode
 import bcrypt
 import re
-
-
+import uuid
+import smtplib
+from email.mime.text import MIMEText
+from email.mime.multipart import MIMEMultipart
 
 # renders the home page of the website
 def home():
@@ -283,4 +285,128 @@ def delete_account():
         cursor.close()
         connection.close()
 
+# Function to handle password reset request
+def reset_password():
+    data = request.get_json()
+    email = data.get('email', '').strip()
 
+    if not email:
+        return jsonify({"message": "Email is required."}), 400
+
+    connection = create_connection()
+    if connection is None:
+        return jsonify({"message": "Failed to connect to the database."}), 500
+
+    cursor = connection.cursor(dictionary=True)
+    try:
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user = cursor.fetchone()
+        if not user:
+            return jsonify({"message": "Email not found."}), 404
+
+        token = str(uuid.uuid4())
+        cursor.execute("UPDATE users SET reset_token = %s WHERE email = %s", (token, email))
+        connection.commit()
+
+        send_reset_email(email, token)
+        return jsonify({"message": "Password reset email sent.", "reset_link": f"http://127.0.0.1:5000/reset/{token}"})
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+    finally:
+        cursor.close()
+        connection.close()
+
+# Function to handle password reset form submission
+def reset_with_token(token):
+    if request.method == 'GET':
+        return render_template('reset_password.html', token=token)
+
+    elif request.method == 'POST':
+        data = request.form
+        password = data.get('password', '').strip()
+        confirm_password = data.get('confirm_password', '').strip()
+
+        if not password or not confirm_password:
+            flash("All fields are required.")
+            return redirect(url_for('reset_with_token', token=token))
+
+        if password != confirm_password:
+            flash("Passwords do not match.")
+            return redirect(url_for('reset_with_token', token=token))
+
+        if len(password) < 8:
+            flash("Password must be at least 8 characters long.")
+            return redirect(url_for('reset_with_token', token=token))
+
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+        connection = create_connection()
+        if connection is None:
+            return jsonify({"message": "Failed to connect to the database."}), 500
+
+        cursor = connection.cursor()
+        try:
+            cursor.execute("UPDATE users SET password = %s, reset_token = NULL WHERE reset_token = %s", (hashed_password, token))
+            connection.commit()
+            flash("Password reset successfully.")
+            return redirect(url_for('login'))
+        except Error as e:
+            return jsonify({"message": str(e)}), 500
+        finally:
+            cursor.close()
+            connection.close()
+            
+def send_reset_email(to_email, token):
+    from_email = "your_email@exampleAEH.com"
+    from_password = "your_email_password"
+    subject = "Password Reset Request"
+    reset_url = f"http://127.0.0.1:5000/reset/{token}"
+
+    msg = MIMEMultipart()
+    msg['From'] = from_email
+    msg['To'] = to_email
+    msg['Subject'] = subject
+
+    body = f"Please click the link to reset your password: {reset_url}"
+    msg.attach(MIMEText(body, 'plain'))
+
+    try:
+        server = smtplib.SMTP('smtp.gmail.com', 587)
+        server.starttls()
+        server.login(from_email, from_password)
+        text = msg.as_string()
+        server.sendmail(from_email, to_email, text)
+        server.quit()
+    except Exception as e:
+        print(f"Failed to send email: {e}")    
+        
+        
+def reset_password_link():
+    data = request.get_json()
+    email = data.get('email', '').strip()
+
+    if not email:
+        return jsonify({"message": "Email is required."}), 400
+
+    connection = create_connection()
+    if connection is None:
+        return jsonify({"message": "Failed to connect to the database."}), 500
+
+    cursor = connection.cursor(dictionary=True)
+    try:
+        cursor.execute("SELECT * FROM users WHERE email = %s", (email,))
+        user = cursor.fetchone()
+        if not user:
+            return jsonify({"message": "Email not found."}), 404
+
+        token = str(uuid.uuid4())
+        cursor.execute("UPDATE users SET reset_token = %s WHERE email = %s", (token, email))
+        connection.commit()
+
+        reset_link = f"http://127.0.0.1:5000/reset/{token}"
+        return jsonify({"reset_link": reset_link})
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+    finally:
+        cursor.close()
+        connection.close()                

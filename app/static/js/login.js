@@ -23,13 +23,44 @@ $(document).ready(function () {
             success: function (response) {
                 $('#loginResult').text(response.message);
                 setTimeout(function () {
-                    window.location.href = '/'; // Redirect to home page
+                    window.location.href = '/';
                 }, 100);
             },
-            error: function (xhr, status, error) {
+            error: function (xhr) {
                 var errorMessage = xhr.responseJSON.message;
                 $('#loginResult').text(errorMessage);
             }
         });
     });
+
+    $("#forgotPasswordForm").submit(function (event) {
+        event.preventDefault();
+        var email = $("#resetEmail").val();
+
+        $.ajax({
+            type: "POST",
+            url: "/reset_password_link",
+            contentType: "application/json",
+            data: JSON.stringify({ email: email }),
+            success: function (response) {
+                $("#resetResult").html("A reset link has been sent to your email.");
+                if (response.reset_link) {
+                    $("#resetLink").html(`<a href="${response.reset_link}">${response.reset_link}</a>`);
+                }
+            },
+            error: function (xhr) {
+                $("#resetResult").html(xhr.responseJSON.message);
+            }
+        });
+    });
 });
+
+function showForgotPassword() {
+    $("#forgotPasswordModal").show();
+}
+
+function closeForgotPassword() {
+    $("#forgotPasswordModal").hide();
+    $("#resetResult").html("");
+    $("#resetLink").html("");
+}
