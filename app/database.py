@@ -3,6 +3,8 @@ from mysql.connector import Error
 from datetime import datetime
 
 # Function to create a database connection
+
+
 def create_connection():
     try:
         connection = mysql.connector.connect(
@@ -28,6 +30,7 @@ def create_connection():
         print(f"Error: {e}")
         return None
 
+
 def init_db():
     connection = create_connection()
     if connection is None:
@@ -46,9 +49,9 @@ def init_db():
         )
     ''')
 
-    # Insert three plans into subscription_plan table
+    # Insert three plans into subscription_plan table using INSERT IGNORE
     cursor.execute('''
-        INSERT INTO subscription_plan (plan_name, daily_limit, price) VALUES
+        INSERT IGNORE INTO subscription_plan (plan_name, daily_limit, price) VALUES
         ('Basic', 25, 0),
         ('Standard', 250, 19.99),
         ('Unlimited', NULL, 49.99)
@@ -72,9 +75,9 @@ def init_db():
         )
     ''')
 
-    # Insert aehuser user into users table
+    # Insert aehuser user into users table using INSERT IGNORE
     cursor.execute('''
-        INSERT INTO users (username, email, password, name, surname, plan_name) VALUES
+        INSERT IGNORE INTO users (username, email, password, name, surname, plan_name) VALUES
         ('aehuser', 'aehuser@aeh.pl', 'aehuser', 'Aeh', 'User', 'Unlimited')
     ''')
 
@@ -93,6 +96,7 @@ def init_db():
     cursor.close()
     connection.close()
 
+
 def revoke_drop_privileges():
     connection = create_connection()
     if connection is None:
@@ -109,7 +113,8 @@ def revoke_drop_privileges():
             WHERE db = 'user_auth' AND user != 'root' AND user != 'mysql.sys';
         ''')
 
-        cursor.execute("SET @sql = IFNULL(@sql, '');")  # Ensure @sql is not NULL
+        # Ensure @sql is not NULL
+        cursor.execute("SET @sql = IFNULL(@sql, '');")
         cursor.execute('PREPARE stmt FROM @sql;')
         cursor.execute('EXECUTE stmt;')
         cursor.execute('DEALLOCATE PREPARE stmt;')
@@ -119,6 +124,7 @@ def revoke_drop_privileges():
     finally:
         cursor.close()
         connection.close()
+
 
 def reset_recognized_count():
     connection = create_connection()
@@ -141,6 +147,7 @@ def reset_recognized_count():
     finally:
         cursor.close()
         connection.close()
+
 
 if __name__ == "__main__":
     init_db()
