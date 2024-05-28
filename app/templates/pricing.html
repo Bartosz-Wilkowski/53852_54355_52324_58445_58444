@@ -1,0 +1,51 @@
+{% extends "base.html" %}
+{% block content %}
+<div id="generic_price_table">   
+    <section>
+        <div class="container">
+            <div class="row">
+                <div class="col-md-12">
+                    <div class="price-heading clearfix">
+                        <h1>SLI Pricing Table</h1>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="container">
+            <div class="row">
+                {% for plan in plans %}
+                <div class="col-md-4">
+                    <div class="generic_content {% if plan.plan_name == 'Standard' %}active{% endif %} clearfix">
+                        <div class="generic_head_price clearfix">
+                            <div class="generic_head_content clearfix">
+                                <div class="head_bg"></div>
+                                <div class="head">
+                                    <span>{{ plan.plan_name }}</span>
+                                </div>
+                            </div>
+                            <div class="generic_price_tag clearfix">    
+                                <span class="price">
+                                    <span class="sign">$</span>
+                                    <span class="currency">{{ plan.dollars }}</span>
+                                    <span class="cent">.{{ plan.cents }}</span>
+                                    <span class="month">/MON</span>
+                                </span>
+                            </div>
+                        </div>                            
+                        <div class="generic_feature_list">
+                            <ul>
+                                <li><span>{{ plan.daily_limit if plan.daily_limit is not none else 'No' }}</span> Character Recognition Limit</li>
+                                <li><span>24h</span> Refresh Interval</li>
+                            </ul>
+                        </div>
+                        <div class="generic_price_btn clearfix">
+                            <a class="" href="">Sign up</a>
+                        </div>
+                    </div>
+                </div>
+                {% endfor %}
+            </div>    
+        </div>
+    </section>        
+</div>
+{% endblock %}

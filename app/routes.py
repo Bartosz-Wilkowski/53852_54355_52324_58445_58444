@@ -9,6 +9,8 @@ from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
 # renders the home page of the website
+
+
 def home():
     return render_template('index.html', logged_in=is_logged_in())
 
@@ -37,6 +39,7 @@ def test_connection():
         if connection and connection.is_connected():
             connection.close()
 
+
 test_connection()
 
 
@@ -48,7 +51,7 @@ def login():
 
     if request.method == 'GET':
         return render_template('login.html', logged_in=is_logged_in())
-    
+
     elif request.method == 'POST':
         try:
             data = request.get_json() if request.is_json else request.form
@@ -67,7 +70,8 @@ def login():
 
             cursor = connection.cursor()
             try:
-                cursor.execute("SELECT password FROM users WHERE username = %s", (username,))
+                cursor.execute(
+                    "SELECT password FROM users WHERE username = %s", (username,))
                 result = cursor.fetchone()
                 if result and bcrypt.checkpw(password.encode('utf-8'), result[0].encode('utf-8')):
                     session['username'] = username
@@ -91,7 +95,7 @@ def register():
 
     if request.method == 'GET':
         return render_template('register.html', logged_in=is_logged_in())
-    
+
     elif request.method == 'POST':
         try:
             data = request.get_json() if request.is_json else request.form
@@ -116,7 +120,8 @@ def register():
                 return jsonify({"message": "Failed to connect to the database."}), 500
 
             cursor = connection.cursor()
-            hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
+            hashed_password = bcrypt.hashpw(
+                password.encode('utf-8'), bcrypt.gensalt())
             try:
                 cursor.execute(
                     "INSERT INTO users (username, email, password, name, surname) VALUES (%s, %s, %s, %s, %s)",
@@ -136,8 +141,8 @@ def register():
         except Exception as e:
             print(f"Exception during registration: {e}")
             return jsonify({"message": str(e)}), 500
-        
-        
+
+
 # function serves the user profile page. It checks if the user is logged in by verifying the session.
 # Redirects to the login page if the user is not logged in.
 def userprofile():
@@ -194,7 +199,7 @@ def purchase_plan():
     card_name = data.get('cardName', '').strip()
     expiry_date = data.get('expiryDate', '').strip()
     cvc = data.get('cvc', '').strip()
-    amount = 10.0 
+    amount = 10.0
 
     # Validate input fields
     if not all([plan, card_number, card_name, expiry_date, cvc]):
@@ -213,20 +218,22 @@ def purchase_plan():
         return jsonify({"message": "Invalid CVC. It should be 3 or 4 digits."}), 400
 
     # Add payment logic (assuming payment is successful for this example)
-    
+
     connection = create_connection()
     if connection is None:
         return jsonify({"message": "Failed to connect to the database."}), 500
 
     cursor = connection.cursor()
     try:
-        cursor.execute("SELECT id FROM users WHERE username = %s", (session['username'],))
+        cursor.execute("SELECT id FROM users WHERE username = %s",
+                       (session['username'],))
         user_id = cursor.fetchone()
         if user_id is None:
             return jsonify({"message": "User not found."}), 404
         user_id = user_id[0]
 
-        cursor.execute("UPDATE users SET plan = %s WHERE username = %s", (plan, session['username']))
+        cursor.execute(
+            "UPDATE users SET plan = %s WHERE username = %s", (plan, session['username']))
         connection.commit()
 
         cursor.execute(
@@ -242,10 +249,41 @@ def purchase_plan():
         cursor.close()
         connection.close()
 
+
 def interpreter():
     return render_template('sli.html')
 
+
+def format_price(price):
+    """Split price into dollars and cents."""
+    dollars = int(price)
+    cents = int(round((price - dollars) * 100))
+    return dollars, cents
+
+
+def pricing():
+    connection = create_connection()
+    if connection is None:
+        return "Failed to connect to the database.", 500
+
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute('SELECT * FROM subscription_plan')
+    plans = cursor.fetchall()
+
+    for plan in plans:
+        dollars, cents = format_price(plan['price'])
+        plan['dollars'] = dollars
+        plan['cents'] = f'{cents:02d}'
+
+    cursor.close()
+    connection.close()
+
+    return render_template('pricing.html', plans=plans)
+
+
 # Define the delete_account function
+
+
 def delete_account():
     if 'username' not in session:
         print("User not logged in.")
@@ -259,12 +297,13 @@ def delete_account():
     cursor = connection.cursor()
     try:
         # Fetch user ID based on session username
-        cursor.execute("SELECT id FROM users WHERE username = %s", (session['username'],))
+        cursor.execute("SELECT id FROM users WHERE username = %s",
+                       (session['username'],))
         user_id = cursor.fetchone()
         if not user_id:
             print("User not found.")
             return jsonify({"message": "User not found."}), 404
-        
+
         user_id = user_id[0]
 
         # Delete related records in payments table
@@ -286,6 +325,8 @@ def delete_account():
         connection.close()
 
 # Function to handle password reset request
+
+
 def reset_password():
     data = request.get_json()
     email = data.get('email', '').strip()
@@ -305,7 +346,8 @@ def reset_password():
             return jsonify({"message": "Email not found."}), 404
 
         token = str(uuid.uuid4())
-        cursor.execute("UPDATE users SET reset_token = %s WHERE email = %s", (token, email))
+        cursor.execute(
+            "UPDATE users SET reset_token = %s WHERE email = %s", (token, email))
         connection.commit()
 
         send_reset_email(email, token)
@@ -317,6 +359,8 @@ def reset_password():
         connection.close()
 
 # Function to handle password reset form submission
+
+
 def reset_with_token(token):
     if request.method == 'GET':
         return render_template('reset_password.html', token=token)
@@ -338,7 +382,8 @@ def reset_with_token(token):
             flash("Password must be at least 8 characters long.")
             return redirect(url_for('reset_with_token', token=token))
 
-        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+        hashed_password = bcrypt.hashpw(password.encode(
+            'utf-8'), bcrypt.gensalt()).decode('utf-8')
 
         connection = create_connection()
         if connection is None:
@@ -346,7 +391,8 @@ def reset_with_token(token):
 
         cursor = connection.cursor()
         try:
-            cursor.execute("UPDATE users SET password = %s, reset_token = NULL WHERE reset_token = %s", (hashed_password, token))
+            cursor.execute(
+                "UPDATE users SET password = %s, reset_token = NULL WHERE reset_token = %s", (hashed_password, token))
             connection.commit()
             flash("Password reset successfully.")
             return redirect(url_for('login'))
@@ -355,7 +401,8 @@ def reset_with_token(token):
         finally:
             cursor.close()
             connection.close()
-            
+
+
 def send_reset_email(to_email, token):
     from_email = "your_email@exampleAEH.com"
     from_password = "your_email_password"
@@ -378,9 +425,9 @@ def send_reset_email(to_email, token):
         server.sendmail(from_email, to_email, text)
         server.quit()
     except Exception as e:
-        print(f"Failed to send email: {e}")    
-        
-        
+        print(f"Failed to send email: {e}")
+
+
 def reset_password_link():
     data = request.get_json()
     email = data.get('email', '').strip()
@@ -400,7 +447,8 @@ def reset_password_link():
             return jsonify({"message": "Email not found."}), 404
 
         token = str(uuid.uuid4())
-        cursor.execute("UPDATE users SET reset_token = %s WHERE email = %s", (token, email))
+        cursor.execute(
+            "UPDATE users SET reset_token = %s WHERE email = %s", (token, email))
         connection.commit()
 
         reset_link = f"http://127.0.0.1:5000/reset/{token}"
@@ -409,4 +457,4 @@ def reset_password_link():
         return jsonify({"message": str(e)}), 500
     finally:
         cursor.close()
-        connection.close()                
+        connection.close()
