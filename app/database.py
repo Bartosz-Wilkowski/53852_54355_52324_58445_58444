@@ -1,9 +1,8 @@
 import mysql.connector
 from mysql.connector import Error
+from datetime import datetime
 
 # Function to create a database connection
-
-
 def create_connection():
     try:
         connection = mysql.connector.connect(
@@ -29,7 +28,6 @@ def create_connection():
         print(f"Error: {e}")
         return None
 
-
 def init_db():
     connection = create_connection()
     if connection is None:
@@ -42,10 +40,18 @@ def init_db():
         CREATE TABLE IF NOT EXISTS subscription_plan (
             plan_id INT AUTO_INCREMENT PRIMARY KEY,
             plan_name VARCHAR(255) NOT NULL,
-            daily_limit INT NOT NULL,
+            daily_limit INT,
             price DOUBLE,
             UNIQUE (plan_name)   
         )
+    ''')
+
+    # Insert three plans into subscription_plan table
+    cursor.execute('''
+        INSERT INTO subscription_plan (plan_name, daily_limit, price) VALUES
+        ('Basic', 25, 0),
+        ('Standard', 250, 19.99),
+        ('Unlimited', NULL, 49.99)
     ''')
 
     # Create users table
@@ -66,6 +72,12 @@ def init_db():
         )
     ''')
 
+    # Insert aehuser user into users table
+    cursor.execute('''
+        INSERT INTO users (username, email, password, name, surname, plan_name) VALUES
+        ('aehuser', 'aehuser@aeh.pl', 'aehuser', 'Aeh', 'User', 'Unlimited')
+    ''')
+
     # Create payments table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS payments (
@@ -81,7 +93,6 @@ def init_db():
     cursor.close()
     connection.close()
 
-
 def revoke_drop_privileges():
     connection = create_connection()
     if connection is None:
@@ -90,26 +101,48 @@ def revoke_drop_privileges():
     cursor = connection.cursor()
 
     try:
-        # Execute the SQL script to revoke DROP privileges
+        # Create a string with REVOKE statements
         cursor.execute('''
-            SET @sql = NULL;
             SELECT GROUP_CONCAT(CONCAT('REVOKE DROP ON `user_auth`.* FROM `', user, '`@`', host, '`;') SEPARATOR ' ')
             INTO @sql
             FROM mysql.db
             WHERE db = 'user_auth' AND user != 'root' AND user != 'mysql.sys';
-            PREPARE stmt FROM @sql;
-            EXECUTE stmt;
-            DEALLOCATE PREPARE stmt;
         ''')
-        print("DROP privileges revoked successfully.")
 
+        cursor.execute("SET @sql = IFNULL(@sql, '');")  # Ensure @sql is not NULL
+        cursor.execute('PREPARE stmt FROM @sql;')
+        cursor.execute('EXECUTE stmt;')
+        cursor.execute('DEALLOCATE PREPARE stmt;')
+        print("DROP privileges revoked successfully.")
     except Error as e:
         print(f"Error: {e}")
     finally:
         cursor.close()
         connection.close()
 
+def reset_recognized_count():
+    connection = create_connection()
+    if connection is None:
+        print("Failed to connect to the database.")
+        return
+    cursor = connection.cursor()
+
+    try:
+        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        cursor.execute('''
+            UPDATE users
+            SET recognized_count = 0, last_reset = %s
+            WHERE plan_name IN ('Basic', 'Standard')
+        ''', (now,))
+        connection.commit()
+        print("recognized_count reset and last_reset updated successfully for Basic and Standard plans.")
+    except Error as e:
+        print(f"Error: {e}")
+    finally:
+        cursor.close()
+        connection.close()
 
 if __name__ == "__main__":
     init_db()
     revoke_drop_privileges()
+    reset_recognized_count()
