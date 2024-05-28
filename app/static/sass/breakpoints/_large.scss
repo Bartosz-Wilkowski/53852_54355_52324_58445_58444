@@ -21,6 +21,10 @@
 		font-size: 2rem;
 
 		}
+
+		&__describe {
+			font-size: 1.8rem;
+		}
 	}
 
 	.section-heading {
@@ -60,7 +64,7 @@
 	.hero-img {
 		padding: 30rem 2em;
 		background-image: $light-transparent-color,
-			url('/img/group-of-people-image-big.jpeg');
+			url(../static/img/group-of-people-image-big.jpeg);
 
 		&__title {
 			flex: 7.2rem;

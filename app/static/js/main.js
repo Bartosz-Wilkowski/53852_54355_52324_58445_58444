@@ -6,18 +6,7 @@ const navBtnBars = document.querySelector('.burger-btn__bars');
 const allSections = document.querySelectorAll('.section');
 const footerYear = document.querySelector('.footer__year');
 const translateText = document.querySelector('.translate__box-signs');
-const translateBtn = document.getElementById('startbtn')
-
-//funkcja, która dodaje klasę translate__box-signs--activebox, kiedy kliknie się na button #startbtn - ta funkcja jest w trakcie tworzenia i jeszcze nie działa
-
-const handleBoxSigns = () => {
-	translateText.classList.toggle('translate__box-signs--activebox');
-
-
-
-};
-
-// wywołanie tej funkcji na dole kodu translateBtn.addEventListener('click', handleBoxSigns);
+const translateBtn = document.getElementById('startbtn');
 
 //funkcja, która dodaje klasę nav--active kiedy kliknie się na burger icon (czyli otwiera nawigację)
 const handleNav = () => {
@@ -123,8 +112,6 @@ const handleCurrentYear = () => {
 handleCurrentYear();
 
 navBtn.addEventListener('click', handleNav);
-
-translateBtn.addEventListener('click', handleBoxSigns);
 
 //wywołanie funckji zmieniającej kolor pasków nawigacji (barsów):
 window.addEventListener('scroll', handleObserver);

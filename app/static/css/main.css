@@ -27,7 +27,7 @@ body {
   text-align: center;
   color: #2e2e2e;
   height: 100vh;
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/signlanguage-small.jpg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url("../img/signlanguage-small.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -91,7 +91,7 @@ body {
 }
 
 .shadow-bg {
-  background-color: rgba(194, 204, 207, 0.8);
+  background-color: #b3c8cf;
 }
 
 .burger-btn {
@@ -150,7 +150,7 @@ body {
   transform: translateX(100%);
   transition: transform 0.5s cubic-bezier(0.215, 0.61, 0.355, 1);
   height: 100vh;
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/navigation-image-small.jpg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url("../img/navigation-image-small.jpg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -160,15 +160,14 @@ body {
   transform: translateX(0);
 }
 .nav__box {
-  padding: 1em 1.5em;
-  margin-top: 1em;
+  padding: 0.5em 1em;
+  margin: 1em;
   border-radius: 8px;
   background-color: #eee;
   opacity: 0.9;
 }
 .nav__item {
   position: relative;
-  display: block;
   padding: 0.5em 1.5em;
   margin: 1.7em 0;
   font-size: 1.5rem;
@@ -194,67 +193,6 @@ body {
 }
 .nav__item:hover::before, .nav__item:hover::after {
   width: 50%;
-}
-/* interpreter */
-.video-container {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 640px;
-  height: 480px;
-  background-color: white;
-  margin: auto;
-  padding: 10px;
-}
-
-#video, #placeholder {
-  max-width: 100%;
-  height: auto;
-}
-
-.placeholder {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  width: 100%;
-  height: 100%;
-  background-color: white;
-}
-
-.swal-wide {
-  width: 80% !important;
-  font-size: 1.5em !important;
-}
-
-.swal2-popup {
-  background-color: #fff !important;
-  color: #333 !important;
-}
-
-.swal2-title {
-  color: #333 !important;
-}
-
-.swal2-content {
-  color: #666 !important;
-}
-
-.swal2-actions {
-  display: flex;
-  gap: 10px; 
-}
-
-.swal2-cancel {
-  order: -1;
-  background-color: #007bff !important; 
-  color: #fff !important; 
-  border: none; 
-}
-
-.swal2-confirm {
-  background-color: #ccc !important; 
-  color: #333 !important; 
-  border: none; 
 }
 
 @keyframes navItemsAnimation {
@@ -324,7 +262,7 @@ nav .navbar-brand:hover {
   position: relative;
   padding: 10em 2em;
   height: 100vh;
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/groupofpeople-image-small.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url("../img/groupofpeople-image-small.jpeg");
   background-size: cover;
   background-position: center;
   background-attachment: fixed;
@@ -399,26 +337,26 @@ nav .navbar-brand:hover {
   transition: transform 1s, opacity 1s;
 }
 .signlanguage__card-info--first {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/a-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(/static/img/a-americansign.jpeg);
 }
 .signlanguage__card-info--second {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/b-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(/static/img/b-americansign.jpeg);
 }
 .signlanguage__card-info--third {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/c-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(/static/img/c-americansign.jpeg);
 }
 .signlanguage__card-info--fourth {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/d-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(/static/img/d-americansign.jpeg);
 }
 .signlanguage__card-info--fifth {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/e-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(/static/img/e-americansign.jpeg);
 }
 .signlanguage__card-info--sixth {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/f-americansign.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(/static/img/f-americansign.jpeg);
 }
 
 .translate {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/hero-image-translate-small.jpeg);
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(/img/hero-image-translate-small.jpeg);
   position: relative;
   display: flex;
   justify-content: center;
@@ -484,6 +422,11 @@ nav .navbar-brand:hover {
 .footer .wrapper {
   padding: 6em 2em 2em;
 }
+.footer__line {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
 .footer__box {
   font-size: 1.4rem;
 }
@@ -512,6 +455,7 @@ nav .navbar-brand:hover {
   text-decoration: none;
 }
 .footer__box-title {
+  margin-top: 2em;
   margin-bottom: 1em;
   font-size: 3rem;
   text-transform: uppercase;
@@ -1098,7 +1042,7 @@ body{background-color:#eee;}
     font-size: 1.6rem;
   }
   .header__describe {
-    font-size: 2rem;
+    font-size: 1.6rem;
   }
   .section-heading {
     font-size: 3.6rem;
@@ -1145,7 +1089,7 @@ body{background-color:#eee;}
     width: 75%;
   }
   .header {
-    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/signlanguage-big.jpg);
+    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url("../img/signlanguage-big.jpg");
   }
   .header__heading {
     margin-top: 3vh;
@@ -1153,6 +1097,9 @@ body{background-color:#eee;}
   }
   .header__btn {
     font-size: 2rem;
+  }
+  .header__describe {
+    font-size: 1.8rem;
   }
   .section-heading {
     font-size: 4.8rem;
@@ -1180,7 +1127,7 @@ body{background-color:#eee;}
   }
   .hero-img {
     padding: 30rem 2em;
-    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.6), rgba(179, 200, 207, 0.7)), url(/static/img/group-of-people-image-big.jpeg);
+    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(../static/img/group-of-people-image-big.jpeg);
   }
   .hero-img__title {
     flex: 7.2rem;
@@ -1196,6 +1143,9 @@ body{background-color:#eee;}
   }
 }
 @media (min-width: 1100px) {
+  .header__describe {
+    font-size: 2rem;
+  }
   .signlanguage__card {
     width: 30%;
   }

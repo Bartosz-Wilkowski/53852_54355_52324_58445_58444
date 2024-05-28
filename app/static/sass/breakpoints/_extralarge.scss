@@ -1,7 +1,13 @@
-@media(min-width: 1100px) {
-    .signlanguage {
-        &__card {
-            width: 30%;
-        }
-    }
+@media (min-width: 1100px) {
+	.header {
+		&__describe {
+			font-size: 2rem;
+		}
+	}
+
+	.signlanguage {
+		&__card {
+			width: 30%;
+		}
+	}
 }
