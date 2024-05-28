@@ -254,8 +254,32 @@ def interpreter():
     return render_template('sli.html')
 
 
+def format_price(price):
+    """Split price into dollars and cents."""
+    dollars = int(price)
+    cents = int(round((price - dollars) * 100))
+    return dollars, cents
+
+
 def pricing():
-    return render_template('pricing.html')
+    connection = create_connection()
+    if connection is None:
+        return "Failed to connect to the database.", 500
+
+    cursor = connection.cursor(dictionary=True)
+    cursor.execute('SELECT * FROM subscription_plan')
+    plans = cursor.fetchall()
+
+    for plan in plans:
+        dollars, cents = format_price(plan['price'])
+        plan['dollars'] = dollars
+        plan['cents'] = f'{cents:02d}'
+
+    cursor.close()
+    connection.close()
+
+    return render_template('pricing.html', plans=plans)
+
 
 # Define the delete_account function
 

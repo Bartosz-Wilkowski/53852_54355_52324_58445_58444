@@ -1,11 +1,8 @@
-from .models import websocket_index, handle_image
-from flask_socketio import SocketIO
-from .database import init_db
-from .routes import home, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout, interpreter, delete_account, reset_password, reset_with_token, reset_password_link, pricing
 from flask import Flask
-<< << << < HEAD
-== == == =
->>>>>> > 1e50673 (add pricing page)
+from .routes import home, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout, interpreter, delete_account, reset_password, reset_with_token, reset_password_link, pricing
+from .database import init_db
+from flask_socketio import SocketIO
+from .models import websocket_index, handle_image
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'AEH'
@@ -29,6 +26,7 @@ app.add_url_rule('/reset_password_link',
                  view_func=reset_password_link, methods=['POST'])
 app.add_url_rule('/reset/<token>', view_func=reset_with_token,
                  methods=['GET', 'POST'])
+
 # Initialize the database
 init_db()
 
