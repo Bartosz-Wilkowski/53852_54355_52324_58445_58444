@@ -16,6 +16,8 @@
                                 <p><strong>Name:</strong> <span id="name"></span></p>
                                 <p><strong>Surname:</strong> <span id="surname"></span></p>
                                 <p><strong>Plan:</strong> <span id="plan"></span></p>
+                                <button id="deleteAccountButton">Delete your Account</button>
+                                <div id="deleteResult"></div>
                         </div>
                         </form>
                     </div>
@@ -28,4 +30,5 @@
 
 <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
 <script src="{{ url_for('static', filename='js/userprofile.js') }}"></script>
+<script src="{{ url_for('static', filename='js/delete_account.js') }}"></script>
 {% endblock %}
