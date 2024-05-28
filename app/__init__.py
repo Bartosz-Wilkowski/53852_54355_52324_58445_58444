@@ -1,5 +1,5 @@
-from flask import Flask, render_template
-from .routes import home, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout, interpreter
+from flask import Flask
+from .routes import home, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout, interpreter, delete_account
 from .database import init_db
 from flask_socketio import SocketIO
 from .models import websocket_index, handle_image
@@ -19,6 +19,7 @@ app.add_url_rule('/purchase_plan', view_func=purchase_plan, methods=['POST'])
 app.add_url_rule('/logout', view_func=logout, methods=['GET'])
 app.add_url_rule('/sli', view_func=interpreter)
 app.add_url_rule('/websocket', view_func=websocket_index)
+app.add_url_rule('/delete_account',view_func=delete_account, methods=['POST'])
 
 # Initialize the database
 init_db()
