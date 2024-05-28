@@ -257,10 +257,6 @@ def interpreter():
 def pricing():
     return render_template('pricing.html')
 
-
-def pricing():
-    return render_template('pricing.html')
-
 # Define the delete_account function
 
 
