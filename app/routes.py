@@ -243,24 +243,44 @@ def purchase_plan():
 def interpreter():
     return render_template('sli.html')
 
-# Delete account function
+# Define the delete_account function
 def delete_account():
     if 'username' not in session:
+        print("User not logged in.")
         return jsonify({"message": "User not logged in."}), 401
 
     connection = create_connection()
     if connection is None:
+        print("Failed to connect to the database.")
         return jsonify({"message": "Failed to connect to the database."}), 500
 
     cursor = connection.cursor()
     try:
-        cursor.execute("DELETE FROM users WHERE username = %s", (session['username'],))
+        # Fetch user ID based on session username
+        cursor.execute("SELECT id FROM users WHERE username = %s", (session['username'],))
+        user_id = cursor.fetchone()
+        if not user_id:
+            print("User not found.")
+            return jsonify({"message": "User not found."}), 404
+        
+        user_id = user_id[0]
+
+        # Delete related records in payments table
+        cursor.execute("DELETE FROM payments WHERE user_id = %s", (user_id,))
         connection.commit()
+
+        # Delete user from the users table
+        cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
+        connection.commit()
+
         session.pop('username', None)
+        print("Account deleted successfully.")
         return jsonify({"message": "Account deleted successfully."})
     except Error as e:
+        print(f"Error deleting account: {e}")
         return jsonify({"message": str(e)}), 500
     finally:
         cursor.close()
         connection.close()
+
 
