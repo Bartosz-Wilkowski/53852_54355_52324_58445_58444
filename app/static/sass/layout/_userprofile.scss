@@ -1,0 +1,33 @@
+.header {
+	.userprofile-title {
+		font-size: 2em;
+		margin-top: 2rem;
+		margin-bottom: 4rem;
+	}
+
+	.user-info {
+		text-align: left;
+		padding: 1rem;
+		border-radius: 8px;
+		background-color: $shadow-color;
+
+		.user-info-title {
+			text-transform: uppercase;
+			font-weight: 600;
+		}
+
+	}
+
+	.delate-account-btn {
+		margin: 3em;
+		padding: 0.8em 1.6em;
+		font-size: 1.4rem;
+		background: $shadow-color;
+		border: none;
+		border-radius: 8px;
+		color: $light-dark;
+		text-decoration: none;
+		text-transform: uppercase;
+		cursor: pointer;
+	}
+}
