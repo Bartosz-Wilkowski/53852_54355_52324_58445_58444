@@ -6,19 +6,19 @@
         <h2 class="section-heading">
             Translation of ASL Alphabet signs
         </h2>
-        <div class="video-container">
+        <div class="transalate__video-container">
             <video id="video" width="640" height="480" autoplay style="display: none;"></video>
             <div id="placeholder" class="placeholder">
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="256" height="256" fill="currentColor">
+                <svg xmlns="http://www.w3.org/2000/svg" class="translate__svg" viewBox="0 0 24 24" width="170" height="170" fill="currentColor">
                     <path d="M12 7a5 5 0 100 10 5 5 0 000-10zm0 8a3 3 0 110-6 3 3 0 010 6zm6-10h-2.586l-2-2H10.586l-2 2H6a2 2 0 00-2 2v10a2 2 0 002 2h12a2 2 0 002-2V7a2 2 0 00-2-2zm0 12H6V7h12v10z"></path>
                 </svg>
             </div>
         </div>
-        <button id="toggleCameraBtn" class="btn btn-primary">Turn Camera On</button>
-        <button id="toggleRecognitionBtn" class="btn btn-primary">Pause Recognition</button>
-        <p id="prediction"></p>
-        <textarea id="history" rows="4" cols="50" readonly></textarea>
-        <button id="clearHistoryBtn" class="btn btn-secondary">Clear History</button>
+        <button id="toggleCameraBtn" class="translate__btn translate__btn-primary btn-special-animation">Turn Camera On</button>
+        <button id="toggleRecognitionBtn" class="translate__btn translate__btn-primary btn-special-animation">Pause Recognition</button>
+        <p id="prediction" class="translate__prediction"></p>
+        <textarea id="history" class="translate__textarea" rows="2" cols="50" readonly></textarea>
+        <button id="clearHistoryBtn" class="translate__btn translate__btn-secondary btn-special-animation">Clear History</button>
         <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
         <script src="https://cdnjs.cloudflare.com/ajax/libs/socket.io/4.0.1/socket.io.min.js"></script>
         <script src="/static/js/script.js"></script>
