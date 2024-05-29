@@ -6,6 +6,12 @@
         padding: 6em 2em 2em;
     }
 
+    &__line {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+    }
+
     &__box {
         font-size: 1.4rem;
     }
@@ -42,6 +48,7 @@
     }
 
     &__box-title {
+        margin-top: 2em;
         margin-bottom: 1em;
         font-size: 3rem;
         text-transform: uppercase;
