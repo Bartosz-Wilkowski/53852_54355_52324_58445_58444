@@ -525,3 +525,40 @@ def reset_password_link():
     finally:
         cursor.close()
         connection.close()
+
+def get_logged_in_user_username():
+    return session.get('username')
+
+def change_password():
+    # Check if user is logged in
+    if not is_logged_in():
+        return jsonify({"message": "User is not logged in."}), 401
+
+    # Get the username of the logged-in user from the session
+    user_username = get_logged_in_user_username()
+
+    # Get the new password from the request
+    new_password = request.json.get('new_password')
+    print("New Password:", new_password)  # Debugging statement
+
+    # If new password is not provided, return an error
+    if not new_password:
+        return jsonify({"message": "New password is required."}), 400
+
+    # Hash the new password
+    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
+
+    # Connect to the database and update the user's password
+    connection = create_connection()
+    cursor = connection.cursor()
+    try:
+        cursor.execute("UPDATE users SET password = %s WHERE username = %s", (hashed_password, user_username))
+        connection.commit()
+        print("Password updated for:", user_username)  # Debugging statement
+        return jsonify({"message": "Password changed successfully."}), 200
+    except Exception as e:
+        print("Error:", str(e))  # Debugging statement
+        return jsonify({"message": str(e)}), 500
+    finally:
+        cursor.close()
+        connection.close()

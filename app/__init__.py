@@ -1,5 +1,5 @@
 from flask import Flask
-from .routes import home, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout, interpreter, delete_account, reset_password, reset_with_token, reset_password_link, pricing, get_plan_price, get_plans
+from .routes import home, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout, interpreter, delete_account, reset_password, reset_with_token, reset_password_link, pricing, get_plan_price, get_plans, change_password
 from .database import init_db
 from flask_socketio import SocketIO
 from .models import websocket_index, handle_image
@@ -26,6 +26,7 @@ app.add_url_rule('/reset_password_link', view_func=reset_password_link, methods=
 app.add_url_rule('/reset/<token>', view_func=reset_with_token, methods=['GET', 'POST'])
 app.add_url_rule('/get-plans', view_func=get_plans, methods=['GET'])
 app.add_url_rule('/get-plan-price/<plan_name>', view_func=get_plan_price, methods=['GET'])
+app.add_url_rule('/change_password', view_func=change_password, methods=['POST'])
 
 # Initialize the database
 init_db()
