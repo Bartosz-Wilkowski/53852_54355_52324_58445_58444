@@ -519,38 +519,30 @@ def reset_password_link():
         cursor.close()
         connection.close()
 
-def get_logged_in_user_username():
-    return session.get('username')
+def generate_reset_token():
+    if 'username' not in session:
+        return jsonify({"message": "User not logged in."}), 401
 
-def change_password():
-    # Check if user is logged in
-    if not is_logged_in():
-        return jsonify({"message": "User is not logged in."}), 401
-
-    # Get the username of the logged-in user from the session
-    user_username = get_logged_in_user_username()
-
-    # Get the new password from the request
-    new_password = request.json.get('new_password')
-    print("New Password:", new_password)  # Debugging statement
-
-    # If new password is not provided, return an error
-    if not new_password:
-        return jsonify({"message": "New password is required."}), 400
-
-    # Hash the new password
-    hashed_password = bcrypt.hashpw(new_password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
-
-    # Connect to the database and update the user's password
     connection = create_connection()
-    cursor = connection.cursor()
+    if connection is None:
+        return jsonify({"message": "Failed to connect to the database."}), 500
+
+    cursor = connection.cursor(dictionary=True)
     try:
-        cursor.execute("UPDATE users SET password = %s WHERE username = %s", (hashed_password, user_username))
+        # Fetch user data
+        cursor.execute("SELECT * FROM users WHERE username = %s", (session['username'],))
+        user_data = cursor.fetchone()
+        if not user_data:
+            return jsonify({"message": "User data not found."}), 404
+
+        token = str(uuid.uuid4())
+        cursor.execute(
+            "UPDATE users SET reset_token = %s WHERE username = %s", (token, session['username'],))
         connection.commit()
-        print("Password updated for:", user_username)  # Debugging statement
-        return jsonify({"message": "Password changed successfully."}), 200
+
+        reset_link = f"http://127.0.0.1:5000/reset/{token}"
+        return jsonify({"reset_link": reset_link})
     except Exception as e:
-        print("Error:", str(e))  # Debugging statement
         return jsonify({"message": str(e)}), 500
     finally:
         cursor.close()
