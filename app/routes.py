@@ -175,7 +175,13 @@ def get_user_data():
             # Fetch payment history
             cursor.execute("SELECT payment_date, amount FROM payments WHERE user_id = %s", (user_data['id'],))
             payment_history = cursor.fetchall()
-            user_data['payment_history'] = payment_history
+            
+            # Aktualizujemy sposób przekazywania danych JSON
+            if payment_history:
+                user_data['payment_history'] = payment_history
+            else:
+                user_data['payment_history'] = []
+
             return jsonify(user_data)
         else:
             return jsonify({"message": "User not found."}), 404
@@ -184,6 +190,11 @@ def get_user_data():
     finally:
         cursor.close()
         connection.close()
+
+
+
+
+
 
 
 
@@ -238,15 +249,14 @@ def purchase_plan():
 
     data = request.get_json()
 
-    plan = data.get('newplan', '').strip()
+    plan_name = data.get('newplan', '').strip()
     card_number = data.get('cardNumber', '').strip()
     card_name = data.get('cardName', '').strip()
     expiry_date = data.get('expiryDate', '').strip()
     cvc = data.get('cvc', '').strip()
-    amount = 10.0
 
     # Validate input fields
-    if not all([plan, card_number, card_name, expiry_date, cvc]):
+    if not all([plan_name, card_number, card_name, expiry_date, cvc]):
         return jsonify({"message": "All fields are required."}), 400
 
     if len(card_number) != 16 or not card_number.isdigit():
@@ -275,9 +285,21 @@ def purchase_plan():
         if user_id is None:
             return jsonify({"message": "User not found."}), 404
         user_id = user_id[0]
+        
+        cursor.execute("SELECT plan_name FROM subscription_plan WHERE plan_name = %s", (plan_name,))
+        result = cursor.fetchone()
+        if result is None:
+            return jsonify({"message": "Selected plan does not exist."}), 400
+        
+        cursor.execute("SELECT price FROM subscription_plan WHERE plan_name = %s", (plan_name,))
+        price = cursor.fetchone()
+        if price is None:
+            return jsonify({"message": "Selected plan does not exist."}), 400
+
+        amount = price[0]
 
         cursor.execute(
-            "UPDATE users SET plan = %s WHERE username = %s", (plan, session['username']))
+            "UPDATE users SET plan_name = %s WHERE username = %s", (plan_name, session['username']))
         connection.commit()
 
         cursor.execute(
@@ -294,8 +316,9 @@ def purchase_plan():
         connection.close()
 
 
+
 def interpreter():
-    return render_template('sli.html')
+    return render_template('sli.html', logged_in=is_logged_in())
 
 
 def format_price(price):
@@ -322,7 +345,7 @@ def pricing():
     cursor.close()
     connection.close()
 
-    return render_template('pricing.html', plans=plans)
+    return render_template('pricing.html', plans=plans, logged_in=is_logged_in())
 
 
 # Define the delete_account function
