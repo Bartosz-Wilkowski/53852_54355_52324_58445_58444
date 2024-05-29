@@ -192,12 +192,6 @@ def get_user_data():
         connection.close()
 
 
-
-
-
-
-
-
 # function serves the purchase form page.
 def purchase_form():
     if 'username' in session:
@@ -349,7 +343,6 @@ def pricing():
 
 
 # Define the delete_account function
-
 
 def delete_account():
     if 'username' not in session:

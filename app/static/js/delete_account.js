@@ -18,4 +18,25 @@ $(document).ready(function () {
             }
         });
     });
+    // Add click event handler for reset password button
+    $("#resetPasswordButton").click(function () {
+        var newPassword = prompt("Enter your new password:");
+        if (newPassword) {
+            $.ajax({
+                type: "POST",
+                url: "/change_password",
+                contentType: "application/json",
+                data: JSON.stringify({ new_password: newPassword }), // Send new password as JSON
+                success: function (response) {
+                    alert(response.message);
+                },
+                error: function (xhr) {
+                    var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "An error occurred";
+                    alert(errorMessage);
+                    console.error("Error response:", xhr.responseText);  // Debugging statement
+                }
+            });
+        }
+    });
+
 });
