@@ -99,22 +99,25 @@ def register():
     elif request.method == 'POST':
         try:
             data = request.get_json() if request.is_json else request.form
-            username = data.get('username', '').strip()
-            name = data.get('name', '').strip()
-            surname = data.get('surname', '').strip()
-            email = data.get('email', '').strip()
-            password = data.get('password', '').strip()
+            username = data.get('username', '').strip()[:255]  # Limiting to 255 characters
+            name = data.get('name', '').strip()[:255]  # Limiting to 255 characters
+            surname = data.get('surname', '').strip()[:255]  # Limiting to 255 characters
+            email = data.get('email', '').strip()[:255]  # Limiting to 255 characters
+            password = data.get('password', '').strip()[:255]  # Limiting to 255 characters
 
             # Validate input
             if not all([username, name, surname, email, password]):
                 return jsonify({"message": "All fields are required."}), 400
             if len(password) < 8:
                 return jsonify({"message": "Password must be at least 8 characters long."}), 400
+            
+            if len(username) > 255 or len(name) > 255 or len(surname) > 255 or len(email) > 255 or len(password) > 255:
+                return jsonify({"message": "One or more fields exceed the maximum character limit of 255."}), 400
 
             email_pattern = re.compile(r'^[^\s@]+@[^\s@]+\.[^\s@]+$')
             if not email_pattern.match(email):
                 return jsonify({"message": "Invalid email format."}), 400
-
+            
             connection = create_connection()
             if connection is None:
                 return jsonify({"message": "Failed to connect to the database."}), 500
@@ -243,12 +246,16 @@ def purchase_plan():
 
     data = request.get_json()
 
-    plan_name = data.get('newplan', '').strip()
-    card_number = data.get('cardNumber', '').strip()
-    card_name = data.get('cardName', '').strip()
-    expiry_date = data.get('expiryDate', '').strip()
-    cvc = data.get('cvc', '').strip()
+    plan_name = data.get('newplan', '').strip()[:255]  # Limiting to 255 characters
+    card_number = data.get('cardNumber', '').strip()[:255]  # Limiting to 255 characters
+    card_name = data.get('cardName', '').strip()[:255]  # Limiting to 255 characters
+    expiry_date = data.get('expiryDate', '').strip()[:255]  # Limiting to 255 characters
+    cvc = data.get('cvc', '').strip()[:255]  # Limiting to 255 characters
 
+    # Check if any field exceeds 255 characters
+    if len(plan_name) > 255 or len(card_number) > 255 or len(card_name) > 255 or len(expiry_date) > 255 or len(cvc) > 255:
+        return jsonify({"message": "One or more fields exceed the maximum character limit of 255."}), 400
+    
     # Validate input fields
     if not all([plan_name, card_number, card_name, expiry_date, cvc]):
         return jsonify({"message": "All fields are required."}), 400
@@ -389,7 +396,7 @@ def delete_account():
 
 def reset_password():
     data = request.get_json()
-    email = data.get('email', '').strip()
+    email = data.get('email', '').strip()[:255]  # Limiting to 255 characters
 
     if not email:
         return jsonify({"message": "Email is required."}), 400
@@ -427,40 +434,46 @@ def reset_with_token(token):
 
     elif request.method == 'POST':
         data = request.form
-        password = data.get('password', '').strip()
-        confirm_password = data.get('confirm_password', '').strip()
-
+        password = data.get('password', '').strip()[:255]  # Limiting to 255 characters
+        confirm_password = data.get('confirm_password', '').strip()[:255]  # Limiting to 255 characters
+        
         if not password or not confirm_password:
-            flash("All fields are required.")
+            flash("All fields are required.", "error")
             return redirect(url_for('reset_with_token', token=token))
 
         if password != confirm_password:
-            flash("Passwords do not match.")
+            flash("Passwords do not match.", "error")
             return redirect(url_for('reset_with_token', token=token))
 
         if len(password) < 8:
-            flash("Password must be at least 8 characters long.")
+            flash("Password must be at least 8 characters long.", "error")
+            return redirect(url_for('reset_with_token', token=token))
+        
+        if len(password) > 254 or len(confirm_password) > 254:
+            flash("Password exceeds maximum length of 254 characters.", "error")
             return redirect(url_for('reset_with_token', token=token))
 
-        hashed_password = bcrypt.hashpw(password.encode(
-            'utf-8'), bcrypt.gensalt()).decode('utf-8')
+        hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
         connection = create_connection()
         if connection is None:
-            return jsonify({"message": "Failed to connect to the database."}), 500
+            flash("Failed to connect to the database.", "error")
+            return redirect(url_for('reset_with_token', token=token))
 
         cursor = connection.cursor()
         try:
-            cursor.execute(
-                "UPDATE users SET password = %s, reset_token = NULL WHERE reset_token = %s", (hashed_password, token))
+            cursor.execute("UPDATE users SET password = %s, reset_token = NULL WHERE reset_token = %s", (hashed_password, token))
             connection.commit()
-            flash("Password reset successfully.")
+            flash("Password reset successfully.", "success")
             return redirect(url_for('login'))
         except Error as e:
-            return jsonify({"message": str(e)}), 500
+            flash(f"An error occurred: {e}", "error")
+            return redirect(url_for('reset_with_token', token=token))
         finally:
             cursor.close()
             connection.close()
+
+
 
 
 def send_reset_email(to_email, token):
