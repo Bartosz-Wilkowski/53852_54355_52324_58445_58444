@@ -4,20 +4,20 @@
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-xl-10">
-                <div class="card rounded-3 text-black">
+                <div class="card text-black">
                     <div class="row g-0">
                         <div class="card-body p-md-5 mx-md-4">
                             <!-- User Profile section -->
-                            <p>User Profile</p>
+                            <p class="userprofile-title">User Profile</p>
                             <form id="userData">
-                                <p><strong>Username:</strong> <span id="username"></span></p>
-                                <p><strong>Email:</strong> <span id="email"></span></p>
-                                <p><strong>Name:</strong> <span id="name"></span></p>
-                                <p><strong>Surname:</strong> <span id="surname"></span></p>
-                                <p><strong>Plan:</strong> <span id="plan"></span></p>
+                                <p class="user-info"><strong class="user-info-title">Username:</strong> <span id="username" class="user-info-data"></span></p>
+                                <p class="user-info"><strong class="user-info-title">Email:</strong> <span id="email" class="user-info-data"></span></p>
+                                <p class="user-info"><strong class="user-info-title">Name:</strong> <span id="name" class="user-info-data"></span></p>
+                                <p class="user-info"><strong class="user-info-title">Surname:</strong> <span id="surname" class="user-info-data"></span></p>
+                                <p class="user-info"><strong class="user-info-title">Plan:</strong> <span id="plan" class="user-info-data"></span></p>
                                 <div id="paymentHistory"></div>
                                 <p id="deleteResult"></p>
-                                <button id="deleteAccountButton" class="btn btn-danger">Delete Account</button>
+                                <button id="deleteAccountButton" class="delate-account-btn" class="btn btn-danger">Delete Account</button>
                             </form>
                             <!-- Add reset password button -->
                             <button id="resetPasswordButton" class="btn btn-primary mt-3">Reset Password</button>
