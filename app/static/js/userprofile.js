@@ -12,7 +12,11 @@ $(document).ready(function () {
         },
         error: function (xhr, status, error) {
             console.error('Error:', error);
-            $('#userData').html('<p>Error retrieving user data.</p>');
+            if (xhr.status === 401) { // Check for unauthorized status
+                window.location.href = '/'; // Redirect
+            } else {
+                $('#userData').html('<p>Error retrieving user data.</p>');
+            }
         }
     });
 });

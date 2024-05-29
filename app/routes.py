@@ -123,9 +123,13 @@ def register():
             hashed_password = bcrypt.hashpw(
                 password.encode('utf-8'), bcrypt.gensalt())
             try:
+                # Fetch subscription plan name
+                cursor.execute("SELECT plan_name FROM subscription_plan WHERE plan_id = 1")
+                plan_name = cursor.fetchone()[0]
+
                 cursor.execute(
-                    "INSERT INTO users (username, email, password, name, surname) VALUES (%s, %s, %s, %s, %s)",
-                    (username, email, hashed_password.decode('utf-8'), name, surname)
+                    "INSERT INTO users (username, email, password, name, surname, plan_name) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (username, email, hashed_password.decode('utf-8'), name, surname, plan_name)
                 )
                 connection.commit()
                 return jsonify({"message": "Registration successful! Please log in."})
@@ -164,10 +168,14 @@ def get_user_data():
 
     cursor = connection.cursor(dictionary=True)
     try:
-        cursor.execute("SELECT * FROM users WHERE username = %s",
-                       (session['username'],))
+        # Fetch user data
+        cursor.execute("SELECT * FROM users WHERE username = %s", (session['username'],))
         user_data = cursor.fetchone()
         if user_data:
+            # Fetch payment history
+            cursor.execute("SELECT payment_date, amount FROM payments WHERE user_id = %s", (user_data['id'],))
+            payment_history = cursor.fetchall()
+            user_data['payment_history'] = payment_history
             return jsonify(user_data)
         else:
             return jsonify({"message": "User not found."}), 404
@@ -178,6 +186,7 @@ def get_user_data():
         connection.close()
 
 
+
 # function serves the purchase form page.
 def purchase_form():
     if 'username' in session:
@@ -185,6 +194,41 @@ def purchase_form():
     else:
         return redirect(url_for('login'))
 
+
+def get_plans():
+    connection = create_connection()
+    if connection is None:
+        return jsonify({"message": "Failed to connect to the database."}), 500
+
+    cursor = connection.cursor(dictionary=True)
+    try:
+        cursor.execute('SELECT plan_name, price FROM subscription_plan')
+        plans = cursor.fetchall()
+        return jsonify(plans)
+    except Error as e:
+        return jsonify({"message": str(e)}), 500
+    finally:
+        cursor.close()
+        connection.close()
+
+def get_plan_price(plan_name):
+    connection = create_connection()
+    if connection is None:
+        return jsonify({"message": "Failed to connect to the database."}), 500
+
+    cursor = connection.cursor()
+    try:
+        cursor.execute('SELECT price FROM subscription_plan WHERE plan_name = %s', (plan_name,))
+        price = cursor.fetchone()
+        if price:
+            return jsonify(price[0])
+        else:
+            return jsonify({"message": "Price not found for the plan."}), 404
+    except Error as e:
+        return jsonify({"message": str(e)}), 500
+    finally:
+        cursor.close()
+        connection.close()
 
 # function processes plan purchases. It verifies if the user is logged in, processes the payment details, and updates the user's plan in the database.
 # Returns success or error messages as JSON responses, and assumes payment processing is successful for this example.
@@ -297,8 +341,7 @@ def delete_account():
     cursor = connection.cursor()
     try:
         # Fetch user ID based on session username
-        cursor.execute("SELECT id FROM users WHERE username = %s",
-                       (session['username'],))
+        cursor.execute("SELECT id FROM users WHERE username = %s", (session['username'],))
         user_id = cursor.fetchone()
         if not user_id:
             print("User not found.")
@@ -314,9 +357,10 @@ def delete_account():
         cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
         connection.commit()
 
+        # Logout user and delete session data
         session.pop('username', None)
         print("Account deleted successfully.")
-        return jsonify({"message": "Account deleted successfully."})
+        return jsonify({"message": "Account deleted successfully.", "redirect": url_for('home')})
     except Error as e:
         print(f"Error deleting account: {e}")
         return jsonify({"message": str(e)}), 500
