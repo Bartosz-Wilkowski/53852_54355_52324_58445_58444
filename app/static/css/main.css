@@ -356,7 +356,6 @@ nav .navbar-brand:hover {
 }
 
 .translate {
-  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(/img/hero-image-translate-small.jpeg);
   position: relative;
   display: flex;
   justify-content: center;
@@ -364,17 +363,11 @@ nav .navbar-brand:hover {
   text-align: center;
   background-size: cover;
   color: #2e2e2e;
-}
-.translate__box-text {
-  margin-top: 1em;
-  padding: 2em;
-  border-radius: 15px;
-  background-color: #eee;
-  opacity: 0.8;
+  background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(/img/hero-image-translate-small.jpeg);
 }
 .translate__btn {
   display: inline-block;
-  margin-top: 1em;
+  margin-bottom: 1em;
   padding: 0.8em 1.6em;
   font-size: 1.4rem;
   font-family: "Montserrat", sans-serif;
@@ -389,30 +382,66 @@ nav .navbar-brand:hover {
 .translate__btn::before {
   background-color: #d2beb3;
 }
-.translate__box {
-  display: flex;
-  justify-content: space-between;
-  margin: 2em 0;
-  height: 30em;
-  color: #2e2e2e;
+.translate__btn-secondary {
+  display: block;
+  margin: 0 auto;
+}
+.translate__textarea {
+  margin-bottom: 1em;
+  padding: 2rem;
   text-align: center;
-}
-.translate__box-video {
-  border-radius: 15px;
-  background-color: none;
-}
-.translate__box-video video {
-  border-radius: 15px;
-  margin-right: 2em;
-}
-.translate__box-signs {
   border-radius: 15px;
   width: 40em;
   background-color: #eee;
   opacity: 0.8;
 }
-.translate__box-signs--activebox {
-  display: inline-block;
+.translate__prediction {
+  margin-bottom: 1em;
+}
+.translate video {
+  margin: 0 auto;
+  margin-bottom: 2em;
+  border-radius: 15px;
+}
+.translate .placeholder {
+  margin: 0 auto;
+  margin-bottom: 2em;
+  padding: 2.5em;
+  height: 15em;
+  width: 20em;
+  background-color: #eee;
+  text-align: center;
+  border-radius: 15px;
+}
+.translate__svg {
+  color: #4e4e4e;
+}
+.translate .swal2-icon {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto;
+  width: 132px;
+  height: 132px;
+  border-color: #eee !important;
+}
+.translate .swal2-icon .swal2-icon-content {
+  font-size: 80px;
+  color: #eee;
+}
+.translate .swal2-cancel,
+.translate .swal2-styled {
+  margin-top: 1em;
+  margin-bottom: 4em;
+  padding: 0.8em 1.6em;
+  color: #2e2e2e;
+  background-color: #eee;
+  border: none;
+  border-radius: 8px;
+  font-size: 1.4rem;
+  font-weight: 400;
+  font-family: Montserrat, sans-serif;
+  text-transform: uppercase;
 }
 
 .footer {
