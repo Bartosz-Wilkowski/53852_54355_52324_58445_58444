@@ -8,7 +8,7 @@ $(document).ready(function () {
             $('#email').text(userData.email);
             $('#name').text(userData.name);
             $('#surname').text(userData.surname);
-            $('#plan').text(userData.plan);
+            $('#plan').text(userData.plan_name);
         },
         error: function (xhr, status, error) {
             console.error('Error:', error);
@@ -16,12 +16,28 @@ $(document).ready(function () {
         }
     });
 
-    // Handle form submission
+    // Fetch available plans and populate the select dropdown
+    $.ajax({
+        url: '/get-plans',
+        type: 'GET',
+        success: function (plans) {
+            plans.forEach(function (plan) {
+                $('#availableplans').append($('<option>', {
+                    value: plan.plan_name,
+                    text: plan.plan_name + ' - $' + plan.price
+                }));
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+
     $('#purchaseForm').submit(function (event) {
         event.preventDefault();
-
+        // Handle form submission
         var formData = {
-            'newplan': $('#newplan').val().trim(),
+            'newplan': $('#availableplans').val().trim(),
             'cardNumber': $('#cardNumber').val().trim(),
             'cardName': $('#cardName').val().trim(),
             'expiryDate': $('#expiryDate').val().trim(),
@@ -60,13 +76,14 @@ $(document).ready(function () {
         if (!cvcPattern.test(formData.cvc)) {
             $('#resultPurchase').text('Invalid CVC. It should be 3 or 4 digits.');
             return;
+            
         }
-
+        console.log($('#availableplans').val().trim());
         $.ajax({
             type: 'POST',
             url: '/purchase_plan',
             contentType: 'application/json',
-            data: JSON.stringify(formData),
+            data: JSON.stringify(formData), // Send data as JSON
             success: function (response) {
                 $('#resultPurchase').text(response.message);
                 setTimeout(function () {

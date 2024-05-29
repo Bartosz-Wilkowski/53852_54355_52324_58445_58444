@@ -6,9 +6,11 @@ $(document).ready(function () {
             contentType: 'application/json',
             success: function (response) {
                 $('#deleteResult').text(response.message);
-                setTimeout(function () {
-                    window.location.href = '/'; // Redirect to home page
-                }, 2000); // Adjust the delay if needed
+                if (response.redirect) {
+                    setTimeout(function () {
+                        window.location.href = response.redirect; // Redirect to home page
+                    }, 100); // Adjust the delay if needed
+                }
             },
             error: function (xhr, status, error) {
                 var errorMessage = xhr.responseJSON ? xhr.responseJSON.message : "An error occurred";
@@ -16,4 +18,22 @@ $(document).ready(function () {
             }
         });
     });
+    // Add click event handler for reset password button
+    $('#resetPasswordButton').click(function () {
+        $.ajax({
+            type: 'GET',
+            url: '/generate_reset_token',
+            success: function (response) {
+                if (response.reset_link) {
+                    window.location.href = response.reset_link;
+                } else {
+                    alert("Error: Failed to generate reset token.");
+                }
+            },
+            error: function (xhr, status, error) {
+                alert("Error: " + error);
+            }
+        });
+    });
+
 });

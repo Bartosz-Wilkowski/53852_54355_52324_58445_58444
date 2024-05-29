@@ -123,9 +123,13 @@ def register():
             hashed_password = bcrypt.hashpw(
                 password.encode('utf-8'), bcrypt.gensalt())
             try:
+                # Fetch subscription plan name
+                cursor.execute("SELECT plan_name FROM subscription_plan WHERE plan_id = 1")
+                plan_name = cursor.fetchone()[0]
+
                 cursor.execute(
-                    "INSERT INTO users (username, email, password, name, surname) VALUES (%s, %s, %s, %s, %s)",
-                    (username, email, hashed_password.decode('utf-8'), name, surname)
+                    "INSERT INTO users (username, email, password, name, surname, plan_name) VALUES (%s, %s, %s, %s, %s, %s)",
+                    (username, email, hashed_password.decode('utf-8'), name, surname, plan_name)
                 )
                 connection.commit()
                 return jsonify({"message": "Registration successful! Please log in."})
@@ -164,10 +168,20 @@ def get_user_data():
 
     cursor = connection.cursor(dictionary=True)
     try:
-        cursor.execute("SELECT * FROM users WHERE username = %s",
-                       (session['username'],))
+        # Fetch user data
+        cursor.execute("SELECT * FROM users WHERE username = %s", (session['username'],))
         user_data = cursor.fetchone()
         if user_data:
+            # Fetch payment history
+            cursor.execute("SELECT payment_date, amount FROM payments WHERE user_id = %s", (user_data['id'],))
+            payment_history = cursor.fetchall()
+            
+            # Aktualizujemy sposób przekazywania danych JSON
+            if payment_history:
+                user_data['payment_history'] = payment_history
+            else:
+                user_data['payment_history'] = []
+
             return jsonify(user_data)
         else:
             return jsonify({"message": "User not found."}), 404
@@ -186,6 +200,41 @@ def purchase_form():
         return redirect(url_for('login'))
 
 
+def get_plans():
+    connection = create_connection()
+    if connection is None:
+        return jsonify({"message": "Failed to connect to the database."}), 500
+
+    cursor = connection.cursor(dictionary=True)
+    try:
+        cursor.execute('SELECT plan_name, price FROM subscription_plan')
+        plans = cursor.fetchall()
+        return jsonify(plans)
+    except Error as e:
+        return jsonify({"message": str(e)}), 500
+    finally:
+        cursor.close()
+        connection.close()
+
+def get_plan_price(plan_name):
+    connection = create_connection()
+    if connection is None:
+        return jsonify({"message": "Failed to connect to the database."}), 500
+
+    cursor = connection.cursor()
+    try:
+        cursor.execute('SELECT price FROM subscription_plan WHERE plan_name = %s', (plan_name,))
+        price = cursor.fetchone()
+        if price:
+            return jsonify(price[0])
+        else:
+            return jsonify({"message": "Price not found for the plan."}), 404
+    except Error as e:
+        return jsonify({"message": str(e)}), 500
+    finally:
+        cursor.close()
+        connection.close()
+
 # function processes plan purchases. It verifies if the user is logged in, processes the payment details, and updates the user's plan in the database.
 # Returns success or error messages as JSON responses, and assumes payment processing is successful for this example.
 def purchase_plan():
@@ -194,15 +243,14 @@ def purchase_plan():
 
     data = request.get_json()
 
-    plan = data.get('newplan', '').strip()
+    plan_name = data.get('newplan', '').strip()
     card_number = data.get('cardNumber', '').strip()
     card_name = data.get('cardName', '').strip()
     expiry_date = data.get('expiryDate', '').strip()
     cvc = data.get('cvc', '').strip()
-    amount = 10.0
 
     # Validate input fields
-    if not all([plan, card_number, card_name, expiry_date, cvc]):
+    if not all([plan_name, card_number, card_name, expiry_date, cvc]):
         return jsonify({"message": "All fields are required."}), 400
 
     if len(card_number) != 16 or not card_number.isdigit():
@@ -231,9 +279,21 @@ def purchase_plan():
         if user_id is None:
             return jsonify({"message": "User not found."}), 404
         user_id = user_id[0]
+        
+        cursor.execute("SELECT plan_name FROM subscription_plan WHERE plan_name = %s", (plan_name,))
+        result = cursor.fetchone()
+        if result is None:
+            return jsonify({"message": "Selected plan does not exist."}), 400
+        
+        cursor.execute("SELECT price FROM subscription_plan WHERE plan_name = %s", (plan_name,))
+        price = cursor.fetchone()
+        if price is None:
+            return jsonify({"message": "Selected plan does not exist."}), 400
+
+        amount = price[0]
 
         cursor.execute(
-            "UPDATE users SET plan = %s WHERE username = %s", (plan, session['username']))
+            "UPDATE users SET plan_name = %s WHERE username = %s", (plan_name, session['username']))
         connection.commit()
 
         cursor.execute(
@@ -250,8 +310,9 @@ def purchase_plan():
         connection.close()
 
 
+
 def interpreter():
-    return render_template('sli.html')
+    return render_template('sli.html', logged_in=is_logged_in())
 
 
 def format_price(price):
@@ -278,11 +339,10 @@ def pricing():
     cursor.close()
     connection.close()
 
-    return render_template('pricing.html', plans=plans)
+    return render_template('pricing.html', plans=plans, logged_in=is_logged_in())
 
 
 # Define the delete_account function
-
 
 def delete_account():
     if 'username' not in session:
@@ -297,8 +357,7 @@ def delete_account():
     cursor = connection.cursor()
     try:
         # Fetch user ID based on session username
-        cursor.execute("SELECT id FROM users WHERE username = %s",
-                       (session['username'],))
+        cursor.execute("SELECT id FROM users WHERE username = %s", (session['username'],))
         user_id = cursor.fetchone()
         if not user_id:
             print("User not found.")
@@ -314,9 +373,10 @@ def delete_account():
         cursor.execute("DELETE FROM users WHERE id = %s", (user_id,))
         connection.commit()
 
+        # Logout user and delete session data
         session.pop('username', None)
         print("Account deleted successfully.")
-        return jsonify({"message": "Account deleted successfully."})
+        return jsonify({"message": "Account deleted successfully.", "redirect": url_for('home')})
     except Error as e:
         print(f"Error deleting account: {e}")
         return jsonify({"message": str(e)}), 500
@@ -449,6 +509,35 @@ def reset_password_link():
         token = str(uuid.uuid4())
         cursor.execute(
             "UPDATE users SET reset_token = %s WHERE email = %s", (token, email))
+        connection.commit()
+
+        reset_link = f"http://127.0.0.1:5000/reset/{token}"
+        return jsonify({"reset_link": reset_link})
+    except Exception as e:
+        return jsonify({"message": str(e)}), 500
+    finally:
+        cursor.close()
+        connection.close()
+
+def generate_reset_token():
+    if 'username' not in session:
+        return jsonify({"message": "User not logged in."}), 401
+
+    connection = create_connection()
+    if connection is None:
+        return jsonify({"message": "Failed to connect to the database."}), 500
+
+    cursor = connection.cursor(dictionary=True)
+    try:
+        # Fetch user data
+        cursor.execute("SELECT * FROM users WHERE username = %s", (session['username'],))
+        user_data = cursor.fetchone()
+        if not user_data:
+            return jsonify({"message": "User data not found."}), 404
+
+        token = str(uuid.uuid4())
+        cursor.execute(
+            "UPDATE users SET reset_token = %s WHERE username = %s", (token, session['username'],))
         connection.commit()
 
         reset_link = f"http://127.0.0.1:5000/reset/{token}"
