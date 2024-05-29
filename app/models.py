@@ -5,8 +5,9 @@ import numpy as np
 import cv2
 import base64
 import mediapipe as mp
-from .database import create_connection
-from datetime import datetime
+from .database import create_connection, init_db, reset_recognized_count, revoke_drop_privileges
+from datetime import datetime, timedelta
+import uuid  # Import to generate unique guest IDs
 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'AEH'
@@ -27,32 +28,35 @@ model = load_model('models/final_model/final_model.h5')
 def websocket_index():
     return render_template('index.html')
 
-
 def get_user_sign_limit():
     if 'username' in session:
-        connection = create_connection()
-        if connection:
-            cursor = connection.cursor(dictionary=True)
-            cursor.execute(
-                "SELECT plan_name, last_reset, recognized_count FROM users WHERE username = %s", (session['username'],))
-            user_data = cursor.fetchone()
-            cursor.close()
-            connection.close()
-            if user_data:
-                plan = user_data['plan_name']
-                last_reset = user_data['last_reset']
-                if last_reset is None or (datetime.now() - last_reset).days >= 1:
-                    reset_recognition_count(session['username'])
-                    last_reset = datetime.now()
-                    update_last_reset(session['username'], last_reset)
-                if plan == 'Basic':
-                    return 100  # example limit for basic plan
-                elif plan == 'Premium':
-                    return 1000  # example limit for premium plan
-                else:
-                    return 10  # default limit
-    return 10  # default limit for guests
-
+        username = session['username']
+    else:
+        if 'guest_id' not in session:
+            session['guest_id'] = str(uuid.uuid4())  # Generate a unique guest ID
+        username = session['guest_id']
+    
+    connection = create_connection()
+    if connection:
+        cursor = connection.cursor(dictionary=True)
+        cursor.execute('''
+            SELECT users.plan_name, users.last_reset, users.recognized_count, subscription_plan.daily_limit
+            FROM users
+            JOIN subscription_plan ON users.plan_name = subscription_plan.plan_name
+            WHERE users.username = %s
+        ''', (username,))
+        user_data = cursor.fetchone()
+        cursor.close()
+        connection.close()
+        if user_data:
+            last_reset = user_data['last_reset']
+            daily_limit = user_data['daily_limit']
+            if last_reset is None or (datetime.now() - last_reset).days >= 1:
+                reset_recognition_count(username)
+                last_reset = datetime.now()
+                update_last_reset(username, last_reset)
+            return daily_limit if daily_limit is not None else float('inf')  # Handle unlimited plan
+    return 10  # Default limit for guests
 
 def reset_recognition_count(username):
     connection = create_connection()
@@ -64,7 +68,6 @@ def reset_recognition_count(username):
         cursor.close()
         connection.close()
 
-
 def update_last_reset(username, last_reset):
     connection = create_connection()
     if connection:
@@ -74,7 +77,6 @@ def update_last_reset(username, last_reset):
         connection.commit()
         cursor.close()
         connection.close()
-
 
 @socketio.on('image')
 def handle_image(data):
@@ -96,24 +98,46 @@ def handle_image(data):
 
     if results.multi_hand_landmarks:
         for hand_landmarks in results.multi_hand_landmarks:
-            # Extract landmarks
+        
+            h, w, _ = img.shape
+            x_min = int(min(lm.x for lm in hand_landmarks.landmark) * w)
+            x_max = int(max(lm.x for lm in hand_landmarks.landmark) * w)
+            y_min = int(min(lm.y for lm in hand_landmarks.landmark) * h)
+            y_max = int(max(lm.y for lm in hand_landmarks.landmark) * h)
+
+            # Ensure coordinates are within image bounds
+            x_min = max(0, x_min)
+            y_min = max(0, y_min)
+            x_max = min(w, x_max)
+            y_max = min(h, y_max)
+
+            # Region of Interest (ROI)
+            roi = img[y_min:y_max, x_min:x_max]
+            if roi.size == 0:
+                continue
+            zoomed_roi = cv2.resize(roi, None, fx=2.0, fy=2.0, interpolation=cv2.INTER_LINEAR)
+
+            # Adjusting new ROI coordinates to stay within bounds
+            new_y_max = min(y_min + zoomed_roi.shape[0], h)
+            new_y_min = max(0, new_y_max - zoomed_roi.shape[0])
+            new_x_max = min(x_min + zoomed_roi.shape[1], w)
+            new_x_min = max(0, new_x_max - zoomed_roi.shape[1])
+
+            zoomed_roi = zoomed_roi[:new_y_max-new_y_min, :new_x_max-new_x_min]
+
+            img[new_y_min:new_y_max, new_x_min:new_x_max] = zoomed_roi
+
+            # Prepare landmarks for prediction
             landmarks = []
             for lm in hand_landmarks.landmark:
                 landmarks.append([lm.x, lm.y, lm.z])
 
             landmarks = np.array(landmarks).flatten()
-
-            # Normalize landmarks
-            landmarks = (landmarks - np.min(landmarks)) / \
-                (np.max(landmarks) - np.min(landmarks))
-
-            # Add batch dimension
+            landmarks = (landmarks - np.min(landmarks)) / (np.max(landmarks) - np.min(landmarks))
             landmarks = np.expand_dims(landmarks, axis=0)
 
             # Make prediction
             prediction = model.predict(landmarks)
-
-            # Get the predicted class
             predicted_class = labels[np.argmax(prediction)]
 
             session['recognized_count'] += 1
