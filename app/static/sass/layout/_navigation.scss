@@ -1,9 +1,7 @@
-// żeby podczas scrollowania pod nawigacją na desktopy dodawał się cień
+// żeby podczas scrollowania pod nawigacją na desktopy dodawał się kolor
 .shadow-bg {
-	background-color: $shadow-color;
+	background-color: $main-color;
 }
-
-
 
 .burger-btn {
 	position: fixed;
@@ -82,8 +80,8 @@
 
 	//wygląd prostokątów
 	&__box {
-		padding: 1em 1.5em;
-		margin-top: 1em;
+		padding: 0.5em 1em;
+		margin: 1em;
 		border-radius: 8px;
 		background-color: $light-white;
 		opacity: 0.9;
@@ -92,7 +90,6 @@
 	//wygląd tekstu linków
 	&__item {
 		position: relative;
-		display: block;
 		padding: 0.5em 1.5em;
 		margin: 1.7em 0;
 		font-size: 1.5rem;
@@ -151,24 +148,19 @@
 
 // nawigacja na desktopa
 nav {
-
-	
-z-index: 10;
-transition: background-color .6s;
-
+	z-index: 10;
+	transition: background-color 0.6s;
 
 	.navbar-brand {
 		font-weight: bold;
 		color: $light-dark;
 	}
 
-
 	.nav-link {
 		color: $light-dark;
 		font-size: 1.5rem;
 		text-transform: uppercase;
 		font-weight: 500;
-		
 	}
 
 	.nav-link:focus,
@@ -177,9 +169,4 @@ transition: background-color .6s;
 	.navbar-brand:hover {
 		color: $dark-blue;
 	}
-
-	
-
 }
-
-

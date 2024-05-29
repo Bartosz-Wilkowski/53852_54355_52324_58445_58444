@@ -117,32 +117,32 @@
 
 			&--first {
 				background-image: $light-transparent-color,
-					url(/img/a-americansign.jpeg);
+					url(/static/img/a-americansign.jpeg);
 			}
 
 			&--second {
 				background-image: $light-transparent-color,
-					url(/img/b-americansign.jpeg);
+					url(/static/img/b-americansign.jpeg);
 			}
 
 			&--third {
 				background-image: $light-transparent-color,
-					url(/img/c-americansign.jpeg);
+					url(/static/img/c-americansign.jpeg);
 			}
 
 			&--fourth {
 				background-image: $light-transparent-color,
-					url(/img/d-americansign.jpeg);
+					url(/static/img/d-americansign.jpeg);
 			}
 
 			&--fifth {
 				background-image: $light-transparent-color,
-					url(/img/e-americansign.jpeg);
+					url(/static/img/e-americansign.jpeg);
 			}
 
 			&--sixth {
 				background-image: $light-transparent-color,
-					url(/img/f-americansign.jpeg);
+					url(/static/img/f-americansign.jpeg);
 			}
 		}
 	}
@@ -150,8 +150,6 @@
 
 //sekcja translate
 .translate {
-	background-image: $light-transparent-color,
-		url(/img/hero-image-translate-small.jpeg);
 	position: relative;
 	display: flex;
 	justify-content: center;
@@ -159,18 +157,12 @@
 	text-align: center;
 	background-size: cover;
 	color: $dark;
-
-	&__box-text {
-		margin-top: 1em;
-		padding: 2em;
-		border-radius: 15px;
-		background-color: $light-white;
-		opacity: 0.8;
-	}
+	background-image: $light-transparent-color,
+		url(../img/hero-image-translate-small.jpeg);
 
 	&__btn {
 		display: inline-block;
-		margin-top: 1em;
+		margin-bottom: 1em;
 		padding: 0.8em 1.6em;
 		font-size: 1.4rem;
 		font-family: 'Montserrat', sans-serif;
@@ -186,40 +178,82 @@
 		&::before {
 			background-color: $secondary-color;
 		}
+
+		&-secondary {
+			display: block;
+			margin: 0 auto;
+		}
+	}
+
+	//box, w którym mają wyświetlać się znaki z tłumaczeniem
+	&__textarea {
+		margin-bottom: 1em;
+		padding: 2rem;
+		text-align: center;
+		border-radius: 15px;
+		width: 40em;
+		background-color: $light-white;
+		opacity: 0.8;
+	}
+
+	&__prediction {
+		margin-bottom: 1em;
 	}
 
 	//stylowanie video-boxa
 
-	&__box {
-		display: flex;
-		justify-content: space-between;
-		margin: 2em 0;
-		height: 30em;
-		color: $dark;
+	video {
+		margin: 0 auto;
+		margin-bottom: 2em;
+		border-radius: 15px;
+	}
+
+	.placeholder {
+		margin: 0 auto;
+		margin-bottom: 2em;
+		padding: 2.5em;
+		height: 15em;
+		width: 20em;
+		background-color: $light-white;
 		text-align: center;
+		border-radius: 15px;
+	}
 
-		&-video {
-			border-radius: 15px;
-			background-color: none;
+	&__svg {
+		color: $light-dark;
+	}
 
-			video {
-				border-radius: 15px;
-				margin-right: 2em;
-			}
-		}
+	// icon item (You have reached your daily limit of recognized characters)
+	.swal2-icon {
+		display: flex;
+		justify-content: center;
+		align-items: center;
+		margin: 0 auto;
+		width: 132px;
+		height: 132px;
+		border-color: $light-white !important;
 
-		//drugi box, w którym mają wyświetlać się znaki z tłumaczeniem
-		&-signs {
-			border-radius: 15px;
-			width: 40em;
-			background-color: $light-white;
-			opacity: 0.8;
-			
-			
-
-			&--activebox {
-			display: inline-block;
-			}
+		.swal2-icon-content {
+			font-size: 80px;
+			color: $light-white;
 		}
 	}
+
+	// Upgrade Plan button
+	.swal2-cancel,
+	.swal2-styled {
+		margin-top: 1em;
+		margin-bottom: 4em;
+		padding: 0.8em 1.6em;
+		color: $dark;
+		background-color: $light-white;
+		border: none;
+		border-radius: 8px;
+		font-size: 1.4rem;
+		font-weight: 400;
+		font-family: Montserrat, sans-serif;
+		text-transform: uppercase;
+	
+	}
 }
+

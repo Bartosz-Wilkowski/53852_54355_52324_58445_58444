@@ -30,24 +30,24 @@
     <nav class="nav">
         <div class="nav__items">
             <div class="nav__box">
-                <a class="nav-link" href="{{ url_for('home') }}#howitworks">how it works</a>
+                <a class="nav__item nav-link" href="{{ url_for('home') }}#howitworks">how it works</a>
             </div>
             <div class="nav__box">
-                <a class="nav-link" href="{{ url_for('home') }}#signlanguage">ASL alphabet</a>
+                <a class=" nav__item nav-link" href="{{ url_for('home') }}#signlanguage">ASL alphabet</a>
             </div>
             <div class="nav__box">
-                <a class="nav-link" href="{{ url_for('home') }}#subscription">subscription</a>
+                <a class="nav__item nav-link" href="{{ url_for('home') }}#subscription">subscription</a>
             </div>
             <div class="nav__box">
-                <a class="nav-link" href="{{ url_for('interpreter') }}">start translation</a>
-                <div class="nav__box">
-                    {% if logged_in %}
-                    <a class="nav-link" href="{{ url_for('userprofile') }}">Profile</a>
-                    <a class="nav-link" href="{{ url_for('logout') }}">Logout</a>
-                    {% else %}
-                    <a class="nav-link" href="{{ url_for('login') }}">Login</a>
-                    {% endif %}
-                </div>
+                <a class=" nav__item nav-link" href="{{ url_for('interpreter') }}">start translation</a>
+            </div>
+            <div class="nav__box">
+                {% if logged_in %}
+                <a class=" nav__item nav-link" href="{{ url_for('userprofile') }}">Profile</a>
+                <a class="nav__item nav-link" href="{{ url_for('logout') }}">Logout</a>
+                {% else %}
+                <a class="nav__item nav-link" href="{{ url_for('login') }}">Login</a>
+                {% endif %}
             </div>
     </nav>
 
@@ -79,8 +79,11 @@
     {% endblock %}
     <footer class="footer">
         <div class="wrapper">
+            <hr class="footer__line"/>
             <div class="footer__boxes">
+            
                 <div class="footer__box">
+            
                     <h3 class="footer__box-title">
                         <i class="fa-solid fa-hands-asl-interpreting"></i> American Sign Language
                         Detector Co.
