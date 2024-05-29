@@ -28,6 +28,7 @@ model = load_model('models/final_model/final_model.h5')
 def websocket_index():
     return render_template('index.html')
 
+
 def get_user_sign_limit():
     if 'username' in session:
         username = session['username']
@@ -58,6 +59,7 @@ def get_user_sign_limit():
             return daily_limit if daily_limit is not None else float('inf')  # Handle unlimited plan
     return 10  # Default limit for guests
 
+
 def reset_recognition_count(username):
     connection = create_connection()
     if connection:
@@ -68,6 +70,7 @@ def reset_recognition_count(username):
         cursor.close()
         connection.close()
 
+
 def update_last_reset(username, last_reset):
     connection = create_connection()
     if connection:
@@ -77,6 +80,18 @@ def update_last_reset(username, last_reset):
         connection.commit()
         cursor.close()
         connection.close()
+
+
+def update_recognized_count(username, count):
+    connection = create_connection()
+    if connection:
+        cursor = connection.cursor()
+        cursor.execute(
+            "UPDATE users SET recognized_count = %s WHERE username = %s", (count, username))
+        connection.commit()
+        cursor.close()
+        connection.close()
+
 
 @socketio.on('image')
 def handle_image(data):
@@ -141,6 +156,14 @@ def handle_image(data):
             predicted_class = labels[np.argmax(prediction)]
 
             session['recognized_count'] += 1
+
+            # Update the recognized count in the database
+            if 'username' in session:
+                username = session['username']
+            else:
+                username = session['guest_id']
+            update_recognized_count(username, session['recognized_count'])
+
             emit('prediction', {'prediction': predicted_class})
             return
 
