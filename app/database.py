@@ -2,10 +2,12 @@ import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
 
-# Function to create a database connection
-
-
 def create_connection():
+    """
+    Function to create a database connection.
+    Returns:
+        connection: MySQL database connection object.
+    """
     try:
         connection = mysql.connector.connect(
             host='localhost',
@@ -17,7 +19,6 @@ def create_connection():
             cursor.execute("CREATE DATABASE IF NOT EXISTS user_auth")
             cursor.close()
             connection.close()
-
         connection = mysql.connector.connect(
             host='localhost',
             database='user_auth',
@@ -30,14 +31,16 @@ def create_connection():
         print(f"Error: {e}")
         return None
 
-
 def init_db():
+    """
+    Initialize the MySQL database by creating necessary tables.
+    """
     connection = create_connection()
     if connection is None:
         print("Failed to connect to the database.")
         return
     cursor = connection.cursor()
-
+    
     # Create subscription_plan table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS subscription_plan (
@@ -48,7 +51,7 @@ def init_db():
             UNIQUE (plan_name)   
         )
     ''')
-
+    
     # Insert three plans into subscription_plan table using INSERT IGNORE
     cursor.execute('''
         INSERT IGNORE INTO subscription_plan (plan_name, daily_limit, price) VALUES
@@ -56,7 +59,7 @@ def init_db():
         ('Standard', 250, 19.99),
         ('Unlimited', NULL, 49.99)
     ''')
-
+    
     # Create users table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS users (
@@ -75,13 +78,13 @@ def init_db():
             FOREIGN KEY (plan_name) REFERENCES subscription_plan(plan_name)
         )
     ''')
-
+    
     # Insert aehuser user into users table using INSERT IGNORE
     cursor.execute('''
         INSERT IGNORE INTO users (username, email, password, name, surname, plan_name) VALUES
         ('aehuser', 'aehuser@aeh.pl', 'Aehuser1', 'Aeh', 'User', 'Unlimited')
     ''')
-
+    
     # Create payments table
     cursor.execute('''
         CREATE TABLE IF NOT EXISTS payments (
@@ -92,29 +95,28 @@ def init_db():
             FOREIGN KEY (user_id) REFERENCES users(id)
         )
     ''')
-
+    
     connection.commit()
     cursor.close()
     connection.close()
 
-
 def revoke_drop_privileges():
+    """
+    Revoke DROP privileges from specific users in the database.
+    """
     connection = create_connection()
     if connection is None:
         print("Failed to connect to the database.")
         return
     cursor = connection.cursor()
-
     try:
-        # Create a string with REVOKE statements
         cursor.execute('''
             SELECT GROUP_CONCAT(CONCAT('REVOKE DROP ON `user_auth`.* FROM `', user, '`@`', host, '`;') SEPARATOR ' ')
             INTO @sql
             FROM mysql.db
             WHERE db = 'user_auth' AND user != 'root' AND user != 'mysql.sys';
         ''')
-
-        # Ensure @sql is not NULL
+        
         cursor.execute("SET @sql = IFNULL(@sql, '');")
         cursor.execute('PREPARE stmt FROM @sql;')
         cursor.execute('EXECUTE stmt;')
@@ -126,24 +128,23 @@ def revoke_drop_privileges():
         cursor.close()
         connection.close()
 
-
 def reset_recognized_count():
+    """
+    Reset recognized count and last reset for Basic and Standard plans in the database.
+    """
     connection = create_connection()
     if connection is None:
         print("Failed to connect to the database.")
         return
     cursor = connection.cursor()
-
     try:
         now = datetime.now()
         midnight = datetime.combine(now.date(), datetime.min.time())
-        
         cursor.execute('''
             UPDATE users
             SET recognized_count = 0, last_reset = %s
             WHERE plan_name IN ('Basic', 'Standard') AND (last_reset IS NULL OR last_reset < %s)
         ''', (midnight, midnight))
-        
         connection.commit()
         print("recognized_count reset and last_reset updated successfully for Basic and Standard plans.")
     except Error as e:
@@ -151,7 +152,6 @@ def reset_recognized_count():
     finally:
         cursor.close()
         connection.close()
-
 
 if __name__ == "__main__":
     init_db()
