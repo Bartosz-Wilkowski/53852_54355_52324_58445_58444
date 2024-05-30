@@ -1,54 +1,103 @@
 {% extends "base.html" %}
 {% block content %}
+
+
+
+
 <section class="header">
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
-            <div class="col-xl-10">
+            <div class="col-md-10 col-lg-8 col-xl-5">
                 <div class="card rounded-3 text-black">
                     <div class="row g-0">
-
+                        <h1>Payment Form</h1>
                         <div class="card-body p-md-5 mx-md-4">
                             <!--User data section-->
-                            <h1>Purchase Plan</h1>
-                            <form id="userData">
-                                <p><strong>Username:</strong> <span id="username"></span></p>
-                                <p><strong>Email:</strong> <span id="email"></span></p>
-                                <p><strong>Full Name:</strong> <span id="name"></span> <span id="surname"></span></p>
-                                <p><strong>Current Plan:</strong> <span id="plan"></span></p>
-                            </form>
-                            <form id="purchaseForm">
-                                <form id="purchaseForm">
-                                    <label for="availableplans">Select Plan:</label>
-                                    <select id="availableplans" name="availableplans">
-                                        <!-- Option tags will be dynamically added here -->
-                                    </select>
-                                    <div>
-                                        <label for="cardNumber">Card Number:</label>
-                                        <input type="text" id="cardNumber" name="cardNumber" required>
-                                    </div>
-                                    <div>
-                                        <label for="cardName">Name on Card:</label>
-                                        <input type="text" id="cardName" name="cardName" required>
-                                    </div>
-                                    <div>
-                                        <label for="expiryDate">Expiry Date (MM/YY):</label>
-                                        <input type="text" id="expiryDate" name="expiryDate" required>
-                                    </div>
-                                    <div>
-                                        <label for="cvc">CVC:</label>
-                                        <input type="text" id="cvc" name="cvc" required>
-                                    </div>
-                                    <button type="submit">Submit</button>
-                                    <div id="resultPurchase"></div>
+                            <h2>User Data</h1>
+                                <form id="userData">
+                                    <p class="new-plan-data"><strong class="user-info-title">Username:</strong> <span
+                                            id="username" class="user-info-data"></span></p>
+                                    <p class="new-plan-data"><strong class="user-info-title">Email:</strong> <span
+                                            id="email" class="user-info-data"></span></p>
+                                    <p class="new-plan-data"><strong class="user-info-title">Full Name:</strong> <span
+                                            id="name" class="user-info-data"></span> <span id="surname"
+                                            class="user-info-data"></span></p>
+                                    <p class="new-plan-data"><strong class="user-info-title">Current Plan:</strong> <span
+                                            id="plan" class="user-info-data"></span></p>
                                 </form>
-                                
-                            </form>
-                        </div>
+                                <form id="purchaseForm">
+                                    <form id="purchaseForm">
 
+
+
+                                        <div class="card rounded-3">
+                                            <div class="card-body p-4">
+                                                <div class="text-center mb-4">
+                                                    <h1>
+                                                        Payment settings
+                                                    </h1>
+                                                    <div class="new-plan-info">
+                                                        <label for="availableplans">Select New Plan:</label>
+                                                        <select id="availableplans" name="availableplans">
+                                                            <!-- Option tags will be dynamically added here -->
+                                                        </select>
+                                                    </div>
+                                                    <div data-mdb-input-init class="form-outline mb-4">
+                                                        <input type="text" id="cardName" name="cardName"
+                                                            class="form-control form-control-lg"
+                                                            placeholder="Enter name on card" />
+                                                    </div>
+
+                                                    <div class="row mb-4">
+                                                        <div class="col-7">
+                                                            <div data-mdb-input-init class="form-outline">
+                                                                <input type="text" id="cardNumber" name="cardNumber"
+                                                                    class="form-control form-control-lg"
+                                                                    placeholder="1234 5678 1234 5678" required />
+                                                            </div>
+                                                        </div>
+
+
+
+                                                        <div class="col-3">
+                                                            <div data-mdb-input-init class="form-outline">
+                                                                <input type="password" id="expiryDate"
+                                                                    class="form-control form-control-lg"
+                                                                    placeholder="MM/YYYY" name="expiryDate" required />
+                                                            </div>
+                                                        </div>
+                                                        <div>
+                                                            <div class="col-2">
+                                                                <div data-mdb-input-init class="form-outline">
+                                                                    <input type="password" id="cvc" name="cvc"
+                                                                        class="form-control form-control-lg"
+                                                                        placeholder="Cvv" required />
+                                                                    <label class="form-label"
+                                                                        for="formControlLgcvv"></label>
+                                                                </div>
+                                                            </div>
+                                                        </div>
+                                                    </div>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                        </div>
                     </div>
+
+                    <button type="submit" data-mdb-button-init data-mdb-ripple-init
+                        class="btn btn-success btn-lg btn-block">Submit</button>
+
+                    <div id="resultPurchase"></div>
+                    </form>
+
+                    </form>
                 </div>
+
             </div>
         </div>
+    </div>
+    </div>
     </div>
     </div>
 </section>

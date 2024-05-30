@@ -1340,3 +1340,18 @@ body{background-color:#eee;}
     width: 30%;
   }
 }/*# sourceMappingURL=main.css.map */
+.new-plan-data {
+  text-align: left;
+  padding: 1rem;
+  font-weight: 600;
+}
+
+.new-plan-info {
+  text-align: center;
+  padding: 1rem;
+  border-radius: 8px;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+
+  
