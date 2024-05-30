@@ -1,4 +1,9 @@
 $(document).ready(function () {
+    /**
+     * Handles the account deletion process.
+     * Sends an AJAX POST request to delete the account.
+     * Displays the result message and redirects if necessary.
+     */
     $('#deleteAccountButton').click(function () {
         $.ajax({
             type: 'POST',
@@ -18,7 +23,12 @@ $(document).ready(function () {
             }
         });
     });
-    // Add click event handler for reset password button
+
+    /**
+     * Handles the password reset token generation process.
+     * Sends an AJAX GET request to generate a reset token.
+     * Redirects to the reset link if successful.
+     */
     $('#resetPasswordButton').click(function () {
         $.ajax({
             type: 'GET',
@@ -35,5 +45,4 @@ $(document).ready(function () {
             }
         });
     });
-
 });

@@ -1,3 +1,8 @@
+/**
+ * @fileoverview This file contains the JavaScript for handling navigation, webcam access, section observation, 
+ * and updating the footer year.
+ */
+
 const nav = document.querySelector('.nav');
 const navBtn = document.querySelector('.burger-btn');
 const allNavItems = document.querySelectorAll('.nav__item');
@@ -8,110 +13,119 @@ const footerYear = document.querySelector('.footer__year');
 const translateText = document.querySelector('.translate__box-signs');
 const translateBtn = document.getElementById('startbtn');
 
-//funkcja, która dodaje klasę nav--active kiedy kliknie się na burger icon (czyli otwiera nawigację)
+/**
+ * Toggles the navigation menu visibility.
+ * Adds a class to open the navigation and removes it to close the navigation.
+ */
 const handleNav = () => {
-	nav.classList.toggle('nav--active');
+    nav.classList.toggle('nav--active');
 
-	//żeby kolor barsów w nawigacji pozostawał biały
-	navBtnBars.classList.remove('black-bars-color');
+    // Ensure the navigation button bars remain white.
+    navBtnBars.classList.remove('black-bars-color');
 
-	//żeby nawigacja zamykała się automatycznie po kliknięciu w dany link:
-	allNavItems.forEach((item) => {
-		item.addEventListener('click', () => {
-			nav.classList.remove('nav--active');
-		});
-	});
+    // Close the navigation when a navigation item is clicked.
+    allNavItems.forEach((item) => {
+        item.addEventListener('click', () => {
+            nav.classList.remove('nav--active');
+        });
+    });
 
-	//animacja dla linków znajdujących się w nawigacji
-	handleNavItemsAnimation();
+    // Handle animations for navigation items.
+    handleNavItemsAnimation();
 };
 
+/**
+ * Handles the animation for the navigation items.
+ * Adds an animation class to each item with a delay.
+ */
 const handleNavItemsAnimation = () => {
-	let delayTime = 0;
+    let delayTime = 0;
 
-	allNavItems.forEach((item) => {
-		item.classList.toggle('nav-items-animation');
-		item.style.animationDelay = '.' + delayTime + 's';
-		delayTime++;
-	});
+    allNavItems.forEach((item) => {
+        item.classList.toggle('nav-items-animation');
+        item.style.animationDelay = '.' + delayTime + 's';
+        delayTime++;
+    });
 
-	allNavBoxes.forEach((item) => {
-		item.classList.toggle('nav-items-animation');
-		item.style.animationDelay = '.' + delayTime + 's';
-		delayTime++;
-	});
+    allNavBoxes.forEach((item) => {
+        item.classList.toggle('nav-items-animation');
+        item.style.animationDelay = '.' + delayTime + 's';
+        delayTime++;
+    });
 };
 
-//użycie webcam
+/**
+ * Opens the webcam and displays the video stream in the video element.
+ * Ensures that the user's media devices are accessed.
+ */
 function openCam() {
-	let All_mediaDevices = navigator.mediaDevices;
-	if (!All_mediaDevices || !All_mediaDevices.getUserMedia) {
-		console.log('getUserMedia() not supported.');
-		return;
-	}
-	All_mediaDevices.getUserMedia({
-		audio: false,
-		video: true,
-	})
-		.then(function (vidStream) {
-			var video = document.getElementById('videocam');
-			if ('srcObject' in video) {
-				video.srcObject = vidStream;
-			} else {
-				video.src = window.URL.createObjectURL(vidStream);
-			}
-			video.onloadedmetadata = function (e) {
-				video.play();
-			};
-		})
-		.catch(function (e) {
-			console.log(e.name + ': ' + e.message);
-		});
+    let All_mediaDevices = navigator.mediaDevices;
+    if (!All_mediaDevices || !All_mediaDevices.getUserMedia) {
+        console.log('getUserMedia() not supported.');
+        return;
+    }
+    All_mediaDevices.getUserMedia({
+        audio: false,
+        video: true,
+    })
+    .then(function (vidStream) {
+        var video = document.getElementById('videocam');
+        if ('srcObject' in video) {
+            video.srcObject = vidStream;
+        } else {
+            video.src = window.URL.createObjectURL(vidStream);
+        }
+        video.onloadedmetadata = function (e) {
+            video.play();
+        };
+    })
+    .catch(function (e) {
+        console.log(e.name + ': ' + e.message);
+    });
 }
 
-//zmiana koloru pasków nawigacji (bars) na ciemniejszy (ta funkcja będzie obserwowała, na której sekcji właśnie jest użytkownik)
+/**
+ * Observes the user's scroll position and changes the navigation button bars' color
+ * based on the section's background color.
+ */
 const handleObserver = () => {
-	const currentSection = window.scrollY;
+    const currentSection = window.scrollY;
 
-	allSections.forEach((section) => {
-		if (
-			section.classList.contains('white-section') &&
-			section.offsetTop <= currentSection + 60
-		) {
-			navBtnBars.classList.add('black-bars-color');
-		} else if (
-			!section.classList.contains('white-section') &&
-			section.offsetTop <= currentSection + 60
-		) {
-			navBtnBars.classList.remove('black-bars-color');
-		}
-	});
+    allSections.forEach((section) => {
+        if (section.classList.contains('white-section') && section.offsetTop <= currentSection + 60) {
+            navBtnBars.classList.add('black-bars-color');
+        } else if (!section.classList.contains('white-section') && section.offsetTop <= currentSection + 60) {
+            navBtnBars.classList.remove('black-bars-color');
+        }
+    });
 };
 
-// żeby podczas scrollowania pod nawigacją na desktopy dodawał się cień
+/**
+ * Adds a shadow to the navigation bar when the user scrolls down the page.
+ */
 document.addEventListener('DOMContentLoaded', function () {
-	const nav = document.querySelector('.navbar');
+    const nav = document.querySelector('.navbar');
 
-	function addShadow() {
-		if (window.scrollY >= 50) {
-			nav.classList.add('shadow-bg');
-		} else {
-			nav.classList.remove('shadow-bg');
-		}
-	}
+    function addShadow() {
+        if (window.scrollY >= 50) {
+            nav.classList.add('shadow-bg');
+        } else {
+            nav.classList.remove('shadow-bg');
+        }
+    }
 
-	window.addEventListener('scroll', addShadow);
+    window.addEventListener('scroll', addShadow);
 });
 
-//żeby w footerze automatycznie był wyświetlany poprawny rok
+/**
+ * Updates the footer year to the current year.
+ */
 const handleCurrentYear = () => {
-	const year = new Date().getFullYear();
-	footerYear.innerText = year;
+    const year = new Date().getFullYear();
+    footerYear.innerText = year;
 };
 
 handleCurrentYear();
 
 navBtn.addEventListener('click', handleNav);
-
-//wywołanie funckji zmieniającej kolor pasków nawigacji (barsów):
 window.addEventListener('scroll', handleObserver);
