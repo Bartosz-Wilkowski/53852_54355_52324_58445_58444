@@ -36,7 +36,7 @@
                 <a class=" nav__item nav-link" href="{{ url_for('home') }}#signlanguage">ASL alphabet</a>
             </div>
             <div class="nav__box">
-                <a class="nav__item nav-link" href="{{ url_for('home') }}#subscription">subscription</a>
+                <a class="nav-link" href="{{ url_for('pricing') }}">subscription</a>
             </div>
             <div class="nav__box">
                 <a class=" nav__item nav-link" href="{{ url_for('interpreter') }}">start translation</a>
@@ -62,7 +62,7 @@
                 <div class="navbar-nav ms-auto">
                     <a class="nav-link" href="{{ url_for('home') }}#howitworks">how it works</a>
                     <a class="nav-link" href="{{ url_for('home') }}#signlanguage">ASL alphabet</a>
-                    <a class="nav-link" href="{{ url_for('home') }}#subscription">subscription</a>
+                    <a class="nav-link" href="{{ url_for('pricing') }}">subscription</a>
                     <a class="nav-link" href="{{ url_for('interpreter') }}">start translation</a>
                     {% if logged_in %}
                     <a class="nav-link" href="{{ url_for('userprofile') }}">Profile</a>

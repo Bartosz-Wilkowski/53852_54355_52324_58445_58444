@@ -1,21 +1,22 @@
 $(document).ready(function () {
     $('#registerForm').submit(function (event) {
         event.preventDefault();
-
+    
         var username = $('#username').val().trim();
-        var name = $('#name').val().trim();
-        var surname = $('#surname').val().trim();
-        var email = $('#email').val().trim();
-        var password = $('#password').val().trim();
+        var name = $('#name').val().trim(); 
+        var surname = $('#surname').val().trim(); 
+        var email = $('#email').val().trim(); 
+        var password = $('#password').val().trim(); 
+        
+        // Check if any field exceeds 255 characters
+        if (username.length > 255 || name.length > 255 || surname.length > 255 || email.length > 255 || password.length > 255) {
+            $('#registerResult').text('One or more fields exceed the maximum character limit of 255.');
+            return;
+        }
 
         // Basic validation
         if (!username || !name || !surname || !email || !password) {
             $('#registerResult').text('All fields are required.');
-            return;
-        }
-
-        if (password.length < 8) {
-            $('#registerResult').text('Password must be at least 8 characters long.');
             return;
         }
 

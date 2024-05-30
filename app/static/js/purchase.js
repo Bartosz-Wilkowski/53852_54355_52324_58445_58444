@@ -8,7 +8,7 @@ $(document).ready(function () {
             $('#email').text(userData.email);
             $('#name').text(userData.name);
             $('#surname').text(userData.surname);
-            $('#plan').text(userData.plan);
+            $('#plan').text(userData.plan_name);
         },
         error: function (xhr, status, error) {
             console.error('Error:', error);
@@ -16,17 +16,39 @@ $(document).ready(function () {
         }
     });
 
-    // Handle form submission
+    // Fetch available plans and populate the select dropdown
+    $.ajax({
+        url: '/get-plans',
+        type: 'GET',
+        success: function (plans) {
+            plans.forEach(function (plan) {
+                $('#availableplans').append($('<option>', {
+                    value: plan.plan_name,
+                    text: plan.plan_name + ' - $' + plan.price
+                }));
+            });
+        },
+        error: function (xhr, status, error) {
+            console.error('Error:', error);
+        }
+    });
+
     $('#purchaseForm').submit(function (event) {
         event.preventDefault();
-
+        // Handle form submission
         var formData = {
-            'newplan': $('#newplan').val().trim(),
+            'newplan': $('#availableplans').val().trim(),
             'cardNumber': $('#cardNumber').val().trim(),
             'cardName': $('#cardName').val().trim(),
             'expiryDate': $('#expiryDate').val().trim(),
             'cvc': $('#cvc').val().trim()
         };
+
+        // Check if any field exceeds 255 characters
+        if (formData.newplan.length > 255 || formData.cardNumber.length > 255 || formData.cardName.length > 255 || formData.expiryDate.length > 255 || formData.cvc.length > 255) {
+            $('#resultPurchase').text('One or more fields exceed the maximum character limit of 255.');
+            return;
+        }
 
         // Basic validation
         if (!formData.newplan || !formData.cardNumber || !formData.cardName || !formData.expiryDate || !formData.cvc) {
@@ -60,13 +82,14 @@ $(document).ready(function () {
         if (!cvcPattern.test(formData.cvc)) {
             $('#resultPurchase').text('Invalid CVC. It should be 3 or 4 digits.');
             return;
-        }
 
+        }
+        console.log($('#availableplans').val().trim());
         $.ajax({
             type: 'POST',
             url: '/purchase_plan',
             contentType: 'application/json',
-            data: JSON.stringify(formData),
+            data: JSON.stringify(formData), // Send data as JSON
             success: function (response) {
                 $('#resultPurchase').text(response.message);
                 setTimeout(function () {
