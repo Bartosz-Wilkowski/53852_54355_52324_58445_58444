@@ -594,13 +594,48 @@ nav .navbar-brand:hover {
 }
 
 .modal-content {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   color: #2e2e2e;
   background-color: #b3c8cf;
+  padding: 2em;
+}
+.modal-content .close {
+  position: absolute;
+  top: 2vh;
+  left: 10vh;
+  font-size: 4rem;
+  color: #4e4e4e;
+  cursor: pointer;
 }
 .modal-content h2 {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-bottom: 4rem;
+}
+.modal-content input {
+  margin-top: 1em;
+  margin-right: 2rem;
+  padding: 0.8em 1.6em;
+  font-size: 1.4rem;
+  background: #eee;
+  border-radius: 8px;
+  color: #4e4e4e;
+}
+.modal-content button {
+  margin-top: 1em;
+  padding: 0.8em 1.6em;
+  font-size: 1.4rem;
+  background: #eee;
+  border: 2px solid #eee;
+  border-radius: 8px;
+  color: #4e4e4e;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
 }
 
 .wrapper {
