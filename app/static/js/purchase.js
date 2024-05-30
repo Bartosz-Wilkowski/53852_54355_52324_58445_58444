@@ -44,6 +44,12 @@ $(document).ready(function () {
             'cvc': $('#cvc').val().trim()
         };
 
+        // Check if any field exceeds 255 characters
+        if (formData.newplan.length > 255 || formData.cardNumber.length > 255 || formData.cardName.length > 255 || formData.expiryDate.length > 255 || formData.cvc.length > 255) {
+            $('#resultPurchase').text('One or more fields exceed the maximum character limit of 255.');
+            return;
+        }
+
         // Basic validation
         if (!formData.newplan || !formData.cardNumber || !formData.cardName || !formData.expiryDate || !formData.cvc) {
             $('#resultPurchase').text('All fields are required.');
@@ -76,7 +82,7 @@ $(document).ready(function () {
         if (!cvcPattern.test(formData.cvc)) {
             $('#resultPurchase').text('Invalid CVC. It should be 3 or 4 digits.');
             return;
-            
+
         }
         console.log($('#availableplans').val().trim());
         $.ajax({

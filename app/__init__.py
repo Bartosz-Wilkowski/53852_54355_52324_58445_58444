@@ -26,7 +26,7 @@ app.add_url_rule('/reset_password_link', view_func=reset_password_link, methods=
 app.add_url_rule('/reset/<token>', view_func=reset_with_token, methods=['GET', 'POST'])
 app.add_url_rule('/get-plans', view_func=get_plans, methods=['GET'])
 app.add_url_rule('/get-plan-price/<plan_name>', view_func=get_plan_price, methods=['GET'])
-app.add_url_rule('/generate_reset_token', view_func=generate_reset_token, methods=['GET'])
+app.add_url_rule('/generate_reset_token', view_func=generate_reset_token, methods=['GET', 'POST'])
 # Initialize the database
 init_db()
 
