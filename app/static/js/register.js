@@ -1,11 +1,45 @@
+/**
+ * @fileoverview This file contains the client-side JavaScript for handling user registration.
+ * It includes form validation and AJAX request submission to register a new user.
+ */
+
 $(document).ready(function () {
+    /**
+     * Event listener for the registration form submission.
+     * Prevents the default form submission, performs validation, and sends an AJAX request to register the user.
+     * @param {Event} event - The form submission event.
+     */
     $('#registerForm').submit(function (event) {
         event.preventDefault();
-    
+        
+        /**
+         * The username entered by the user.
+         * @type {string}
+         */
         var username = $('#username').val().trim();
+
+        /**
+         * The name entered by the user.
+         * @type {string}
+         */
         var name = $('#name').val().trim(); 
+
+        /**
+         * The surname entered by the user.
+         * @type {string}
+         */
         var surname = $('#surname').val().trim(); 
+
+        /**
+         * The email entered by the user.
+         * @type {string}
+         */
         var email = $('#email').val().trim(); 
+
+        /**
+         * The password entered by the user.
+         * @type {string}
+         */
         var password = $('#password').val().trim(); 
         
         // Check if any field exceeds 255 characters
@@ -42,6 +76,10 @@ $(document).ready(function () {
             return;
         }
         
+        /**
+         * The form data to be sent in the AJAX request.
+         * @type {Object}
+         */
         var formData = {
             'username': username,
             'name': name,
@@ -50,6 +88,7 @@ $(document).ready(function () {
             'password': password
         };
 
+        // Send AJAX request to register the user
         $.ajax({
             type: 'POST',
             url: '/register',

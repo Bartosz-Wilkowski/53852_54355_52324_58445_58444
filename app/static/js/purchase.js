@@ -1,5 +1,12 @@
+/**
+ * @fileoverview This file contains the client-side JavaScript for fetching user data, displaying available plans,
+ * and handling the purchase form submission.
+ */
+
 $(document).ready(function () {
-    // Fetch user data and display it
+    /**
+     * Fetch user data from the server and display it on the page.
+     */
     $.ajax({
         url: '/get-user-data',
         type: 'GET',
@@ -16,7 +23,9 @@ $(document).ready(function () {
         }
     });
 
-    // Fetch available plans and populate the select dropdown
+    /**
+     * Fetch available plans from the server and populate the select dropdown.
+     */
     $.ajax({
         url: '/get-plans',
         type: 'GET',
@@ -33,9 +42,18 @@ $(document).ready(function () {
         }
     });
 
+    /**
+     * Event listener for the purchase form submission.
+     * Prevents the default form submission, performs validation, and sends an AJAX request to purchase a plan.
+     * @param {Event} event - The form submission event.
+     */
     $('#purchaseForm').submit(function (event) {
         event.preventDefault();
-        // Handle form submission
+        
+        /**
+         * The form data to be sent in the AJAX request.
+         * @type {Object}
+         */
         var formData = {
             'newplan': $('#availableplans').val().trim(),
             'cardNumber': $('#cardNumber').val().trim(),
@@ -82,9 +100,9 @@ $(document).ready(function () {
         if (!cvcPattern.test(formData.cvc)) {
             $('#resultPurchase').text('Invalid CVC. It should be 3 or 4 digits.');
             return;
-
         }
         console.log($('#availableplans').val().trim());
+        // Send AJAX request to purchase the plan
         $.ajax({
             type: 'POST',
             url: '/purchase_plan',

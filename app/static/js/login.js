@@ -1,4 +1,10 @@
 $(document).ready(function () {
+    /**
+     * Handles the login form submission.
+     * Validates the input fields and sends an AJAX request to the server.
+     *
+     * @param {Event} event - The form submission event.
+     */
     $('#loginForm').submit(function (event) {
         event.preventDefault();
 
@@ -33,6 +39,12 @@ $(document).ready(function () {
         });
     });
 
+    /**
+     * Handles the forgot password form submission.
+     * Sends an AJAX request to get a password reset link.
+     *
+     * @param {Event} event - The form submission event.
+     */
     $("#forgotPasswordForm").submit(function (event) {
         event.preventDefault();
         var email = $("#resetEmail").val();
@@ -55,10 +67,16 @@ $(document).ready(function () {
     });
 });
 
+/**
+ * Displays the forgot password modal.
+ */
 function showForgotPassword() {
     $("#forgotPasswordModal").show();
 }
 
+/**
+ * Closes the forgot password modal and clears the reset result and link.
+ */
 function closeForgotPassword() {
     $("#forgotPasswordModal").hide();
     $("#resetResult").html("");
