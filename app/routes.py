@@ -45,6 +45,38 @@ import smtplib
 from email.mime.text import MIMEText
 from email.mime.multipart import MIMEMultipart
 
+# Adding URL rules for the initial routes
+def routes(app):
+    """
+    Add URL rules to the Flask application for different routes.
+
+    This function adds URL rules to the Flask application for various routes, each associated
+    with a corresponding view function.
+
+    Args:
+        app (Flask): The Flask application instance to which the URL rules will be added.
+
+    Returns:
+        None
+    """
+    app.add_url_rule('/', view_func=home)
+    app.add_url_rule('/login', view_func=login, methods=['GET', 'POST'])
+    app.add_url_rule('/register', view_func=register, methods=['GET', 'POST'])
+    app.add_url_rule('/userprofile', view_func=userprofile, methods=['GET'])
+    app.add_url_rule('/get-user-data', view_func=get_user_data, methods=['GET'])
+    app.add_url_rule('/purchase_form', view_func=purchase_form, methods=['GET'])
+    app.add_url_rule('/purchase_plan', view_func=purchase_plan, methods=['POST'])
+    app.add_url_rule('/logout', view_func=logout, methods=['GET'])
+    app.add_url_rule('/sli', view_func=interpreter)
+    app.add_url_rule('/pricing', view_func=pricing)
+    app.add_url_rule('/delete_account', view_func=delete_account, methods=['POST'])
+    app.add_url_rule('/reset_password', view_func=reset_password, methods=['POST'])
+    app.add_url_rule('/reset_password_link', view_func=reset_password_link, methods=['POST'])   
+    app.add_url_rule('/reset/<token>', view_func=reset_with_token, methods=['GET', 'POST'])
+    app.add_url_rule('/get-plans', view_func=get_plans, methods=['GET'])
+    app.add_url_rule('/get-plan-price/<plan_name>', view_func=get_plan_price, methods=['GET'])
+    app.add_url_rule('/generate_reset_token', view_func=generate_reset_token, methods=['GET', 'POST'])
+
 def home():
     """
     Renders the home page of the website.

@@ -52,6 +52,21 @@ labels = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 
 
 model = load_model('models/final_model/final_model.h5')
 
+def websocket(app):
+    """
+    Add a WebSocket URL rule to the Flask application.
+
+    This function adds a URL rule to the Flask application to handle WebSocket connections.
+    The WebSocket URL rule is set to '/websocket', and the corresponding view function
+    is `websocket_index`.
+
+    Args:
+        app (Flask): The Flask application instance to which the WebSocket URL rule will be added.
+
+    Returns:
+        None
+    """
+    app.add_url_rule('/websocket', view_func=websocket_index)
 
 def websocket_index():
     """
@@ -61,7 +76,6 @@ def websocket_index():
         Response: The rendered index.html template.
     """
     return render_template('index.html')
-
 
 def get_user_sign_limit():
     """
