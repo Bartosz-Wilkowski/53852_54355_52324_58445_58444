@@ -363,18 +363,35 @@ def purchase_plan():
 
     cursor = connection.cursor()
     try:
-        cursor.execute("SELECT id FROM users WHERE username = %s",
-                       (session['username'],))
-        user_id = cursor.fetchone()
-        if user_id is None:
+        # Get the user ID
+        cursor.execute("SELECT id, plan_name FROM users WHERE username = %s", (session['username'],))
+        user = cursor.fetchone()
+        if user is None:
             return jsonify({"message": "User not found."}), 404
-        user_id = user_id[0]
         
-        cursor.execute("SELECT plan_name FROM subscription_plan WHERE plan_name = %s", (plan_name,))
-        result = cursor.fetchone()
-        if result is None:
+        user_id, current_plan_name = user
+
+        # Get the ID of the current plan
+        cursor.execute("SELECT plan_id FROM subscription_plan WHERE plan_name = %s", (current_plan_name,))
+        current_plan_id = cursor.fetchone()
+        if current_plan_id is None:
+            return jsonify({"message": "Current plan not found."}), 400
+        
+        current_plan_id = current_plan_id[0]
+
+        # Get the ID of the new plan
+        cursor.execute("SELECT plan_id FROM subscription_plan WHERE plan_name = %s", (plan_name,))
+        new_plan_id = cursor.fetchone()
+        if new_plan_id is None:
             return jsonify({"message": "Selected plan does not exist."}), 400
         
+        new_plan_id = new_plan_id[0]
+
+        # Check if the new plan is equal to or lower than the current plan
+        if new_plan_id == current_plan_id:
+            return jsonify({"message": "You cannot purchase a plan that is equal to your current plan."}), 400
+
+        # Get the price of the new plan
         cursor.execute("SELECT price FROM subscription_plan WHERE plan_name = %s", (plan_name,))
         price = cursor.fetchone()
         if price is None:
@@ -382,10 +399,12 @@ def purchase_plan():
 
         amount = price[0]
 
+        # Update the user's plan
         cursor.execute(
             "UPDATE users SET plan_name = %s WHERE username = %s", (plan_name, session['username']))
         connection.commit()
 
+        # Record the payment
         cursor.execute(
             "INSERT INTO payments (user_id, payment_date, amount) VALUES (%s, CURDATE(), %s)",
             (user_id, amount)
