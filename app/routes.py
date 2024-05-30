@@ -184,7 +184,14 @@ def register():
                     (username, email, hashed_password.decode('utf-8'), name, surname, plan_name)
                 )
                 connection.commit()
-                return jsonify({"message": "Registration successful! Please log in."})
+                 # Log the user in by setting session variables
+                session['username'] = username
+                session['email'] = email
+                session['name'] = name
+                session['surname'] = surname
+                session['plan_name'] = plan_name
+                
+                return jsonify({"message": "Registration successful!"})
             except Error as e:
                 print(f"Error during user registration: {e}")
                 if e.errno == errorcode.ER_DUP_ENTRY:
