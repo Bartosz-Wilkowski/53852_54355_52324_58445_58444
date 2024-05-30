@@ -39,7 +39,7 @@
                             </ul>
                         </div>
                         <div class="generic_price_btn clearfix">
-                            <a class=""href="{% if 'username' in session %}/purchase_form?plan={{ plan.plan_name }}{% else %}/login{% endif %}">
+                            <a class=""href="{% if 'username' in session %}/purchase_form?plan={{ plan.plan_name }}{% else %}/register{% endif %}">
                                 {% if 'username' in session %}Select{% else %}Sign up{% endif %}
                             </a>
                         </div>
