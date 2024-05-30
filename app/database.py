@@ -1,3 +1,20 @@
+"""
+Module: database_initialization
+
+This module contains functions for initializing the MySQL database, creating necessary tables,
+and managing user privileges and reset mechanisms.
+
+Functions:
+    - create_connection(): Create a database connection.
+    - init_db(): Initialize the MySQL database by creating necessary tables.
+    - revoke_drop_privileges(): Revoke DROP privileges from specific users in the database.
+    - reset_recognized_count(): Reset recognized count and last reset for users with Basic and Standard plans.
+
+Dependencies:
+    - mysql.connector
+    - datetime
+"""
+
 import mysql.connector
 from mysql.connector import Error
 from datetime import datetime
@@ -5,6 +22,7 @@ from datetime import datetime
 def create_connection():
     """
     Function to create a database connection.
+
     Returns:
         connection: MySQL database connection object.
     """
@@ -130,7 +148,7 @@ def revoke_drop_privileges():
 
 def reset_recognized_count():
     """
-    Reset recognized count and last reset for Basic and Standard plans in the database.
+    Reset recognized count and last reset for users with Basic and Standard plans in the database.
     """
     connection = create_connection()
     if connection is None:
