@@ -97,7 +97,7 @@ $(document).ready(function () {
             success: function (response) {
                 $('#registerResult').text(response.message);
                 setTimeout(function () {
-                    window.location.href = '/login';
+                    window.location.href = '/';
                 }, 100);
             },
             error: function (xhr, status, error) {
