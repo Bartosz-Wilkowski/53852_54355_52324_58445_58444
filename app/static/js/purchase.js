@@ -4,7 +4,12 @@
  */
 
 $(document).ready(function () {
-    /**
+    // Get plan from URL parameters
+    const urlParams = new URLSearchParams(window.location.search);
+    const selectedPlan = urlParams.get('plan');
+
+    // Fetch user data from the server and display it on the page
+  /**
      * Fetch user data from the server and display it on the page.
      */
     $.ajax({
@@ -23,7 +28,7 @@ $(document).ready(function () {
         }
     });
 
-    /**
+      /**
      * Fetch available plans from the server and populate the select dropdown.
      */
     $.ajax({
@@ -31,10 +36,12 @@ $(document).ready(function () {
         type: 'GET',
         success: function (plans) {
             plans.forEach(function (plan) {
-                $('#availableplans').append($('<option>', {
+                const option = $('<option>', {
                     value: plan.plan_name,
-                    text: plan.plan_name + ' - $' + plan.price
-                }));
+                    text: plan.plan_name + ' - $' + plan.price,
+                    selected: plan.plan_name === selectedPlan // Set as selected if it matches the plan in the URL
+                });
+                $('#availableplans').append(option);
             });
         },
         error: function (xhr, status, error) {
@@ -42,7 +49,7 @@ $(document).ready(function () {
         }
     });
 
-    /**
+      /**
      * Event listener for the purchase form submission.
      * Prevents the default form submission, performs validation, and sends an AJAX request to purchase a plan.
      * @param {Event} event - The form submission event.
@@ -101,7 +108,7 @@ $(document).ready(function () {
             $('#resultPurchase').text('Invalid CVC. It should be 3 or 4 digits.');
             return;
         }
-        console.log($('#availableplans').val().trim());
+
         // Send AJAX request to purchase the plan
         $.ajax({
             type: 'POST',
