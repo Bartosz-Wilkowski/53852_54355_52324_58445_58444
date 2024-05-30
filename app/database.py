@@ -79,7 +79,7 @@ def init_db():
     # Insert aehuser user into users table using INSERT IGNORE
     cursor.execute('''
         INSERT IGNORE INTO users (username, email, password, name, surname, plan_name) VALUES
-        ('aehuser', 'aehuser@aeh.pl', 'aehuser', 'Aeh', 'User', 'Unlimited')
+        ('aehuser', 'aehuser@aeh.pl', 'Aehuser1', 'Aeh', 'User', 'Unlimited')
     ''')
 
     # Create payments table
@@ -135,12 +135,15 @@ def reset_recognized_count():
     cursor = connection.cursor()
 
     try:
-        now = datetime.now().strftime('%Y-%m-%d %H:%M:%S')
+        now = datetime.now()
+        midnight = datetime.combine(now.date(), datetime.min.time())
+        
         cursor.execute('''
             UPDATE users
             SET recognized_count = 0, last_reset = %s
-            WHERE plan_name IN ('Basic', 'Standard')
-        ''', (now,))
+            WHERE plan_name IN ('Basic', 'Standard') AND (last_reset IS NULL OR last_reset < %s)
+        ''', (midnight, midnight))
+        
         connection.commit()
         print("recognized_count reset and last_reset updated successfully for Basic and Standard plans.")
     except Error as e:
