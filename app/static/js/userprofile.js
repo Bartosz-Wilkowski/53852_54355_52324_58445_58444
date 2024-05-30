@@ -14,8 +14,13 @@ $(document).ready(function () {
             var paymentHistory = userData.payment_history;
             if (paymentHistory && paymentHistory.length > 0) {
                 var paymentHistoryHTML = '';
-                paymentHistory.forEach(function(payment) {
-                    paymentHistoryHTML += '<p><strong>Payment Date:</strong> ' + payment.payment_date + '</p>';
+                paymentHistory.forEach(function (payment) {
+                    paymentHistoryHTML += '<p><strong>Payment Date:</strong> ' + formatDate(payment.payment_date) + '</p>';
+                    function formatDate(dateString) {
+                        var date = new Date(dateString);
+                        var options = { weekday: 'short', year: 'numeric', month: 'short', day: 'numeric' };
+                        return date.toLocaleDateString('en-GB', options);
+                    }
                     paymentHistoryHTML += '<p><strong>Amount:</strong> ' + payment.amount + '</p>';
                     paymentHistoryHTML += '<hr>'; // Separate each payment entry
                 });
