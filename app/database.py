@@ -78,7 +78,7 @@ def init_db():
     # Insert aehuser user into users table using INSERT IGNORE
     cursor.execute('''
         INSERT IGNORE INTO users (username, email, password, name, surname, plan_name) VALUES
-        ('aehuser', 'aehuser@aeh.pl', 'aehuser', 'Aeh', 'User', 'Unlimited')
+        ('aehuser', 'aehuser@aeh.pl', 'Aehuser1', 'Aeh', 'User', 'Unlimited')
     ''')
 
     # Create payments table
