@@ -6,7 +6,6 @@
             <div class="col-xl-10">
                 <div class="card rounded-3 text-black">
                     <div class="row g-0">
-
                         <div class="card-body p-md-5 mx-md-4">
                             <!--User data section-->
                             <h1>Purchase Plan</h1>
@@ -17,42 +16,36 @@
                                 <p><strong>Current Plan:</strong> <span id="plan"></span></p>
                             </form>
                             <form id="purchaseForm">
-                                <form id="purchaseForm">
-                                    <label for="availableplans">Select Plan:</label>
-                                    <select id="availableplans" name="availableplans">
-                                        <!-- Option tags will be dynamically added here -->
-                                    </select>
-                                    <div>
-                                        <label for="cardNumber">Card Number:</label>
-                                        <input type="text" id="cardNumber" name="cardNumber" required>
-                                    </div>
-                                    <div>
-                                        <label for="cardName">Name on Card:</label>
-                                        <input type="text" id="cardName" name="cardName" required>
-                                    </div>
-                                    <div>
-                                        <label for="expiryDate">Expiry Date (MM/YY):</label>
-                                        <input type="text" id="expiryDate" name="expiryDate" required>
-                                    </div>
-                                    <div>
-                                        <label for="cvc">CVC:</label>
-                                        <input type="text" id="cvc" name="cvc" required>
-                                    </div>
-                                    <button type="submit">Submit</button>
-                                    <div id="resultPurchase"></div>
-                                </form>
-                                
+                                <label for="availableplans">Select Plan:</label>
+                                <select id="availableplans" name="availableplans">
+                                    <!-- Option tags will be dynamically added here -->
+                                </select>
+                                <div>
+                                    <label for="cardNumber">Card Number:</label>
+                                    <input type="text" id="cardNumber" name="cardNumber" required>
+                                </div>
+                                <div>
+                                    <label for="cardName">Name on Card:</label>
+                                    <input type="text" id="cardName" name="cardName" required>
+                                </div>
+                                <div>
+                                    <label for="expiryDate">Expiry Date (MM/YY):</label>
+                                    <input type="text" id="expiryDate" name="expiryDate" required>
+                                </div>
+                                <div>
+                                    <label for="cvc">CVC:</label>
+                                    <input type="text" id="cvc" name="cvc" required>
+                                </div>
+                                <button type="submit">Submit</button>
+                                <div id="resultPurchase"></div>
                             </form>
                         </div>
-
                     </div>
                 </div>
             </div>
         </div>
     </div>
-    </div>
 </section>
-
 
 <div id="result"></div>
 
