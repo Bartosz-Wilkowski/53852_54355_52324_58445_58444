@@ -305,7 +305,7 @@ def purchase_plan():
         new_plan_id = new_plan_id[0]
 
         # Check if the new plan is equal to or lower than the current plan
-        if new_plan_id = current_plan_id:
+        if new_plan_id == current_plan_id:
             return jsonify({"message": "You cannot purchase a plan that is equal to your current plan."}), 400
 
         # Get the price of the new plan
