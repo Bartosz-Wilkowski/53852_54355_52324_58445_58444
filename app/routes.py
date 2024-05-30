@@ -1,5 +1,39 @@
 """
-Module for handling user authentication and related functionalities.
+Module: user_authentication
+
+This module handles user authentication and related functionalities.
+
+Functions:
+    - home(): Renders the home page of the website.
+    - is_logged_in(): Checks if a user is logged in.
+    - logout(): Logs out the user.
+    - test_connection(): Tests the database connection.
+    - login(): Handles user login.
+    - register(): Handles user registration.
+    - userprofile(): Serves the user profile page.
+    - get_user_data(): Retrieves user data from the database.
+    - purchase_form(): Serves the purchase form page.
+    - get_plans(): Retrieves subscription plans.
+    - get_plan_price(plan_name): Retrieves the price of a specific plan.
+    - purchase_plan(): Processes plan purchases.
+    - interpreter(): Renders the SLI (Sign Language Interpreter) page.
+    - format_price(price): Splits price into dollars and cents.
+    - pricing(): Retrieves subscription plans from the database and formats prices.
+    - delete_account(): Deletes the user account.
+    - reset_password(): Handles password reset request.
+    - reset_with_token(token): Handles password reset form submission.
+    - send_reset_email(to_email, token): Sends a password reset email.
+    - reset_password_link(): Generates a password reset link.
+    - generate_reset_token(): Generates a password reset token.
+
+Dependencies:
+    - Flask
+    - flask_mail
+    - bcrypt
+    - re
+    - uuid
+    - smtplib
+    - email.mime
 """
 from flask import render_template, request, jsonify, redirect, url_for, session, flash
 from .database import create_connection
