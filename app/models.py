@@ -26,17 +26,23 @@ model = load_model('models/final_model/final_model.h5')
 
 
 def websocket_index():
+    """Render the index.html template for the WebSocket application."""
     return render_template('index.html')
 
 
 def get_user_sign_limit():
+    """Get the sign limit for the current user.
+
+    Returns:
+        int: The sign limit for the user.
+    """
     if 'username' in session:
         username = session['username']
     else:
         if 'guest_id' not in session:
             session['guest_id'] = str(uuid.uuid4())  # Generate a unique guest ID
         username = session['guest_id']
-    
+
     connection = create_connection()
     if connection:
         cursor = connection.cursor(dictionary=True)
@@ -61,6 +67,11 @@ def get_user_sign_limit():
 
 
 def reset_recognition_count(username):
+    """Reset the recognition count for the specified user.
+
+    Args:
+        username (str): The username for which the recognition count should be reset.
+    """
     connection = create_connection()
     if connection:
         cursor = connection.cursor()
@@ -72,6 +83,12 @@ def reset_recognition_count(username):
 
 
 def update_last_reset(username, last_reset):
+    """Update the last reset time for the specified user.
+
+    Args:
+        username (str): The username for which the last reset time should be updated.
+        last_reset (datetime): The new last reset time.
+    """
     connection = create_connection()
     if connection:
         cursor = connection.cursor()
@@ -83,6 +100,12 @@ def update_last_reset(username, last_reset):
 
 
 def update_recognized_count(username, count):
+    """Update the recognized count for the specified user.
+
+    Args:
+        username (str): The username for which the recognized count should be updated.
+        count (int): The new recognized count.
+    """
     connection = create_connection()
     if connection:
         cursor = connection.cursor()
@@ -95,6 +118,11 @@ def update_recognized_count(username, count):
 
 @socketio.on('image')
 def handle_image(data):
+    """Handle image data received from the client and perform gesture recognition.
+
+    Args:
+        data (dict): A dictionary containing the image data.
+    """
     if 'recognized_count' not in session:
         session['recognized_count'] = 0
 
