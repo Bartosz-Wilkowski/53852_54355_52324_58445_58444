@@ -1,0 +1,39 @@
+.header {
+	.card-purchase {
+		background-color: $light-white;
+		opacity: 0.8;
+		border-radius: 15px;
+
+		.card-body {
+			color: $dark;
+
+			.purchase-title {
+				margin: 1em;
+				font-size: 2em;
+				font-weight: 400;
+			}
+
+			.purchase-form1 {
+				.purchase-info {
+					text-align: left;
+					padding: 1rem;
+					border-radius: 8px;
+					background-color: $shadow-color;
+
+					.purchase-info-title {
+						text-transform: uppercase;
+						font-weight: 600;
+					}
+				}
+			}
+		}
+
+		.purchase-form2 {
+			margin-top: 2em;
+			margin-bottom: 2em;
+			padding: 2em;
+			background-color: $grey;
+			border-radius: 15px;
+		}
+	}
+}

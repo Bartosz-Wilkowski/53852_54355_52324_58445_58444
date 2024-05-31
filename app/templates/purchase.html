@@ -4,40 +4,42 @@
     <div class="container py-5 h-100">
         <div class="row d-flex justify-content-center align-items-center h-100">
             <div class="col-xl-10">
-                <div class="card rounded-3 text-black">
+                <div class="card-purchase card text-black">
                     <div class="row g-0">
                         <div class="card-body p-md-5 mx-md-4">
                             <!--User data section-->
-                            <h1>Purchase Plan</h1>
-                            <form id="userData">
-                                <p><strong>Username:</strong> <span id="username"></span></p>
-                                <p><strong>Email:</strong> <span id="email"></span></p>
-                                <p><strong>Full Name:</strong> <span id="name"></span> <span id="surname"></span></p>
-                                <p><strong>Current Plan:</strong> <span id="plan"></span></p>
+                            <h1 class="purchase-title">Purchase Plan</h1>
+                            <form id="userData" class="purchase-form1">
+                                <p class="purchase-info"><strong class="purchase-info-title">Username:</strong> <span id="username" class="purchase-info-data"></span></p>
+                                <p class="purchase-info"><strong class="purchase-info-title">Email:</strong> <span id="email" class="purchase-info-data"></span></p>
+                                <p class="purchase-info"><strong class="purchase-info-title">Full Name:</strong> <span id="name" class="purchase-info-data"></span> <span id="surname" class="purchase-info-data"></span></p>
+                                <p class="purchase-info"><strong class="purchase-info-title">Current Plan:</strong> <span id="plan" class="purchase-info-data"></span></p>
                             </form>
-                            <form id="purchaseForm">
-                                <label for="availableplans">Select Plan:</label>
-                                <select id="availableplans" name="availableplans">
-                                    <!-- Option tags will be dynamically added here -->
-                                </select>
-                                <div>
-                                    <label for="cardNumber">Card Number:</label>
-                                    <input type="text" id="cardNumber" name="cardNumber" required>
-                                </div>
-                                <div>
-                                    <label for="cardName">Name on Card:</label>
-                                    <input type="text" id="cardName" name="cardName" required>
-                                </div>
-                                <div>
-                                    <label for="expiryDate">Expiry Date (MM/YY):</label>
-                                    <input type="text" id="expiryDate" name="expiryDate" required>
-                                </div>
-                                <div>
-                                    <label for="cvc">CVC:</label>
-                                    <input type="text" id="cvc" name="cvc" required>
-                                </div>
-                                <button type="submit">Submit</button>
-                                <div id="resultPurchase"></div>
+                            <form id="purchaseForm" class="purchase-form2">
+                                    <label for="availableplans">Select Plan:</label>
+                                    <select id="availableplans" name="availableplans">
+                                        <!-- Option tags will be dynamically added here -->
+                                    </select>
+                                    <div>
+                                        <label for="cardNumber">Card Number:</label>
+                                        <input type="text" id="cardNumber" name="cardNumber" required>
+                                    </div>
+                                    <div>
+                                        <label for="cardName">Name on Card:</label>
+                                        <input type="text" id="cardName" name="cardName" required>
+                                    </div>
+                                    <div>
+                                        <label for="expiryDate">Expiry Date (MM/YY):</label>
+                                        <input type="text" id="expiryDate" name="expiryDate" required>
+                                    </div>
+                                    <div>
+                                        <label for="cvc">CVC:</label>
+                                        <input type="text" id="cvc" name="cvc" required>
+                                    </div>
+                                    <button type="submit">Submit</button>
+                                    <div id="resultPurchase"></div>
+                               
+                                
                             </form>
                         </div>
                     </div>
