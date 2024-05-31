@@ -2,7 +2,6 @@
 	div {
 		.card {
 			.card-body {
-
 				.login-title {
 					margin: 2rem;
 					font-size: 2em;
@@ -20,6 +19,14 @@
 					margin-bottom: 3em;
 				}
 
+				.login-button-primary {
+					background-color: $main-color;
+				}
+
+				.login-button-primary::before {
+					background-color: $secondary-color;
+				}
+
 				.register-account {
 					display: block;
 					margin: 0 auto;
@@ -31,6 +38,10 @@
 					.btn {
 						margin-top: 1rem;
 						margin-bottom: 2em;
+					}
+
+					.btn::before {
+						background-color: $secondary-color;
 					}
 				}
 			}

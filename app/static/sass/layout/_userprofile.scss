@@ -30,7 +30,15 @@
 		cursor: pointer;
 	}
 
+	.delate-account-btn::before {
+		background-color: $secondary-color;
+	}
+
 	#resetPasswordButton {
 		margin-bottom: 2em;
+	}
+
+	#resetPasswordButton::before {
+		background-color: $secondary-color;
 	}
 }
