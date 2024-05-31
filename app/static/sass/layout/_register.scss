@@ -4,7 +4,6 @@
 			background-color: $light-white;
 			opacity: 0.8;
 			border-radius: 15px;
-            
 
 			.card-body {
 				color: $dark;
@@ -31,6 +30,10 @@
 					text-decoration: none;
 					text-transform: uppercase;
 					cursor: pointer;
+				}
+
+				.btn::before {
+					background-color: $secondary-color;
 				}
 			}
 		}

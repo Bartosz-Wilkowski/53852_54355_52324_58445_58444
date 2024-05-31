@@ -3,20 +3,28 @@
 		background-color: $light-white;
 		opacity: 0.8;
 		border-radius: 15px;
+		top: 8px;
 
 		.card-body {
 			color: $dark;
+			clear: both;
 
 			.purchase-title {
-				margin: 1em;
+				margin-top: 1rem;
+				margin-bottom: 2.5rem;
 				font-size: 2em;
 				font-weight: 400;
 			}
 
 			.purchase-form1 {
+				position: relative;
+				float: left;
+				width: 40%;
+
 				.purchase-info {
 					text-align: left;
-					padding: 1rem;
+					padding: 4rem;
+					margin-bottom: 1.8rem;
 					border-radius: 8px;
 					background-color: $shadow-color;
 
@@ -26,14 +34,77 @@
 					}
 				}
 			}
-		}
 
-		.purchase-form2 {
-			margin-top: 2em;
-			margin-bottom: 2em;
-			padding: 2em;
-			background-color: $grey;
-			border-radius: 15px;
+			.purchase-form2 {
+				position: relative;
+				float: right;
+				width: 55%;
+				padding: 2rem;
+				background-color: $grey;
+				border-radius: 15px;
+
+				.label-select-info {
+					text-align: center;
+					justify-content: flex-end;
+
+					.select-title {
+						margin: 1rem;
+						margin-top: 0;
+						font-weight: 600;
+						text-transform: uppercase;
+					}
+
+					.select-plan {
+						margin: 1rem;
+						padding: 0.5rem;
+
+						margin-top: 0;
+						margin-bottom: 2rem;
+						border-radius: 8px;
+						border: none;
+					}
+				}
+
+				.label-info {
+					.select-info {
+						display: block;
+						margin: 0 auto;
+						margin-top: 1rem;
+						margin-bottom: 0.5rem;
+						text-align: center;
+					}
+				}
+
+				.purchase-input {
+					display: block;
+					margin: 0 auto;
+					padding: 0.5rem;
+					border-radius: 8px;
+					border: none;
+				}
+			}
+
+			.purchase-button {
+				
+				margin: 0 auto;
+				margin-top: 2.5em;
+				padding: 0.8em 1.6em;
+				font-size: 1.6rem;
+				background: $main-color;
+				border: none;
+				border-radius: 8px;
+				color: $light-dark;
+				text-decoration: none;
+				text-transform: uppercase;
+				cursor: pointer;
+
+
+			}
+
+			.purchase-button::before{
+				background-color: $secondary-color;
+			}
+			
 		}
 	}
 }
