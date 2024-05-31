@@ -1340,3 +1340,8 @@ body{background-color:#eee;}
     width: 30%;
   }
 }/*# sourceMappingURL=main.css.map */
+
+.payment-history-container {
+  max-height: 200px; /* Adjust the height as needed */
+  overflow-y: auto;
+}
