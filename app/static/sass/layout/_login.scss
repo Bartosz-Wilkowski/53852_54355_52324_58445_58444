@@ -1,37 +1,38 @@
 .header {
 	div {
 		.card {
-			.login-title {
-				margin: 2rem;
-				font-size: 2em;
-				font-weight: 400;
-			}
+			.card-body {
 
-			.login-text {
-				text-transform: uppercase;
-				margin-top: 1em;
-				margin-bottom: 3em;
-			}
+				.login-title {
+					margin: 2rem;
+					font-size: 2em;
+					font-weight: 400;
+					color: $dark;
+				}
 
-            .login-button {
-                margin-bottom: 3em;
-            }
+				.login-text {
+					text-transform: uppercase;
+					margin-top: 1em;
+					margin-bottom: 3em;
+				}
 
+				.login-button {
+					margin-bottom: 3em;
+				}
 
-			.register-account {
-                display: block;
-                margin: 0 auto;
+				.register-account {
+					display: block;
+					margin: 0 auto;
 
-                .create-account-text {
-                    font-weight: 500;
-                }
-                
-                .btn {
-                    margin-top: 1rem;
-                    margin-bottom: 2em;
-                }
+					.create-account-text {
+						font-weight: 500;
+					}
 
-
+					.btn {
+						margin-top: 1rem;
+						margin-bottom: 2em;
+					}
+				}
 			}
 		}
 	}

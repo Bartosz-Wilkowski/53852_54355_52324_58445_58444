@@ -15,11 +15,10 @@
 			text-transform: uppercase;
 			font-weight: 600;
 		}
-
 	}
 
 	.delate-account-btn {
-		margin: 3em;
+		margin-top: 2em;
 		padding: 0.8em 1.6em;
 		font-size: 1.4rem;
 		background: $shadow-color;
@@ -29,5 +28,9 @@
 		text-decoration: none;
 		text-transform: uppercase;
 		cursor: pointer;
+	}
+
+	#resetPasswordButton {
+		margin-bottom: 2em;
 	}
 }
