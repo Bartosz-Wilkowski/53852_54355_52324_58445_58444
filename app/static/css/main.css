@@ -642,6 +642,14 @@ nav .navbar-brand:hover {
   cursor: pointer;
 }
 
+.container .reset-password-page .card-body {
+  color: #2e2e2e;
+}
+.container .reset-password-page .card-body .reset-password-page-title {
+  font-size: 2em;
+  margin: 2rem;
+}
+
 .wrapper {
   margin: 0 auto;
   width: 100%;
