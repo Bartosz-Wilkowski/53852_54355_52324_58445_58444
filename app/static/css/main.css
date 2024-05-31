@@ -647,7 +647,16 @@ nav .navbar-brand:hover {
 }
 .container .reset-password-page .card-body .reset-password-page-title {
   font-size: 2em;
-  margin: 2rem;
+  margin-top: 2rem;
+  margin-bottom: 4rem;
+  font-weight: 400;
+}
+.container .reset-password-page .card-body #resetPasswordForm .form-group-input {
+  margin-bottom: 2rem;
+}
+.container .reset-password-page .card-body #resetPasswordForm .reset-password-page-button {
+  margin-top: 4rem;
+  margin-bottom: 3rem;
 }
 
 .wrapper {
