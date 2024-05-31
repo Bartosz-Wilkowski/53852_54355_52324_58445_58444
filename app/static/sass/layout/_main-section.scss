@@ -25,9 +25,9 @@
 	}
 }
 
-//klasy .section-heading i .section-padding znajdują się w pliku components/sections
+// The classes .section-heading and .section-padding are located in the file components/sections.
 
-//druga sekcja w <main> - sekcja hero-img:
+// The second section in <main> is the hero-img section.
 .hero-img {
 	position: relative;
 	padding: 10em 2em;
@@ -46,7 +46,7 @@
 	}
 }
 
-// trzecia sekcja w <main> - sekcja signlanguage
+// The third section in <main> is the signlanguage section.
 .signlanguage {
 	background-color: $light-white;
 	&__card {
@@ -71,7 +71,7 @@
 			}
 		}
 
-		//przednia część kart
+		// Front part of the card.
 		&-img {
 			padding: 2em;
 			height: 100%;
@@ -89,7 +89,7 @@
 				font-weight: 100;
 			}
 
-			//napis "Poznaj znak migowy"
+			// "Learn Sign Language"
 			&-info {
 				position: absolute;
 				bottom: 30px;
@@ -102,7 +102,7 @@
 			}
 		}
 
-		// dolne części kart (te ze zdjęciami)
+		// bottom parts of the cards (those with the images)
 		&-info {
 			position: absolute;
 			background-size: cover;
@@ -148,7 +148,7 @@
 	}
 }
 
-//sekcja translate
+// translate section
 .translate {
 	position: relative;
 	display: flex;
@@ -174,7 +174,7 @@
 		text-transform: uppercase;
 		cursor: pointer;
 
-		//po najechaniu myszką na button zmienia się jego kolor:
+		// button changes color on hover
 		&::before {
 			background-color: $secondary-color;
 		}
@@ -185,7 +185,7 @@
 		}
 	}
 
-	//box, w którym mają wyświetlać się znaki z tłumaczeniem
+	// box where translation signs will be displayed
 	&__textarea {
 		margin-bottom: 1em;
 		padding: 2rem;
@@ -200,7 +200,7 @@
 		margin-bottom: 1em;
 	}
 
-	//stylowanie video-boxa
+	// styling the video box
 
 	video {
 		margin: 0 auto;

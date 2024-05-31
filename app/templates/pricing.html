@@ -34,12 +34,14 @@
                         </div>
                         <div class="generic_feature_list">
                             <ul>
-                                <li><span>{{ plan.daily_limit if plan.daily_limit is not none else 'No' }}</span> Character Recognition Limit</li>
+                                <li><span>{{ plan.daily_limit if plan.daily_limit is not none else 'No' }}</span>
+                                    Character Recognition Limit</li>
                                 <li><span>24h</span> Refresh Interval</li>
                             </ul>
                         </div>
                         <div class="generic_price_btn clearfix">
-                            <a class=""href="{% if 'username' in session %}/purchase_form?plan={{ plan.plan_name }}{% else %}/register{% endif %}">
+                            <a class=""
+                                href="{% if 'username' in session %}/purchase_form?plan={{ plan.plan_name }}{% else %}/register{% endif %}">
                                 {% if 'username' in session %}Select{% else %}Sign up{% endif %}
                             </a>
                         </div>

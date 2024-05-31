@@ -12,7 +12,7 @@
 	background-attachment: scroll;
 
 	&__heading {
-		// dodać position absolute - żeby manipulować położeniem
+		// Add position absolute to manipulate the positioning.
 		top: 4rem;
 		margin-top: 2rem;
 		padding: 1rem;
@@ -39,7 +39,7 @@
 		text-transform: uppercase;
 		cursor: pointer;
 
-		//po najechaniu myszką na button zmienia się jego kolor:
+		// On mouse hover, the button's color changes.
 		&::before {
 			background-color: $secondary-color;
 		}
