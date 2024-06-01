@@ -16,31 +16,33 @@
                                 <p class="purchase-info"><strong class="purchase-info-title">Current Plan:</strong> <span id="plan" class="purchase-info-data"></span></p>
                             </form>
                             <form id="purchaseForm" class="purchase-form2">
-                                    <label for="availableplans">Select Plan:</label>
-                                    <select id="availableplans" name="availableplans">
+                                <div class="label-select-info">
+                                    <label for="availableplans" class="select-title">Select Plan:</label>
+                                    <select id="availableplans" name="availableplans" class="select-plan"></div>
                                         <!-- Option tags will be dynamically added here -->
                                     </select>
-                                    <div>
-                                        <label for="cardNumber">Card Number:</label>
-                                        <input type="text" id="cardNumber" name="cardNumber" required>
-                                    </div>
-                                    <div>
-                                        <label for="cardName">Name on Card:</label>
-                                        <input type="text" id="cardName" name="cardName" required>
-                                    </div>
-                                    <div>
-                                        <label for="expiryDate">Expiry Date (MM/YY):</label>
-                                        <input type="text" id="expiryDate" name="expiryDate" required>
-                                    </div>
-                                    <div>
-                                        <label for="cvc">CVC:</label>
-                                        <input type="text" id="cvc" name="cvc" required>
-                                    </div>
-                                    <button type="submit">Submit</button>
-                                    <div id="resultPurchase"></div>
+                                    <div class="label-info">
+                                        <label for="cardNumber" class="select-info">Card Number:</label></div>
+                                        <input type="text" id="cardNumber" name="cardNumber" class="purchase-input" required>
+                                    
+                                    <div class="label-info">
+                                        <label for="cardName" class="select-info">Name on Card:</label></div>
+                                        <input type="text" id="cardName" name="cardName" class="purchase-input" required>
+                                    
+                                    <div class="label-info">
+                                        <label for="expiryDate" class="select-info">Expiry Date (MM/YY):</label></div>
+                                        <input type="text" id="expiryDate" name="expiryDate" class="purchase-input" required>
+                                    
+                                    <div class="label-info">
+                                        <label for="cvc" class="select-info">CVC:</label></div>
+                                        <input type="text" id="cvc" name="cvc" class="purchase-input" required>
+                                    
+                                    
                                
                                 
                             </form>
+                            <button type="submit" class="purchase-button btn-special-animation">Submit</button>
+                                    <div id="resultPurchase"></div>
                         </div>
                     </div>
                 </div>

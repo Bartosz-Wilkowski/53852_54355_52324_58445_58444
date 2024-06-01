@@ -1,44 +1,48 @@
 .header {
-	.userprofile-title {
-		font-size: 2em;
-		margin-top: 2rem;
-		margin-bottom: 4rem;
-	}
+	.card-userprofile {
+		top: 15px;
 
-	.user-info {
-		text-align: left;
-		padding: 1rem;
-		border-radius: 8px;
-		background-color: $shadow-color;
-
-		.user-info-title {
-			text-transform: uppercase;
-			font-weight: 600;
+		.userprofile-title {
+			font-size: 2em;
+			margin-top: 1rem;
+			margin-bottom: 4rem;
 		}
-	}
 
-	.delate-account-btn {
-		margin-top: 2em;
-		padding: 0.8em 1.6em;
-		font-size: 1.4rem;
-		background: $shadow-color;
-		border: none;
-		border-radius: 8px;
-		color: $light-dark;
-		text-decoration: none;
-		text-transform: uppercase;
-		cursor: pointer;
-	}
+		.user-info {
+			text-align: left;
+			padding: 1rem;
+			border-radius: 8px;
+			background-color: $shadow-color;
 
-	.delate-account-btn::before {
-		background-color: $secondary-color;
-	}
+			.user-info-title {
+				text-transform: uppercase;
+				font-weight: 600;
+			}
+		}
 
-	#resetPasswordButton {
-		margin-bottom: 2em;
-	}
+		.delate-account-btn {
+			margin-top: 2em;
+			padding: 0.8em 1.6em;
+			font-size: 1.4rem;
+			background: $shadow-color;
+			border: none;
+			border-radius: 8px;
+			color: $light-dark;
+			text-decoration: none;
+			text-transform: uppercase;
+			cursor: pointer;
+		}
 
-	#resetPasswordButton::before {
-		background-color: $secondary-color;
+		.delate-account-btn::before {
+			background-color: $secondary-color;
+		}
+
+		#resetPasswordButton {
+			margin-bottom: 2em;
+		}
+
+		#resetPasswordButton::before {
+			background-color: $secondary-color;
+		}
 	}
 }

@@ -37,8 +37,6 @@ body {
   background-attachment: scroll;
 }
 .header__heading {
-  top: 4rem;
-  margin-top: 2rem;
   padding: 1rem;
   font-size: 3rem;
   font-weight: 300;
@@ -51,6 +49,7 @@ body {
 .header__btn {
   display: inline-block;
   margin-top: 1em;
+  margin-bottom: 2em;
   padding: 0.8em 1.6em;
   font-size: 1.4rem;
   background: #b3c8cf;
@@ -66,10 +65,10 @@ body {
 }
 .header__describe {
   position: absolute;
-  bottom: 18vh;
   display: flex;
   justify-content: center;
   align-items: center;
+  bottom: 18vh;
   width: 100%;
   font-size: 1.4rem;
   margin-top: 3em;
@@ -475,6 +474,7 @@ nav .navbar-brand:hover {
 .footer__box-title {
   font-size: 2.4rem;
   font-weight: 400;
+  padding: 2rem;
 }
 .footer__box-list {
   list-style: none;
@@ -542,6 +542,9 @@ nav .navbar-brand:hover {
   text-transform: uppercase;
   cursor: pointer;
 }
+.header div .card .card-body .btn::before {
+  background-color: #d2beb3;
+}
 
 .header div .card .card-body .login-title {
   margin: 2rem;
@@ -578,22 +581,25 @@ nav .navbar-brand:hover {
   background-color: #d2beb3;
 }
 
-.header .userprofile-title {
+.header .card-userprofile {
+  top: 15px;
+}
+.header .card-userprofile .userprofile-title {
   font-size: 2em;
-  margin-top: 2rem;
+  margin-top: 1rem;
   margin-bottom: 4rem;
 }
-.header .user-info {
+.header .card-userprofile .user-info {
   text-align: left;
   padding: 1rem;
   border-radius: 8px;
   background-color: rgba(194, 204, 207, 0.8);
 }
-.header .user-info .user-info-title {
+.header .card-userprofile .user-info .user-info-title {
   text-transform: uppercase;
   font-weight: 600;
 }
-.header .delate-account-btn {
+.header .card-userprofile .delate-account-btn {
   margin-top: 2em;
   padding: 0.8em 1.6em;
   font-size: 1.4rem;
@@ -605,13 +611,13 @@ nav .navbar-brand:hover {
   text-transform: uppercase;
   cursor: pointer;
 }
-.header .delate-account-btn::before {
+.header .card-userprofile .delate-account-btn::before {
   background-color: #d2beb3;
 }
-.header #resetPasswordButton {
+.header .card-userprofile #resetPasswordButton {
   margin-bottom: 2em;
 }
-.header #resetPasswordButton::before {
+.header .card-userprofile #resetPasswordButton::before {
   background-color: #d2beb3;
 }
 
@@ -677,10 +683,14 @@ nav .navbar-brand:hover {
 }
 .container .reset-password-page .card-body #resetPasswordForm .form-group-input {
   margin-bottom: 2rem;
+  text-transform: uppercase;
 }
 .container .reset-password-page .card-body #resetPasswordForm .reset-password-page-button {
   margin-top: 4rem;
   margin-bottom: 3rem;
+}
+.container .reset-password-page .card-body #resetPasswordForm .reset-password-page-button::before {
+  background-color: #d2beb3;
 }
 
 .swal-wide {
@@ -1153,18 +1163,27 @@ body {
   background-color: #eee;
   opacity: 0.8;
   border-radius: 15px;
+  top: 8px;
 }
 .header .card-purchase .card-body {
   color: #2e2e2e;
+  clear: both;
 }
 .header .card-purchase .card-body .purchase-title {
-  margin: 1em;
+  margin-top: 1rem;
+  margin-bottom: 2.5rem;
   font-size: 2em;
   font-weight: 400;
 }
+.header .card-purchase .card-body .purchase-form1 {
+  position: relative;
+  float: left;
+  width: 40%;
+}
 .header .card-purchase .card-body .purchase-form1 .purchase-info {
   text-align: left;
-  padding: 1rem;
+  padding: 4rem;
+  margin-bottom: 1.8rem;
   border-radius: 8px;
   background-color: rgba(194, 204, 207, 0.8);
 }
@@ -1172,12 +1191,61 @@ body {
   text-transform: uppercase;
   font-weight: 600;
 }
-.header .card-purchase .purchase-form2 {
-  margin-top: 2em;
-  margin-bottom: 2em;
-  padding: 2em;
+.header .card-purchase .card-body .purchase-form2 {
+  position: relative;
+  float: right;
+  width: 55%;
+  padding: 2rem;
   background-color: #e4e4e4;
   border-radius: 15px;
+}
+.header .card-purchase .card-body .purchase-form2 .label-select-info {
+  text-align: center;
+  justify-content: flex-end;
+}
+.header .card-purchase .card-body .purchase-form2 .label-select-info .select-title {
+  margin: 1rem;
+  margin-top: 0;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+.header .card-purchase .card-body .purchase-form2 .label-select-info .select-plan {
+  margin: 1rem;
+  padding: 0.5rem;
+  margin-top: 0;
+  margin-bottom: 2rem;
+  border-radius: 8px;
+  border: none;
+}
+.header .card-purchase .card-body .purchase-form2 .label-info .select-info {
+  display: block;
+  margin: 0 auto;
+  margin-top: 1rem;
+  margin-bottom: 0.5rem;
+  text-align: center;
+}
+.header .card-purchase .card-body .purchase-form2 .purchase-input {
+  display: block;
+  margin: 0 auto;
+  padding: 0.5rem;
+  border-radius: 8px;
+  border: none;
+}
+.header .card-purchase .card-body .purchase-button {
+  margin: 0 auto;
+  margin-top: 2.5em;
+  padding: 0.8em 1.6em;
+  font-size: 1.6rem;
+  background: #b3c8cf;
+  border: none;
+  border-radius: 8px;
+  color: #4e4e4e;
+  text-decoration: none;
+  text-transform: uppercase;
+  cursor: pointer;
+}
+.header .card-purchase .card-body .purchase-button::before {
+  background-color: #d2beb3;
 }
 
 .wrapper {
@@ -1221,7 +1289,7 @@ body {
   bottom: 100px;
   width: 80%;
   margin-bottom: 5em;
-  padding: 2em;
+  padding: 1em 2em 3em 3em;
   background-color: #eee;
   opacity: 0.8;
   border-radius: 15px;
@@ -1415,7 +1483,6 @@ body {
   }
   .hero-img {
     padding: 30rem 2em;
-    background-image: linear-gradient(45deg, rgba(179, 200, 207, 0.7), rgba(179, 200, 207, 0.8)), url(../static/img/group-of-people-image-big.jpeg);
   }
   .hero-img__title {
     flex: 7.2rem;
@@ -1438,8 +1505,3 @@ body {
     width: 30%;
   }
 }/*# sourceMappingURL=main.css.map */
-
-.payment-history-container {
-  max-height: 200px; /* Adjust the height as needed */
-  overflow-y: auto;
-}
