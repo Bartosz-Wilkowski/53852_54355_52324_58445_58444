@@ -1,12 +1,65 @@
 from flask import Flask
 from .routes import home, login, register, userprofile, get_user_data, purchase_plan, purchase_form, logout, interpreter, delete_account, reset_password, reset_with_token, reset_password_link, pricing, get_plan_price, get_plans, generate_reset_token
+from .models import websocket_index, handle_image
 from .database import init_db
 from flask_socketio import SocketIO
-from .models import websocket_index, handle_image
 
+# def classes: UserManager, DatabaseManager SocketIOManager 
+class UserManager:
+    def register_user(self, username, password):
+        pass
+
+    def login_user(self, username, password):
+        pass
+
+    def get_user_data(self, user_id):
+        pass
+
+    def delete_user_account(self, user_id):
+        pass
+
+    def reset_user_password(self, email):
+        pass
+
+    def generate_reset_token(self, email):
+        pass
+
+class DatabaseManager:
+    def __init__(self):
+        self.init_db()
+
+    def init_db(self):
+        init_db()
+
+    def get_user_by_id(self, user_id):
+        pass
+
+    def get_user_by_username(self, username):
+        pass
+
+    def create_plan(self, plan_data):
+        pass
+
+    def get_plans(self):
+        pass
+
+    def get_plan_by_name(self, plan_name):
+        pass
+
+class SocketIOManager:
+    def __init__(self, app):
+        self.socketio = SocketIO(app)
+
+    def handle_image(self, image):
+        pass
+
+# flask 
 app = Flask(__name__)
 app.config['SECRET_KEY'] = 'AEH'
-socketio = SocketIO(app)
+
+database_manager = DatabaseManager()
+user_manager = UserManager()
+socketio_manager = SocketIOManager(app)
 
 # Adding URL rules for the initial routes
 app.add_url_rule('/', view_func=home)
@@ -27,11 +80,12 @@ app.add_url_rule('/reset/<token>', view_func=reset_with_token, methods=['GET', '
 app.add_url_rule('/get-plans', view_func=get_plans, methods=['GET'])
 app.add_url_rule('/get-plan-price/<plan_name>', view_func=get_plan_price, methods=['GET'])
 app.add_url_rule('/generate_reset_token', view_func=generate_reset_token, methods=['GET', 'POST'])
-# Initialize the database
-init_db()
 
-# Adding SocketIO event handler
-socketio.on_event('image', handle_image)
+# database
+database_manager.init_db()
+
+# socketIO
+socketio_manager.socketio.on_event('image', handle_image)
 
 if __name__ == '__main__':
-    socketio.run(app, debug=True)
+    socketio_manager.socketio.run(app, debug=True)
