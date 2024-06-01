@@ -14,9 +14,12 @@ Account Deletion: Provide options for users to delete their accounts.
 Setup
 
 Clone the Repository:
-
 `git clone https://github.com/yourusername/sign-language-recognition.git`
 
+run `app.py`
+
+open 'http://127.0.0.1:5000' in your browser 
+(change port number if youre using different port than 5000)
 
 Usage
 Registration: Create a new account by providing a unique username, valid email, and password.
