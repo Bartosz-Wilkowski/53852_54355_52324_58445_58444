@@ -35,7 +35,7 @@
 		padding: 8em 2em;
 	}
 
-	// nawigacja typu mobile z barsem nie jest widoczna na breakpoincie od 992px
+	// The mobile navigation with the bar is not visible at the breakpoint from 992px.
 	.nav {
 		display: none;
 	}
@@ -76,7 +76,7 @@
 	}
 }
 
-// pojawienie się nawigacji na desktopa (bez bars) dopiero po przekroczeniu breakpointu 992px
+// The desktop navigation (without bars) appears only after exceeding the 992px breakpoint.
 @media (max-width: 992px) {
 
 		.navbar {

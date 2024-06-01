@@ -10,36 +10,42 @@
                             <!--User data section-->
                             <h1 class="purchase-title">Purchase Plan</h1>
                             <form id="userData" class="purchase-form1">
-                                <p class="purchase-info"><strong class="purchase-info-title">Username:</strong> <span id="username" class="purchase-info-data"></span></p>
-                                <p class="purchase-info"><strong class="purchase-info-title">Email:</strong> <span id="email" class="purchase-info-data"></span></p>
-                                <p class="purchase-info"><strong class="purchase-info-title">Full Name:</strong> <span id="name" class="purchase-info-data"></span> <span id="surname" class="purchase-info-data"></span></p>
-                                <p class="purchase-info"><strong class="purchase-info-title">Current Plan:</strong> <span id="plan" class="purchase-info-data"></span></p>
+                                <p class="purchase-info"><strong class="purchase-info-title">Username:</strong> <span
+                                        id="username" class="purchase-info-data"></span></p>
+                                <p class="purchase-info"><strong class="purchase-info-title">Email:</strong> <span
+                                        id="email" class="purchase-info-data"></span></p>
+                                <p class="purchase-info"><strong class="purchase-info-title">Full Name:</strong> <span
+                                        id="name" class="purchase-info-data"></span> <span id="surname"
+                                        class="purchase-info-data"></span></p>
+                                <p class="purchase-info"><strong class="purchase-info-title">Current Plan:</strong>
+                                    <span id="plan" class="purchase-info-data"></span></p>
                             </form>
                             <form id="purchaseForm" class="purchase-form2">
                                 <div class="label-select-info">
                                     <label for="availableplans" class="select-title">Select Plan:</label>
-                                    <select id="availableplans" name="availableplans" class="select-plan"></div>
+                                    <select id="availableplans" name="availableplans" class="select-plan">
                                         <!-- Option tags will be dynamically added here -->
                                     </select>
+                                </div>
                                     <div class="label-info">
-                                        <label for="cardNumber" class="select-info">Card Number:</label></div>
+                                        <label for="cardNumber" class="select-info">Card Number:</label>
+                                    </div>
                                         <input type="text" id="cardNumber" name="cardNumber" class="purchase-input" required>
                                     
                                     <div class="label-info">
-                                        <label for="cardName" class="select-info">Name on Card:</label></div>
+                                        <label for="cardName" class="select-info">Name on Card:</label>
+                                    </div>
                                         <input type="text" id="cardName" name="cardName" class="purchase-input" required>
                                     
                                     <div class="label-info">
-                                        <label for="expiryDate" class="select-info">Expiry Date (MM/YY):</label></div>
+                                        <label for="expiryDate" class="select-info">Expiry Date (MM/YY):</label>
+                                    </div>
                                         <input type="text" id="expiryDate" name="expiryDate" class="purchase-input" required>
                                     
                                     <div class="label-info">
-                                        <label for="cvc" class="select-info">CVC:</label></div>
+                                        <label for="cvc" class="select-info">CVC:</label>
+                                    </div>
                                         <input type="text" id="cvc" name="cvc" class="purchase-input" required>
-                                    
-                                    
-                               
-                                
                             </form>
                             <button type="submit" class="purchase-button btn-special-animation">Submit</button>
                                     <div id="resultPurchase"></div>
