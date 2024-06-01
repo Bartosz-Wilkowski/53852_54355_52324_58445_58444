@@ -20,7 +20,7 @@ beforeEach(() => {
 });
 
 // Import the code to be tested
-require('../src/script.js');
+require('../js/script.js');
 
 describe('Camera Functions', () => {
     // Test to check if startCamera accesses user media

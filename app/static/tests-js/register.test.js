@@ -2,7 +2,7 @@
 const $ = require('jquery');
 
 // Import the JavaScript file containing the functions to be tested
-require('../register.js'); 
+require('../js/register'); 
 
 describe('User Registration', () => {
     test('should handle form submission with valid input', () => {

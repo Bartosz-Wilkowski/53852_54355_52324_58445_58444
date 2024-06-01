@@ -5,7 +5,7 @@
 
 // handleNav function test
 
-const handleNav = require('../src/main.js').handleNav;
+const handleNav = require('../js/main').handleNav;
 
 document.body.innerHTML = `
     <div class="nav"></div>

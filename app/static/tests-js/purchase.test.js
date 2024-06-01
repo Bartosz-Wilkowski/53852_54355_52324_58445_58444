@@ -2,7 +2,7 @@
 const $ = require('jquery');
 
 // Import the JavaScript file containing the functions to be tested
-require('../purchase.js'); 
+require('../js/purchase'); 
 
 describe('Fetch User Data', () => {
     test('should fetch user data and display it on the page', () => {

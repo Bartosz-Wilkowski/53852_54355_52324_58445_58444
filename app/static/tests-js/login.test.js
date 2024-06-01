@@ -2,7 +2,7 @@
 const $ = require('jquery');
 
 // Import the JavaScript file containing the functions to be tested
-require('../login.js'); // Replace 'your-script-file.js' with the actual file name
+require('../js/login'); // Replace 'your-script-file.js' with the actual file name
 
 describe('Login Form Submission', () => {
     test('should handle form submission with valid input', () => {

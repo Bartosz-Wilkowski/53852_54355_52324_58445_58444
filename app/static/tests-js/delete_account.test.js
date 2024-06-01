@@ -1,6 +1,6 @@
 // Import the functions to be tested
 const $ = require('jquery');
-require('../delete_account.js');
+require('../js/delete_account');
 
 describe('Account Deletion Process', () => {
     test('should send AJAX POST request to delete account', () => {
