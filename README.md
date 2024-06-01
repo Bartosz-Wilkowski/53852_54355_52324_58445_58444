@@ -17,6 +17,11 @@ Welcome to the Sign Language Recognition Web Application! This application allow
     git clone https://github.com/yourusername/sign-language-recognition.git
     ```
 
+2. **Instal required packages:**
+    ```
+    pip install -r requirements.txt
+    ```
+    
 2. **Run `app.py`**
 
 3. **Open 'http://127.0.0.1:5000' in your browser**
@@ -58,12 +63,18 @@ Welcome to the Sign Language Recognition Web Application! This application allow
 │       ├── sli.html
 │       └── userprofile.html
 ├── models
+│   ├── dataset
+│   │   ├── test
+│   │   └── train
 │   ├── final_model
 │   │   └── final_model.h5
 │   ├── checkpoint_model
 │   │   └── checkpoint_model.h5
-│   └── model
-│       └── sign_language_interpreter.h5
+│   ├── model
+│   │   └── sign_language_interpreter.h5
+│   ├── compile_model.py 
+|   ├── evaluation.py
+|   └── train_model.py
 ├── tests
 │   ├── crash_test.py
 │   └── crash1_test.py
