@@ -1,5 +1,5 @@
 """
-Module: database_initialization
+Module: database
 
 This module contains classes for managing the MySQL database, including initializing necessary tables,
 managing user privileges, and resetting user recognized counts.

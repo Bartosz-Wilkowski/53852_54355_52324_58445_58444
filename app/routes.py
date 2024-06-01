@@ -46,7 +46,7 @@ Dependencies:
 """
 
 from flask import render_template, request, jsonify, redirect, url_for, session, flash
-from .database import create_connection
+from .database import DatabaseConnection
 from mysql.connector import Error, errorcode
 import bcrypt
 import re
@@ -71,7 +71,7 @@ class UserDataManagement:
         if 'username' not in session:
             return jsonify({"message": "User not logged in."}), 401
 
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection is None:
             return jsonify({"message": "Failed to connect to the database."}), 500
 
@@ -108,7 +108,7 @@ class UserDataManagement:
             print("User not logged in.")
             return jsonify({"message": "User not logged in."}), 401
 
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection is None:
             print("Failed to connect to the database.")
             return jsonify({"message": "Failed to connect to the database."}), 500
@@ -156,7 +156,7 @@ class PlansManagement:
             JSON response: A list of dictionaries containing plan names and prices if successful,
             otherwise returns an error message with appropriate status code.
         """
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection is None:
             return jsonify({"message": "Failed to connect to the database."}), 500
 
@@ -182,7 +182,7 @@ class PlansManagement:
         Returns:
             JSON response: The price of the plan if found, otherwise returns an error message with appropriate status code.
         """
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection is None:
             return jsonify({"message": "Failed to connect to the database."}), 500
 
@@ -224,7 +224,7 @@ class PlansManagement:
         Returns:
             Response: The pricing page template with plans and logged-in status.
         """
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection is None:
             return "Failed to connect to the database.", 500
 
@@ -273,7 +273,7 @@ class PaymentManagement:
         if len(plan_name) > 255 or len(card_number) > 255 or len(card_name) > 255 or len(expiry_date) > 255 or len(cvc) > 255:
             return jsonify({"message": "One or more fields exceed the maximum character limit of 255."}), 400
         
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection is None:
             return jsonify({"message": "Failed to connect to the database."}), 500
 
@@ -317,7 +317,7 @@ class PaymentManagement:
         Returns:
             Response: The purchase form template with plans and logged-in status.
         """
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection is None:
             return "Failed to connect to the database.", 500
 
@@ -348,7 +348,7 @@ class PasswordManagement:
         if len(email) > 255:
             return jsonify({"message": "Email exceeds the maximum character limit of 255."}), 400
 
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection is None:
             return jsonify({"message": "Failed to connect to the database."}), 500
 
@@ -410,7 +410,7 @@ class PasswordManagement:
 
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-            connection = create_connection()
+            connection = DatabaseConnection.create_connection()
             if connection is None:
                 flash('Failed to connect to the database.')
                 return redirect(request.url)
@@ -515,7 +515,7 @@ class Authentication:
                 flash('Username or password exceeds the maximum character limit of 255.')
                 return render_template('login.html', logged_in=Authentication.is_logged_in())
 
-            connection = create_connection()
+            connection = DatabaseConnection.create_connection()
             if connection is None:
                 flash('Failed to connect to the database.')
                 return render_template('login.html', logged_in=Authentication.is_logged_in())
@@ -563,7 +563,7 @@ class Authentication:
 
             hashed_password = bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt())
 
-            connection = create_connection()
+            connection = DatabaseConnection.create_connection()
             if connection is None:
                 flash('Failed to connect to the database.')
                 return render_template('register.html', logged_in=Authentication.is_logged_in())
@@ -602,7 +602,7 @@ class Authentication:
 
         username = session['username']
 
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection is None:
             flash('Failed to connect to the database.')
             return redirect(url_for('login'))
@@ -646,14 +646,14 @@ def purchase_form():
     """
     Route for displaying the purchase form.
     """
-    return SubscriptionPlan.purchase_form()
+    return PaymentManagement.purchase_form()
 
 @app.route('/purchase', methods=['POST'])
 def purchase_plan():
     """
     Route for handling the plan purchase.
     """
-    return SubscriptionPlan.purchase_plan()
+    return PaymentManagement.purchase_plan()
 
 @app.route('/reset_password', methods=['POST'])
 def reset_password():
@@ -717,8 +717,3 @@ def logout():
     Route for logging out the user.
     """
     return Authentication.logout()
-
-# Run the application
-if __name__ == '__main__':
-    app.secret_key = 'your_secret_key'  # Set a secret key for the session
-    app.run(debug=True)  # Run the application in debug mode

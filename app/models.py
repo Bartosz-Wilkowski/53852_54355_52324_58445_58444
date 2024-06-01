@@ -29,7 +29,7 @@ import numpy as np
 import cv2
 import base64
 import mediapipe as mp
-from .database import create_connection, init_db, reset_recognized_count, revoke_drop_privileges
+from .database import DatabaseConnection
 from datetime import datetime, timedelta
 import uuid  # Import to generate unique guest IDs
 
@@ -152,7 +152,7 @@ class UserManager:
                 self.session['guest_id'] = str(uuid.uuid4())  # Generate a unique guest ID
             username = self.session['guest_id']
 
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection:
             cursor = connection.cursor(dictionary=True)
             cursor.execute('''
@@ -181,7 +181,7 @@ class UserManager:
         Args:
             username (str): The username for which the recognition count should be reset.
         """
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection:
             cursor = connection.cursor()
             cursor.execute(
@@ -198,7 +198,7 @@ class UserManager:
             username (str): The username for which the last reset time should be updated.
             last_reset (datetime): The new last reset time.
         """
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection:
             cursor = connection.cursor()
             cursor.execute(
@@ -215,7 +215,7 @@ class UserManager:
             username (str): The username for which the recognized count should be updated.
             count (int): The new recognized count.
         """
-        connection = create_connection()
+        connection = DatabaseConnection.create_connection()
         if connection:
             cursor = connection.cursor()
             cursor.execute(
