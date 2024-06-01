@@ -2,7 +2,12 @@
 app/__pycache__/
 *.pyc
 *.pyo
+.pytest_cache
 venv/
 #dataset images
 model/dataset/test/
 model/dataset/train/
+#model test app
+models/app.py
+models/static
+models/templates
