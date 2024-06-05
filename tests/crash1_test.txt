@@ -1,0 +1,29 @@
+### Sign Language Recognition Application Tests
+
+#### Test Description:
+
+1. **Database Connection Test**
+   - Objective: To ensure the correctness of establishing a connection with the database.
+   - Description: This test verifies whether the `create_connection` function correctly establishes a connection with the local MySQL database.
+   - Expected Outcome: The connection to the database is successfully established.
+
+2. **Database Initialization Test**
+   - Objective: To ensure that database tables are created successfully.
+   - Description: This test checks whether, after running the `init_db` function, the `subscription_plan`, `users`, and `payments` tables are present in the database.
+   - Expected Outcome: Tables are created successfully.
+
+3. **Reset Recognized Count Test**
+   - Objective: To verify the functionality of the function resetting the recognized signs count for users.
+   - Description: This test ensures that the `reset_recognized_count` function correctly resets the recognized signs count for users with Basic and Standard plans.
+   - Expected Outcome: The recognized signs count is reset for the appropriate users.
+
+4. **Revoke Drop Privileges Test**
+   - Objective: To ensure that drop database privileges are revoked for unauthorized users.
+   - Description: This test checks whether the `revoke_drop_privileges` function correctly revokes drop database privileges for users other than root and MySQL system user.
+   - Expected Outcome: Drop database privileges are revoked for the appropriate users.
+
+5. **SocketIO Image Handling Test**
+   - Objective: To ensure the correctness of the function handling image transfer via SocketIO.
+   - Description: This integration test verifies whether the application correctly handles image transfer via SocketIO. Currently, the test is empty and requires implementation of the function handling this functionality.
+   - Expected Outcome: The application handles image transfer via SocketIO correctly.
+

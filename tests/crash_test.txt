@@ -1,0 +1,33 @@
+### Sign Language Recognition Application Tests
+
+#### Test Description:
+
+1. **Flask Application Initialization Test**
+   - Objective: To verify the correctness of Flask application and SocketIO initialization.
+   - Description: This test ensures that the application is properly initialized as a Flask instance and that SocketIO is initialized correctly.
+   - Expected Outcome: The application is initialized successfully.
+
+2. **Model Loading Test**
+   - Objective: To ensure that the model is loaded successfully.
+   - Description: This test checks if the model file exists and if it is successfully loaded by the application.
+   - Expected Outcome: The model is loaded successfully.
+
+3. **Route Availability Tests**
+   - Objective: To check the availability of all routes.
+   - Description: These tests verify the availability of the main route (`/`), the login route (`/login`), and the register route (`/register`).
+   - Expected Outcome: All routes are available.
+
+4. **WebSocket Connection Test**
+   - Objective: To verify the correctness of the WebSocket connection.
+   - Description: This test sends an empty image to the server via WebSocket and checks the received response.
+   - Expected Outcome: The application correctly responds to the WebSocket connection and returns the expected response.
+
+5. **Image Handling Test**
+   - Objective: To check the correctness of image handling by the application.
+   - Description: This test verifies whether the application correctly processes the received image and returns a response based on the processing.
+   - Expected Outcome: The application correctly handles image processing and returns the expected response.
+
+6. **Limit Exceeded Test for Recognized Signs**
+   - Objective: To verify if the application correctly handles exceeding the limit of recognized signs.
+   - Description: This test checks if the application correctly counts the number of recognized signs and reacts when the limit is exceeded.
+   - Expected Outcome: The application correctly responds to exceeding the limit of recognized signs.
