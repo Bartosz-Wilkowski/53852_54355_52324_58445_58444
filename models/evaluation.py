@@ -3,7 +3,7 @@ import numpy as np
 import cv2
 import mediapipe as mp
 from tensorflow.keras.models import load_model
-from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay
+from sklearn.metrics import confusion_matrix, ConfusionMatrixDisplay, classification_report
 import matplotlib.pyplot as plt
 
 # mp
@@ -62,6 +62,25 @@ X_test, y_test = process_test_dataset(test_dataset_path)
 y_pred = model.predict(X_test)
 y_pred_classes = np.argmax(y_pred, axis=1)
 
+# calculate additional metrics
+try:
+
+    # classifaction report
+    class_report = classification_report(y_test, y_pred_classes, target_names=labels)
+    print("Classification Report:")
+    print(class_report)
+
+    # save class report
+    report_path = 'models/results/class_report.txt'
+    with open(report_path, 'w') as f:
+        f.write("Classification Report:\n")
+        f.write(class_report)
+
+    print(f"Classification report saved at: {report_path}")
+
+except Exception as e:
+    print("An error occured while calculating additional metrics:", e)
+    
 # create and save confusion matrix
 try:
     # conf mx

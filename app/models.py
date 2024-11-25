@@ -98,7 +98,7 @@ def get_user_sign_limit():
                 last_reset = datetime.now()
                 update_last_reset(username, last_reset)
             return daily_limit if daily_limit is not None else float('inf')  # Handle unlimited plan
-    return 10  # Default limit for guests
+    return 100000000000  
 
 
 def reset_recognition_count(username):
